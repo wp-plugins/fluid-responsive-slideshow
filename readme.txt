@@ -6,10 +6,10 @@ Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Fluid Responsive Slideshow is a wordpress plugin that enable you to put slideshow easily into post,page, or template. 
+Fluid Responsive Slideshow / image slider is a wordpress plugin that enable you to put slideshow easily into post,page, or template. 
 == Description ==
 
-Fluid Responsive Slideshow is a wordpress plugin that enable you to put slideshow easily into post,page, or template. This plugin is based on a jquery plugin called orbit.js
+Fluid Responsive Slideshow / image slider is a wordpress plugin that enable you to put slideshow easily into post,page, or template. This plugin is based on a jquery plugin called orbit.js
 
 **Features :**
 
@@ -66,7 +66,7 @@ Please try to deactive other plugin.
 1. The slideshow is easy embed on post/page by using shortcode.
 2. Adding a new slideshow is as easy as adding a new categories/tags.
 3. You can easily browse and manage your slide just like managing normal post.
-4. This plugin already provide you with a bunch of option to custumize the slideshow based on your preference. Every slide type also has it owns options
+4. This plugin already provide you with a bunch of option to custumize the slideshow based on your preference. Every slide type also has it owns options.
 
 == Changelog ==
 
