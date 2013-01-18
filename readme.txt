@@ -63,10 +63,10 @@ Please try to deactive other plugin.
 
 == Screenshots ==
 
-1. The slideshow is easy embed on post/page by using shortcode.
-2. Adding a new slideshow is as easy as adding a new categories/tags.
-3. You can easily browse and manage your slide just like managing normal post.
-4. This plugin already provide you with a bunch of option to custumize the slideshow based on your preference. Every slide type also has it owns options.
+1. The slideshow is easy embed on post/page by using shortcode
+2. Adding a new slideshow is as easy as adding a new categories/tags
+3. You can easily browse and manage your slide just like managing normal post
+4. This plugin already provide you with a bunch of option to custumize the slideshow based on your preference. Every slide type also has it owns options
 
 == Changelog ==
 
