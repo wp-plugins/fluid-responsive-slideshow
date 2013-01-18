@@ -1,5 +1,4 @@
 ﻿=== Plugin Name ===
-Donate link: todi.adiatmo@yahoo.com
 Tags: slideshow, gallery, image, responsive, fluid, images
 Requires at least: 3.0.1
 Tested up to: 3.5
@@ -44,14 +43,12 @@ Put the line bellow on your theme file :
 <?php echo do_shortcode("[pjc_slideshow slide_type='your_slide_type']"); ?>
 
 Notes
-*The slide_type paramater is case sensitive
-*Image size must be less or equal than parrent container
-*One slide type can only be made to one slideshow
+* The slide_type paramater is case sensitive
+* Image size must be less or equal than parrent container
+* One slide type can only be made to one slideshow
 
 
 *if you have any questions,comment or suggestion please contact me via todi.adiatmo[at]yahoo.com or [visit plugin site](http://todiadiyatmo.com/2013/01/wordpress-plugin-fluid-responsive-slideshow-plugin/ "visit plugin site")*
-
-Titles are optional, naturally.
 == Installation ==
 
 1. Grap the plugin from from wordpress plugin directory or Upload the fluid-responsive-slideshow folder to the /wp-content/plugins/ directory
@@ -60,6 +57,7 @@ Titles are optional, naturally.
 == Frequently Asked Questions ==
 
 **My slideshow is not working ?**
+
 Please try to deactive other plugin.
 
 == Screenshots ==
