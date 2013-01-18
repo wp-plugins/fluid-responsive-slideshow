@@ -42,13 +42,14 @@ Put the line bellow on your theme file :
 
 <?php echo do_shortcode("[pjc_slideshow slide_type='your_slide_type']"); ?>
 
-Notes
+**Notes**
+
 * The slide_type paramater is case sensitive
 * Image size must be less or equal than parrent container
 * One slide type can only be made to one slideshow
 
 
-*if you have any questions,comment or suggestion please contact me via todi.adiatmo[at]yahoo.com or [visit plugin site](http://todiadiyatmo.com/2013/01/wordpress-plugin-fluid-responsive-slideshow-plugin/ "visit plugin site")*
+*if you have any questions,comment,customization request or suggestion please contact me via todi.adiatmo[at]yahoo.com or [visit plugin site](http://todiadiyatmo.com/2013/01/wordpress-plugin-fluid-responsive-slideshow-plugin/ "visit plugin site")*
 == Installation ==
 
 1. Grap the plugin from from wordpress plugin directory or Upload the fluid-responsive-slideshow folder to the /wp-content/plugins/ directory
