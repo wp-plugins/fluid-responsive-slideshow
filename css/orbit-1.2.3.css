@@ -63,49 +63,66 @@ div.orbit > img,div.orbit > a  {
 /* TIMER
  ================================================== */
 
+
 div.timer {
+
+	position: absolute;
 	width: 40px;
 	height: 40px;
-	overflow: hidden;
-	position: absolute;
 	top: 10px;
 	right: 10px;
-	opacity: .6;
+	opacity: 0.6;
 	cursor: pointer;
-	z-index: 1001;
+	z-index: 9999999999;
+
 }
 
 span.rotator {
-	display: block;
+
+	position: absolute;
+	top: 0px;
+	left: -20px;
 	width: 40px;
 	height: 40px;
-	position: absolute;
-	top: 0;
-	left: -20px;
-	background: url(orbit/rotator-black.png) no-repeat;
-	z-index: 3;
+	background-image: url('orbit/rotator-left.png');
+	z-index: 9999999999;
+	
 }
 
 span.mask {
-	display: block;
+
+	position: absolute;
+	top: 0px;
+	right: 0px;
 	width: 20px;
 	height: 40px;
-	position: absolute;
-	top: 0;
-	right: 0;
-	z-index: 2;
+	z-index: 99999999999;
 	overflow: hidden;
 }
 
-span.rotator.move {
-	left: 0
+span.move {
+	top:0px;
+	position:absolute;
+	left: 0px;
+	
 }
 
-span.mask.move {
+
+
+span.mask-turn {
+
+	display: none;
+	position: absolute;
+	top: 0px;
+	right: 0px;
 	width: 40px;
-	left: 0;
-	background: url(orbit/timer-black.png) repeat 0 0;
+	height: 40px;
+	background-image: url('orbit/rotator-right.png');
+	z-index: 99999999999;
 }
+
+
+
 
 span.pause {
 	display: block;
@@ -116,7 +133,8 @@ span.pause {
 	left: 0;
 	background: url(orbit/pause-black.png) no-repeat;
 	z-index: 4;
-	opacity: 0;
+	opacity: 1;
+	
 }
 
 span.pause.active {
@@ -129,143 +147,8 @@ div.timer:hover span.pause, span.pause.active {
 
 /* CAPTIONS
  ================================================== */
-
-.orbit-caption {
-	display: none;
-	font-family: "HelveticaNeue", "Helvetica-Neue", Helvetica, Arial, sans-serif;
-}
-
-.orbit-wrapper .orbit-caption {
-	
-	background: url('bg-transparent.png') repeat;
-	z-index: 1000;
-	color: #fff;
-	text-align: center;
-	padding: 7px 0;
-	font-size: 13px;
-	position: absolute;
-	right: 0;
-	bottom: 0;
-	width: 100%;
-	text-align:justify;
-}
-
-/* DIRECTIONAL NAV
- ================================================== */
-
-div.slider-nav {
-	display: block
-}
-
-div.slider-nav span {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;   
-	width: 60px;
-	height: 60px;
-	position: absolute;
-	z-index: 1000;
-
-	margin-top: -30px;
-	cursor: pointer;	
-  	font-size: 90px;
-  	font-weight: 100;
-  	line-height: 43px;
- 	color: #ffffff;
-  	text-align: center;
-  	background: #222222;
-  	border: 3px solid #ffffff;
-  	text-align:center;
-  	opacity: 0.5;
-  	filter: alpha(opacity=50);
-	
-}
-
-div.small span{
-    top: 40%;
-	width: 40px;
-	height: 40px;
-	font-size: 60px;
-  	font-weight: 100;
-  	line-height: 30px;
-  	margin-top: -20px;
-}
-
-div.slider-nav span:hover {
-  color: #ffffff;
-  text-decoration: none;
-  opacity: 0.9;
-  filter: alpha(opacity=90);
-}
-
-
-div.slider-nav span.right {
-    margin-right:5px;
-/*	background: url(orbit/right_button.png);*/
-	right: 0;
-	
-}
-
-div.slider-nav span.left {
-    margin-left:5px;
-/*	background: url(orbit/left_button.png);*/
-	left: 10;
-}
-
-/* BULLET NAV
- ================================================== */
-
-.pjc-slideshow-container .orbit-bullets-wrapper{
-    position:absolute;
-    width:100%;
-    height:13px;
-    text-align: center;
-   
-}
-
-.pjc-slideshow-container .orbit-wrapper ul.orbit-bullets {
-    
-	position: relative;
-
-	z-index: 1000;
-	list-style: none;
-	bottom: -5px;
-	display: inline-block;
-
-	margin: 0px;
-	
-	padding:0px;
-	height:13px;
-	
-}
-
-.pjc-slideshow-container .orbit-wrapper ul.orbit-bullets li.pjc-slideshow-navbullets {
-	float: left;
-	margin:0px;
-	margin: 0px 5px;
-	cursor: pointer;
-	color: #999;
-	text-indent: -9999px;
-	background: url(orbit/bullets.jpg) no-repeat 4px 0;
-	width: 13px;
-	height: 12px;
-	overflow: hidden;
-	padding:0px;
-}
-
-.pjc-slideshow-container .orbit-wrapper ul.orbit-bullets li.active {
-	color: #222;
-	background-position: -8px 0;
-	margin:0px;
-	margin-left:auto;
-	margin-right:auto;
-}
-
-.pjc-slideshow-container .orbit-wrapper ul.orbit-bullets  li.has-thumb {
-	background: none;
-	width: 100px;
-	height: 75px;
-}
-
-.pjc-slideshow-container .orbit-wrapper ul.orbit-bullets  li.active.has-thumb {
-	background-position: 0 0;
-	border-top: 2px solid #000;
-}
+ 
+ span.orbit-caption{
+     display:none;
+ }
+ 

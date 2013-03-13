@@ -8,8 +8,16 @@ if ($options[$current]["height"] == "")
 if ($options[$current]["arrow_position"] == "")
 	$options[$current]["arrow_position"] = '45%';
 
+
+
 if ($options[$current]["width"] == "")
 	$options[$current]["width"] = "650";
+
+if ($options[$current]["is_fluid"] == "")
+	$options[$current]["is_fluid"] = "false";
+
+if ($options[$current]["show_textbox"] == "")
+	$options[$current]["show_textbox"] = "true";
 
 if ($options[$current]["textbox_height"] == "")
 	$options[$current]["textbox_height"] = "100";

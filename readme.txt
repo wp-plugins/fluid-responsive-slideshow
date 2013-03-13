@@ -1,4 +1,4 @@
-﻿=== Plugin Name ===
+=== Plugin Name ===
 Tags: slideshow, gallery, image, responsive, fluid, images
 Requires at least: 3.0.1
 Tested up to: 3.5
@@ -48,8 +48,13 @@ Put the line bellow on your theme file :
 * Image size must be less or equal than parrent container
 * One slide type can only be made to one slideshow
 
+**Upgrade Instruction for 0.91**
 
-*if you have any questions,comment,customization request or suggestion please contact me via todi.adiatmo[at]yahoo.com or [visit plugin site](http://todiadiyatmo.com/2013/01/wordpress-plugin-fluid-responsive-slideshow-plugin/ "visit plugin site")*
+* Update each slide options on the slide page
+* Update the FR Slideshow Option for each slide type
+
+
+*if you have any questions,comment,customization request or suggestion please contact me via todi.adiatmo[at]yahoo.com or [visit plugin site](http://www.tonjoo.com/wordpress-plugin-fluid-responsive-slideshow-plugin/ "visit plugin site")*
 == Installation ==
 
 1. Grap the plugin from from wordpress plugin directory or Upload the fluid-responsive-slideshow folder to the /wp-content/plugins/ directory
@@ -59,16 +64,25 @@ Put the line bellow on your theme file :
 
 **My slideshow is not working ?**
 
-Please try to deactive other plugin.
+Please try to deactive other plugin. Most of the problem was caused by other plugin that load JQuery library via CDN which is actualy not allowed by Wordpress.
+
+**Some of my slide is not showing up**
+
+All of the slide must have a slide order and slide type.
 
 == Screenshots ==
 
-1. The slideshow is easy embed on post/page by using shortcode
-2. Adding a new slideshow is as easy as adding a new categories/tags
-3. You can easily browse and manage your slide just like managing normal post
+1. The slideshow is easy embed on post/page by using shortcode.
+2. Adding a new slideshow is as easy as adding a new categories/tags.
+3. You can easily browse and manage your slide just like managing normal post.
 4. This plugin already provide you with a bunch of option to custumize the slideshow based on your preference. Every slide type also has it owns options
 
 == Changelog ==
+
+= 0.91=
+* Support IE 7
+* Fix Option Saving Bug
+* Add skin support ~ skin available on next release 
 
 = 0.9 =
 * First Release

@@ -46,26 +46,6 @@ function pjc_slideshow_tab($current = 'plugin'){
 		<?php screen_icon();
 		echo "<h2>Fluid Responsive Slideshow Options</h2>";
  		?>
-
-		
-		
-		<style type="text/css" media="screen">
-			.form-table td {
-				vertical-align: middle;
-			}
-
-			.form-table th {
-				width: 150px
-			}
-
-			.form-table input,.form-table select {
-
-				width: 150px;
-				margin-right: 10px;
-			}
-
-		</style>
-		
 		<p>Each Slide Type can have its own setting. *Additional CSS can be edited at the fluid-responsive-slideshow.css</p>
 		
 		<?php
@@ -142,12 +122,123 @@ function pjc_slideshow_tab($current = 'plugin'){
 			?>
 			
 			<h2><?php echo "Slide $current Options"?></h2>
+			<!-- Extra style for options -->
+			<style>
+				.form-table td {
+					vertical-align: middle;
+				}
+
+				.form-table th {
+					width: 150px
+				}
+
+				.form-table input,.form-table select {
+
+					width: 150px;
+					margin-right: 10px;
+				}
+				<?php
+					if($options[$current][is_fluid]=='true')
+						echo "
+							#max_image_width{
+								display:none;
+							}
+						";
+
+					if($options[$current][navigation]=='false')
+						echo "
+							.tonjoo_nav_option{
+								display:none;
+							}
+						";
+				
+				?>
+			</style>
 			
 			<table class="form-table">
-				<tr valign="top">
+				<?php 
+
+				$dir =  dirname(__FILE__)."/skins";
+
+				
+				//post format
+			
+
+
+				$skins = scandir($dir);
+
+				$slideshow_skin =  array();
+
+				foreach ($skins as $key => $value) {
+
+					$extension = pathinfo($value, PATHINFO_EXTENSION); 
+					$filename = pathinfo($value, PATHINFO_FILENAME); 
+					$extension = strtolower($extension);
+					$the_value = strtolower($filename);
+
+					if($extension=='css'){
+						$data = array(
+								"label"=>"$filename",
+								"value"=>"$the_value"								
+
+							);
+
+						array_push($slideshow_skin,$data);
+
+					}
+					
+				
+		
+				}
+
+
+			
+
+
+				$option_select = array(
+								"name"=>"pjc_slideshow_options[{$current}][skin]",
+								"description" => "Select skin",
+								"label" => "Slideshow Skin",
+								"value" => $options[$current][skin],
+								"select_array" => $slideshow_skin,
+								"id"=>"tonjoo-frs-skin"
+							);
+
+				
+				 tj_print_select_option($option_select);
+				?>
+
+				<?php 
+
+				$slideshow_fluid = array(
+									'0' => array(
+										'value' =>	'true',
+										'label' =>  'Yes'
+									),
+									'1' => array(
+										'value' =>	'false',
+										'label' =>  'No' 
+									)
+								);
+
+
+				$option_select = array(
+								"name"=>"pjc_slideshow_options[{$current}][is_fluid]",
+								"description" => "Select yes if you want to make the slideshow be fluid",
+								"label" => "Fluid Slideshow",
+								"value" => $options[$current][is_fluid],
+								"select_array" => $slideshow_fluid,
+								"id"=>"tonjoo-frs-is-fluid"
+							);
+
+				
+				 tj_print_select_option($option_select);
+				?>
+
+				<tr valign="top" id='max_image_width'>
 					<th scope="row">Maximal Image Width</th>
 					<td>
-						<input class="regular-text" type="text" name="pjc_slideshow_options<?php echo "[$current][width]"?>" value="<?php esc_attr_e($options[$current]["width"]); ?>" />
+						<input  class="regular-text" type="text" name="pjc_slideshow_options<?php echo "[$current][width]"?>" value="<?php esc_attr_e($options[$current]["width"]); ?>" />
 						<label class="description" >Maximal Width of image, height will be adjusted proportionally</label>
 					</td>
 				</tr>
@@ -159,6 +250,32 @@ function pjc_slideshow_tab($current = 'plugin'){
 					</td>
 				</tr>
 				 -->
+				 <?php 
+
+				$slideshow_select = array(
+									'0' => array(
+										'value' =>	'true',
+										'label' =>  'Yes'
+									),
+									'1' => array(
+										'value' =>	'false',
+										'label' =>  'No' 
+									)
+								);
+
+
+				$option_select = array(
+								"name"=>"pjc_slideshow_options[{$current}][show_textbox]",
+								"description" => "Select yes if you to show the textbox",
+								"label" => "Show Textbox",
+								"value" => $options[$current][show_textbox],
+								"select_array" => $slideshow_select,
+								"id"=>"tonjoo-frs-is-show-textbox"
+							);
+
+				
+				 tj_print_select_option($option_select);
+				?>
 				<tr valign="top">
 					<th scope="row">Textbox height</th>
 					<td>
@@ -313,7 +430,7 @@ function pjc_slideshow_tab($current = 'plugin'){
 						<label class="description" >Display a small timer on the slideshow</label>
 					</td>
 				</tr>
-				<tr valign="top">
+				<tr valign="top" id='tonjoo_show_navigation_arrow'>
 					<th scope="row">Show Navigation Arrow</th>
 					<td>
 						<select name="pjc_slideshow_options<?php echo "[$current][navigation]"?>">
@@ -348,14 +465,14 @@ function pjc_slideshow_tab($current = 'plugin'){
 						<label class="description" >If "no" is selected the navigation arrow will not visible</label>
 					</td>
 				</tr>
-				<tr valign="top">
+				<tr valign="top" class='tonjoo_nav_option'>
 					<th scope="row">Navigation Arrow Position</th>
 					<td>
 						<input class="regular-text" type="text" name="pjc_slideshow_options<?php echo "[$current][arrow_position]"?>" value="<?php esc_attr_e($options[$current]["arrow_position"]); ?>" />
 						<label class="description" >Position of navigation arrow from top( in % )</label>
 					</td>
 				</tr>
-				<tr valign="top">
+				<tr valign="top" class='tonjoo_nav_option'>
 					<th scope="row">Small Navigation Arrow</th>
 					<td>
 						<select name="pjc_slideshow_options<?php echo "[$current][small_navigation]"?>">
@@ -390,7 +507,7 @@ function pjc_slideshow_tab($current = 'plugin'){
 						<label class="description" >Use smaller navigation arrow (for smaller slideshow)</label>
 					</td>
 				</tr>
-				<tr valign="top">
+				<tr valign="top" class='tonjoo_nav_option'>
 					<th scope="row">Small navigation size threshold</th>
 					<td>
 						<input class="regular-text" type="text" name="pjc_slideshow_options<?php echo "[$current][small_navigation_treshold]"?>" value="<?php esc_attr_e($options[$current]["small_navigation_treshold"]); ?>" />

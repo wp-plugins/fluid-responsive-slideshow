@@ -15,23 +15,23 @@
 
         //Defaults to extend options
         var defaults = {  
-            animation: 'horizontal-push', 		// fade, horizontal-slide, vertical-slide, horizontal-push
-            animationSpeed: 600, 				// how fast animtions are
-            timer: true, 						// true or false to have the timer
-            advanceSpeed: 4000, 				// if timer is enabled, time between transitions 
-            pauseOnHover: true, 				// if you hover pauses the slider
-            startClockOnMouseOut: false, 		// if clock should start on MouseOut
-            startClockOnMouseOutAfter: 1000, 	// how long after MouseOut should the timer start again
-            directionalNav: true, 				// manual advancing directional navs
-            captions: true, 					// do you want captions?
-            captionAnimation: 'fade', 			// fade, slideOpen, none
-            captionAnimationSpeed: 600, 		// if so how quickly should they animate in
-            bullets: false,						// true or false to activate the bullet navigation
-            bulletThumbs: false,				// thumbnails for the bullets
-            bulletThumbLocation: '',			// location from this file where thumbs will be
-            afterSlideChange: function(){}, 		// empty function 
-            navigationSmallTreshold:650,
-            navigationSmall:false,
+            'animation': 'horizontal-push', 		// fade, horizontal-slide, vertical-slide, horizontal-push
+            'animationSpeed': 600, 				// how fast animtions are
+            'timer': true, 						// true or false to have the timer
+            'advanceSpeed': 4000, 				// if timer is enabled, time between transitions 
+            'pauseOnHover': true, 				// if you hover pauses the slider
+            'startClockOnMouseOut': false, 		// if clock should start on MouseOut
+            'startClockOnMouseOutAfter': 1000, 	// how long after MouseOut should the timer start again
+            'directionalNav': true, 				// manual advancing directional navs
+            'captions': true, 					// do you want captions?
+            'captionAnimation': 'fade', 			// fade, slideOpen, none
+            'captionAnimationSpeed': 600, 		// if so how quickly should they animate in
+            'bullets': false,						// true or false to activate the bullet navigation
+            'bulletThumbs': false,				// thumbnails for the bullets
+            'bulletThumbLocation': '',			// location from this file where thumbs will be
+            'afterSlideChange': function(){}, 		// empty function 
+            'navigationSmallTreshold':650,
+            'navigationSmall':false
      	};  
      	
      	
@@ -103,6 +103,18 @@
 // ==============
 // ! TIMER   
 // ==============
+            date = new Date();
+            milliseconds = date.getTime();
+            start_seconds = milliseconds / 1000;
+
+
+            function log_time(){
+                date = new Date();
+                milliseconds = date.getTime();
+                seconds = milliseconds / 1000;
+                seconds = seconds-start_seconds;
+                console.log(seconds);
+            }
 
 		
             //Timer Execution
@@ -111,33 +123,46 @@
             		return false;
             	//if timer is hidden, don't need to do crazy calculations
             	} else if(timer.is(':hidden')) {
+                    timerRunning = true;
 		            clock = setInterval(function(e){
+                        
 						shift("next");  
+                     
 		            }, options.advanceSpeed);            		
 		        //if timer is visible and working, let's do some math
             	} else {
 		            timerRunning = true;
 		            pause.removeClass('active')
 		            clock = setInterval(function(e){
-		                var degreeCSS = "rotate("+degrees+"deg)"
-		                degrees += 2
+		            	
+
+		            
+		                var degreeCSS = "rotate("+degrees+"deg)"		           
 		                rotator.css({ 
 		                    "-webkit-transform": degreeCSS,
+		                    "-ms-transform": degreeCSS,
 		                    "-moz-transform": degreeCSS,
 		                    "-o-transform": degreeCSS
 		                });
-		                if(degrees > 180) {
-		                    rotator.addClass('move');
-		                    mask.addClass('move');
+		                  degrees += 1
+		                if(degrees >= 180) {
+		                	
+		                	mask.addClass('move')
+							rotator.addClass('move')
+							mask_turn.css("display","block")
+		                	
+		
 		                }
-		                if(degrees == 360) {
+		                if(degrees >= 360) {
 		                    
 		                    degrees = 0;
-		                    rotator.removeClass('move');
-		                    mask.removeClass('move');
+		                    mask.removeClass('move')
+							rotator.removeClass('move')
+						    mask_turn.css("display","none")
+		             
 		                    shift("next");
 		                }
-		            }, options.advanceSpeed/180);
+		            }, options.advanceSpeed/360);
 				}
 	        }
 	        function stopClock() {
@@ -152,13 +177,14 @@
            
             //Timer Setup
             if(options.timer) {         	
-                var timerHTML = '<div class="timer"><span class="mask"><span class="rotator"></span></span><span class="pause"></span></div>'
+                var timerHTML = '<div class="timer"><span class="mask"><span class="rotator"></span></span><span class="mask-turn"></span><span class="pause"></span></div>'
                 orbitWrapper.append(timerHTML);
                 var timer = orbitWrapper.children('div.timer'),
                 	timerRunning;
                 if(timer.length != 0) {
                     var rotator = jQuery(orbit_id+' div.timer span.rotator'),
                     	mask = jQuery(orbit_id+' div.timer span.mask'),
+                    	mask_turn = jQuery(orbit_id+' div.timer span.mask-turn'),
                     	pause = jQuery(orbit_id+' div.timer span.pause'),
                     	degrees = 0,
                     	clock; 
@@ -201,7 +227,7 @@
                      
             //Caption Setup
             if(options.captions) {
-                var captionHTML = '<div class="orbit-caption"></div>';
+                var captionHTML = '<div class="orbit-caption '+options.skinClass.toLowerCase()+'"></div>';
                 orbitWrapper.append(captionHTML);
                 var caption = orbitWrapper.children('.orbit-caption');
             	setCaption();
@@ -259,7 +285,7 @@
             //DirectionalNav { rightButton --> shift("next"), leftButton --> shift("prev");
             if(options.directionalNav) {
             	if(options.directionalNav == "false") { return false; }
-                var directionalNavHTML = '<div class="slider-nav "><span class="right">›</span><span class="left">‹</span></div>';
+                var directionalNavHTML = '<div class="slider-nav '+options.skinClass.toLowerCase()+'"><span class="right">›</span><span class="left">‹</span></div>';
                 orbitWrapper.append(directionalNavHTML);
                 var leftBtn = orbitWrapper.children('div.slider-nav').children('span.left'),
                 	rightBtn = orbitWrapper.children('div.slider-nav').children('span.right');

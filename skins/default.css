@@ -1,0 +1,142 @@
+/* CAPTIONS
+ ================================================== */
+
+.orbit-caption.default {
+	display: none;
+	font-family: "HelveticaNeue", "Helvetica-Neue", Helvetica, Arial, sans-serif;
+}
+
+.orbit-wrapper .orbit-caption.default {
+	
+	background: url(../css/bg-transparent.png) repeat;
+	z-index: 1000;
+	color: #fff;
+	text-align: center;
+	padding: 7px 0;
+	font-size: 13px;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	text-align:justify;
+}
+
+/* DIRECTIONAL div
+ ================================================== */
+
+NAV.slider-nav.default {
+	display: block
+}
+
+div.slider-nav.default span {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;   
+	width: 60px;
+	height: 60px;
+	position: absolute;
+	z-index: 1000;
+
+	margin-top: -30px;
+	cursor: pointer;	
+  	font-size: 90px;
+  	font-weight: 100;
+  	line-height: 43px;
+ 	color: #ffffff;
+  	text-align: center;
+  	background: #222222;
+  	border: 3px solid #ffffff;
+  	text-align:center;
+  	opacity: 0.5;
+  	filter: alpha(opacity=50);
+	
+}
+
+div.small span{
+    top: 40%;
+	width: 40px;
+	height: 40px;
+	font-size: 60px;
+  	font-weight: 100;
+  	line-height: 30px;
+  	margin-top: -20px;
+}
+
+div.slider-nav.default span:hover {
+  color: #ffffff;
+  text-decoration: none;
+  opacity: 0.9;
+  filter: alpha(opacity=90);
+}
+
+
+div.slider-nav.default span.right {
+    margin-right:5px;
+/*	background: url(orbit/right_button.png);*/
+	right: 0;
+	
+}
+
+div.slider-nav.default span.left {
+    margin-left:5px;
+/*	background: url(orbit/left_button.png);*/
+	left: 10;
+}
+
+/* BULLET NAV
+ ================================================== */
+
+.pjc-slideshow-container .orbit-bullets-wrapper{
+    position:absolute;
+    width:100%;
+    height:13px;
+    text-align: center;
+   
+}
+
+.pjc-slideshow-container .orbit-wrapper ul.orbit-bullets {
+    
+	position: relative;
+
+	z-index: 1000;
+	list-style: none;
+	bottom: -5px;
+	display: inline-block;
+
+	margin: 0px;
+	
+	padding:0px;
+	height:13px;
+	
+}
+
+.pjc-slideshow-container .orbit-wrapper ul.orbit-bullets li.pjc-slideshow-navbullets {
+	float: left;
+	margin:0px;
+	margin: 0px 5px;
+	cursor: pointer;
+	color: #999;
+	text-indent: -9999px;
+	background: url(../css/orbit/bullets.jpg) no-repeat 4px 0;
+	width: 13px;
+	height: 12px;
+	overflow: hidden;
+	padding:0px;
+}
+
+.pjc-slideshow-container .orbit-wrapper ul.orbit-bullets li.active {
+	color: #222;
+	background-position: -8px 0;
+	margin:0px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.pjc-slideshow-container .orbit-wrapper ul.orbit-bullets  li.has-thumb {
+	background: none;
+	width: 100px;
+	height: 75px;
+}
+
+.pjc-slideshow-container .orbit-wrapper ul.orbit-bullets  li.active.has-thumb {
+	background-position: 0 0;
+	border-top: 2px solid #000;
+}

@@ -1,21 +1,51 @@
 <?php
 /*
  *Plugin Name: Fluid Responsive Slideshow
- *Plugin URI: http://todiadiyatmo.com/2013/01/wordpress-plugin-fluid-responsive-slideshow-plugin/
+ *Plugin URI: http://www.tonjoo.com/wordpress-plugin-fluid-responsive-slideshow-plugin/
  *Description: Fluid and Responsive Slideshow for wordpress.
- *Version: 0.9
- *Author: Todi Adiyatmo Wijoyo
- *Author URI: http://todiadiyatmo.com/
+ *Version: 0.91
+ *Author: tonjoo
+ *Author URI: http://www.tonjoo.com/
  *License: GPLv2
  *Contributor:Saga Iqranegara
  * 
 */
 
+
+
+/*
+ * Call other file for this plugin
+ */
+
+require_once( plugin_dir_path( __FILE__ ) . 'shortcode.php');
+require_once( plugin_dir_path( __FILE__ ) . 'post-list.php');
+require_once( plugin_dir_path( __FILE__ ) . 'display-info.php');
+require_once( plugin_dir_path( __FILE__ ) . 'custom-meta.php');
+require_once( plugin_dir_path( __FILE__ ) . 'submenu.php');
+require_once( plugin_dir_path( __FILE__ ) . 'tonjoo-library.php');
+require_once( plugin_dir_path( __FILE__ ) . 'notification/notification.php');
+
+ /*
+ *  Save plugin version on db on plugin installation
+ */
+
+
+
+global $tonjoo_frs_version;
+$tonjoo_frs_version = "0.91";
+
 /*
  * Add featured image support for this plugin
  */ 
+add_action( 'after_setup_theme', 'after_setup_theme_pjc_slideshow' );
 
-add_theme_support( 'post-thumbnails',array('pjc_slideshow')); 
+function after_setup_theme_pjc_slideshow(){
+	add_theme_support( 'post-thumbnails', array() );
+}
+
+
+
+
 
  /*
  *  Init pjc_slideshow post-type
@@ -24,7 +54,10 @@ add_theme_support( 'post-thumbnails',array('pjc_slideshow'));
 add_action( 'init', 'create_pjc_slideshow' );
 
 function create_pjc_slideshow() {
-	
+
+
+
+
 	
 	
     register_post_type( 'pjc_slideshow',
@@ -52,7 +85,7 @@ function create_pjc_slideshow() {
             'has_archive' => true
         )
     );	
-	
+	add_theme_support( 'post-thumbnails'); 
 	// register_taxonomy( $taxonomy, $object_type, $args );  
 	
 	 // Add new taxonomy, make it hierarchical (like categories)
@@ -108,22 +141,15 @@ function pjc_slideshow_admin() {
     * Register css and javascript for admin page
     */
   
-	wp_enqueue_style('colorpicker-css',plugins_url("Fluid-Responsive-Slideshow/css/jquery.miniColors.css"));      
-    wp_enqueue_style('style',plugins_url("Fluid-Responsive-Slideshow/css/admin_pjc_slideshow.css"));  
-    wp_enqueue_script('colorpicker-mini',plugins_url("Fluid-Responsive-Slideshow/js/jquery.miniColors.js"));  
-	
+	wp_enqueue_style('colorpicker-css',plugin_dir_url( __FILE__ )."css/jquery.minicolors.css");      
+    wp_enqueue_script('colorpicker-mini',plugin_dir_url( __FILE__ )."js/jquery.minicolors.js");  
+
 
     wp_enqueue_script('jquery');  
+    wp_enqueue_script('tonjoo_frs_admin',plugin_dir_url( __FILE__ )."js/tonjoo_frs_admin.js");  
+
+ 
+
 }
-
-/*
- * Call other file for this plugin
- */
-
-require_once( plugin_dir_path( __FILE__ ) . 'shortcode.php');
-require_once( plugin_dir_path( __FILE__ ) . 'post-list.php');
-require_once( plugin_dir_path( __FILE__ ) . 'display-info.php');
-require_once( plugin_dir_path( __FILE__ ) . 'custom-meta.php');
-require_once( plugin_dir_path( __FILE__ ) . 'submenu.php');
 
 

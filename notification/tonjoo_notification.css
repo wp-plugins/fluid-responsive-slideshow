@@ -1,0 +1,19 @@
+#tonjoo-notification{
+    width:600px;
+    height:330px;
+    padding:10px 20px;
+    position:fixed;
+    z-index:100000000;
+    top:40%;
+    margin-top:-150px;
+    left:50%;
+    margin-left:-300px;
+    line-height:15px;
+
+}
+
+#tonjoo-notification-close{
+    width:80px;
+    margin-top:10px;
+    float:right;
+}
