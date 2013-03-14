@@ -37,11 +37,9 @@ $tonjoo_frs_version = "0.91";
 /*
  * Add featured image support for this plugin
  */ 
-add_action( 'after_setup_theme', 'after_setup_theme_pjc_slideshow' );
 
-function after_setup_theme_pjc_slideshow(){
-	add_theme_support( 'post-thumbnails', array() );
-}
+add_theme_support( 'post-thumbnails', array() );
+
 
 
 
