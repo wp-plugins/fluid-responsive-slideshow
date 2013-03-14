@@ -139,8 +139,8 @@ function pjc_slideshow_admin() {
     * Register css and javascript for admin page
     */
   
-	wp_enqueue_style('colorpicker-css',plugin_dir_url( __FILE__ )."css/jquery.minicolors.css");      
-    wp_enqueue_script('colorpicker-mini',plugin_dir_url( __FILE__ )."js/jquery.minicolors.js");  
+	wp_enqueue_style('colorpicker-css',plugin_dir_url( __FILE__ )."css/jquery.miniColors.css");      
+    wp_enqueue_script('colorpicker-mini',plugin_dir_url( __FILE__ )."js/jquery.miniColors.js");  
 
 
     wp_enqueue_script('jquery');  
