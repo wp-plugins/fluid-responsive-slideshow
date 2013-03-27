@@ -113,35 +113,7 @@ function pjc_gallery_print($attr) {
 			}";
 		}
 		
-		$style="
-		<link rel='stylesheet' href='$skin' type='text/css'>
-
-		<style>
-		$slideshow_width
-		$textbox_style
-
-		#$attr[slide_type_id] .orbit-wrapper .orbit-caption {
-				display:none;
-			}
-
-		#$attr[slide_type_id]wrap .orbit-caption h4{
-			font-size:{$options[$current][textbox_h4_size]}px;
-		    margin:0px;
-		    padding:3px {$options[$current][textbox_padding]}px;
 		
-		}
-		#$attr[slide_type_id]wrap .orbit-caption p{
-		    margin:0px;
-		    padding:0px {$options[$current][textbox_padding]}px;
-		
-		    font-size:{$options[$current][textbox_p_size]}px;
-		}
-		
-		#$attr[slide_type_id]wrap div.slider-nav span{
-		    top:{$options[$current][arrow_position]};
-		}
-		</style>
-		";
 		
 		$javascript = "
 		<!-- Slideshow generated using Fluid-Responsive-Slideshow, http://www.tonjoo.com/wordpress-plugin-fluid-responsive-slideshow-plugin/ -->
@@ -151,10 +123,10 @@ function pjc_gallery_print($attr) {
 						jQuery('#{$attr[slide_type_id]}').orbit({
 							animation : '{$options[$current][animation]}', // fade, horizontal-slide, vertical-slide, horizontal-push
 							animationSpeed :  {$options[$current][animation_time]}, // how fast animtions are
-							timer :  'true', // true or false to have the timer
+							timer :  true, // true or false to have the timer
 							advanceSpeed :   {$options[$current][fade_time]}, // if timer is enabled, time between transitions
 							pauseOnHover : {$options[$current][pause]}, // if you hover pauses the slider
-							startClockOnMouseOut :  '{$options[$current][start_mouseout]}', // if clock should start on MouseOut
+							startClockOnMouseOut :  {$options[$current][start_mouseout]}, // if clock should start on MouseOut
 							startClockOnMouseOutAfter :  {$options[$current][start_mouseout_after]}, // how long after MouseOut should the timer start again
 							directionalNav :  {$options[$current][navigation]}, // manual advancing directional navs
 							captions : true, // do you want captions?
@@ -171,20 +143,16 @@ function pjc_gallery_print($attr) {
 			})
 		
 		</script>
-		<!--[if IE]>
+		<!--[if lt IE10]>
 			<style type='text/css'>
-			.orbit-wrapper .timer { display: none !important; }
-			.orbit-wrapper div.caption { background:transparent; filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000,endColorstr=#99000000);zoom: 1; }
+			#$attr[slide_type_id]wrap  .timer { display: none !important; }
+			#$attr[slide_type_id]wrap  div.caption { background:transparent; filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000,endColorstr=#99000000);zoom: 1; }
 			</style>
 		<![endif]-->
 		";
 
 		if($options[$current][show_timer]=="false"){
-			$javascript .="
-			<style type='text/css'>
-			.orbit-wrapper .timer { display: none !important; }
-			</style>"
-			;
+			$timer ="#$attr[slide_type_id]wrap  .timer { display: none !important; }";
 		}
 		
 		/*
@@ -231,6 +199,53 @@ function pjc_gallery_print($attr) {
 			}
 	       $i+=1;
         endwhile;
+
+        if($options[$current]['skin']=='modern'){
+        	$i=$i-1;
+			$li_width= 100/$i;
+			$li_width = round($li_width,10);
+
+	        $li="
+        	#$attr[slide_type_id]wrap  li.pjc-slideshow-navbullets{
+        		width:$li_width%;
+    		}
+
+	        ";
+        }
+        
+
+        $style="
+		<link rel='stylesheet' href='$skin' type='text/css'>
+
+		<style>
+		$timer
+		$li
+		$slideshow_width
+		$textbox_style
+		
+
+		#$attr[slide_type_id] .orbit-wrapper .orbit-caption {
+				display:none;
+			}
+
+		#$attr[slide_type_id]wrap .orbit-caption h4{
+			font-size:{$options[$current][textbox_h4_size]}px;
+		    margin:0px;
+		    padding:3px {$options[$current][textbox_padding]}px;
+		
+		}
+		#$attr[slide_type_id]wrap .orbit-caption p{
+		    margin:0px;
+		    padding:0px {$options[$current][textbox_padding]}px;
+		
+		    font-size:{$options[$current][textbox_p_size]}px;
+		}
+		
+		#$attr[slide_type_id]wrap div.slider-nav span{
+		    top:{$options[$current][arrow_position]};
+		}
+		</style>
+		";
       
 		
 

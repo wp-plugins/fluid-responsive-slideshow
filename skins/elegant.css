@@ -1,12 +1,12 @@
 /* CAPTIONS
  ================================================== */
 
-.default .orbit-caption {
+.elegant .orbit-caption {
 	display: none;
 	font-family: "HelveticaNeue", "Helvetica-Neue", Helvetica, Arial, sans-serif;
 }
 
-.orbit-wrapper.default .orbit-caption {
+.orbit-wrapper.elegant .orbit-caption {
 	
 	background: url(../css/bg-transparent.png) repeat;
 	z-index: 1000;
@@ -24,33 +24,29 @@
 /* DIRECTIONAL div
  ================================================== */
 
-.default NAV.slider-nav {
+.elegant NAV.slider-nav {
 	display: block
 }
 
-.default div.slider-nav span {
+.elegant div.slider-nav span {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;   
 	width: 60px;
 	height: 60px;
 	position: absolute;
 	z-index: 1000;
-
 	margin-top: -30px;
 	cursor: pointer;	
-  	font-size: 90px;
-  	font-weight: 100;
+  	font-size: 60px;
+  	font-weight: bold;
   	line-height: 43px;
- 	color: #ffffff;
-  	text-align: center;
-  	background: #222222;
-  	border: 3px solid #ffffff;
+ 	color: #FFF;
   	text-align:center;
-  	opacity: 0.5;
+  	opacity: 0.9;
   	filter: alpha(opacity=50);
 	
 }
 
-.default div.small span{
+.elegant div.small span{
     top: 40%;
 	width: 40px;
 	height: 40px;
@@ -60,7 +56,7 @@
   	margin-top: -20px;
 }
 
-.default div.slider-nav span:hover {
+.elegant div.slider-nav span:hover {
   color: #ffffff;
   text-decoration: none;
   opacity: 0.9;
@@ -68,14 +64,14 @@
 }
 
 
-.default div.slider-nav span.right {
+.elegant div.slider-nav span.right {
     margin-right:5px;
 /*	background: url(orbit/right_button.png);*/
 	right: 0;
 	
 }
 
-.default div.slider-nav span.left {
+.elegant div.slider-nav span.left {
     margin-left:5px;
 /*	background: url(orbit/left_button.png);*/
 	left: 10;
@@ -84,59 +80,60 @@
 /* BULLET NAV
  ================================================== */
 
-.pjc-slideshow-container .default .orbit-bullets-wrapper{
+.pjc-slideshow-container .elegant .orbit-bullets-wrapper{
     position:absolute;
     width:100%;
     height:13px;
-    text-align: center;
-   
+    top:0;
+    left:0;
 }
 
-.pjc-slideshow-container .default .orbit-bullets-wrapper ul.orbit-bullets {
+.pjc-slideshow-container .elegant .orbit-bullets-wrapper ul.orbit-bullets {
     
 	position: relative;
-
+    text-align: center;
 	z-index: 1000;
 	list-style: none;
 	bottom: -5px;
 	display: inline-block;
-
 	margin: 0px;
-	
 	padding:0px;
 	height:13px;
 	
 }
 
-.pjc-slideshow-container .orbit-wrapper.default ul.orbit-bullets li.pjc-slideshow-navbullets {
+.pjc-slideshow-container .orbit-wrapper.elegant ul.orbit-bullets li.pjc-slideshow-navbullets {
 	float: left;
 	margin:0px;
 	margin: 0px 5px;
 	cursor: pointer;
 	color: #999;
-	text-indent: -9999px;
-	background: url(../css/orbit/bullets.jpg) no-repeat 4px 0;
-	width: 13px;
-	height: 12px;
-	overflow: hidden;
+	width: 16px;
+	height: 23px;
 	padding:0px;
+	font-size: 1em;
+	background-color:#333;
+	color:#ffffff;
+	background-image:none;
 }
 
-.pjc-slideshow-container .orbit-wrapper.default ul.orbit-bullets li.active {
-	color: #222;
-	background-position: -8px 0;
-	margin:0px;
-	margin-left:auto;
-	margin-right:auto;
+.pjc-slideshow-container .orbit-wrapper.elegant ul.orbit-bullets li.pjc-slideshow-navbullets:hover {
+	background-color:#F60;
 }
 
-.pjc-slideshow-container .orbit-wrapper.default ul.orbit-bullets  li.has-thumb {
+
+.pjc-slideshow-container .orbit-wrapper.elegant ul.orbit-bullets li.active {
+	color: #ffffff;
+	background-color:#F60;
+}
+
+.pjc-slideshow-container .orbit-wrapper.elegant ul.orbit-bullets  li.has-thumb {
 	background: none;
 	width: 100px;
 	height: 75px;
 }
 
-.pjc-slideshow-container .orbit-wrapper.default ul.orbit-bullets  li.active.has-thumb {
+.pjc-slideshow-container .orbit-wrapper.elegant ul.orbit-bullets  li.active.has-thumb {
 	background-position: 0 0;
 	border-top: 2px solid #000;
 }

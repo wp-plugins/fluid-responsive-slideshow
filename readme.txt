@@ -1,5 +1,6 @@
 === Plugin Name ===
 Tags: slideshow, gallery, image, responsive, fluid, images
+Donate link: http://tonjoo.com/donate/
 Requires at least: 3.0.1
 Tested up to: 3.5
 Stable tag: trunk
@@ -20,6 +21,7 @@ Fluid Responsive Slideshow / image slider is a wordpress plugin that enable you 
 * Hiperlink on image.
 * Custom text and font size.
 * And many custumizable parameter.
+* Multiple Skin
 
 
 **Usage Instruction**
@@ -48,13 +50,18 @@ Put the line bellow on your theme file :
 * Image size must be less or equal than parrent container
 * One slide type can only be made to one slideshow
 
-**Upgrade Instruction for 0.91**
+**Upgrade Instruction from 0.90**
 
 * Update each slide options on the slide page
 * Update the FR Slideshow Option for each slide type
 
 
-*if you have any questions,comment,customization request or suggestion please contact me via todi.adiatmo[at]yahoo.com or [visit plugin site](http://www.tonjoo.com/wordpress-plugin-fluid-responsive-slideshow-plugin/ "visit plugin site")*
+*if you have any questions,comment,customization request or suggestion please contact me via support[at]tonjoo.com or [visit plugin site](http://www.tonjoo.com/wordpress-plugin-fluid-responsive-slideshow-plugin/ "visit plugin site")*
+
+*You can view available skins on [skins demo](http://tonjoo.com/skins-for-fluid-responsive-slideshow/ "skins demo")*
+
+
+
 == Installation ==
 
 1. Grap the plugin from from wordpress plugin directory or Upload the fluid-responsive-slideshow folder to the /wp-content/plugins/ directory
@@ -76,8 +83,13 @@ All of the slide must have a slide order and slide type.
 2. Adding a new slideshow is as easy as adding a new categories/tags.
 3. You can easily browse and manage your slide just like managing normal post.
 4. This plugin already provide you with a bunch of option to custumize the slideshow based on your preference. Every slide type also has it owns options
+5. Skin Options
 
 == Changelog ==
+
+= 0.92=
+* Fix options bug
+* Add 3 Skin
 
 = 0.91=
 * Support IE 7

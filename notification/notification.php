@@ -31,15 +31,13 @@ function tonjoo_frs_print_notification_box(){
 
 		Thank you for choosing Fluid Responsive Slideshow.
 
-		In version 0.91 we have made several improvement :
+		In version 0.92 we have made several improvement :
 		<ol>
-			<li>Fix saving issue on the option page</li>
-			<li>Fix animation when the timer is hidden</li>
-			<li>Add support for IE 7</li>
-			<li>Add skin options ~ more skin will be available on next update</li>
+			<li>Fix some options value that does not wor</li>
+			<li>Add 3 new skin ~ modern,minimalist,corporate</li>
 		</ol>
 
-		<b>Installation instruction for upgrade user</b>
+		<b>Installation instruction for upgrade user from 0.90</b>
 		<br>
 		<br>
 		Due to improvement we made to the new version user upgrading this plugin from previous version will have to do the following things :

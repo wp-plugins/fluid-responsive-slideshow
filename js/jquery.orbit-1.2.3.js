@@ -63,7 +63,7 @@
             
          
             var orbit = jQuery(this).addClass('orbit'),         
-            	orbitWrapper = orbit.wrap('<div id="'+jQuery(this).attr("id")+'wrap" class="orbit-wrapper" />').parent();
+            	orbitWrapper = orbit.wrap('<div id="'+jQuery(this).attr("id")+'wrap" class="orbit-wrapper '+options.skinClass.toLowerCase()+'" />').parent();
             orbit.add(orbitWidth)
 	    	            
             //Collect all slides and set slider size of largest image
@@ -227,7 +227,7 @@
                      
             //Caption Setup
             if(options.captions) {
-                var captionHTML = '<div class="orbit-caption '+options.skinClass.toLowerCase()+'"></div>';
+                var captionHTML = '<div class="orbit-caption"></div>';
                 orbitWrapper.append(captionHTML);
                 var caption = orbitWrapper.children('.orbit-caption');
             	setCaption();
@@ -285,7 +285,7 @@
             //DirectionalNav { rightButton --> shift("next"), leftButton --> shift("prev");
             if(options.directionalNav) {
             	if(options.directionalNav == "false") { return false; }
-                var directionalNavHTML = '<div class="slider-nav '+options.skinClass.toLowerCase()+'"><span class="right">›</span><span class="left">‹</span></div>';
+                var directionalNavHTML = '<div class="slider-nav "><span class="right">›</span><span class="left">‹</span></div>';
                 orbitWrapper.append(directionalNavHTML);
                 var leftBtn = orbitWrapper.children('div.slider-nav').children('span.left'),
                 	rightBtn = orbitWrapper.children('div.slider-nav').children('span.right');
@@ -298,21 +298,24 @@
                     shift("next")
                 });
             }
+                
             
             
             if(options.navigationSmall){
-				
-				jQuery(this).resize(function(){
-					if(jQuery(this).width()<options.navigationSmallTreshold){
-		    			jQuery(this).siblings("div.slider-nav").addClass('small')
+				    
+				jQuery(window).resize(function(){
+
+
+					if(jQuery(window).width()<options.navigationSmallTreshold){
+		    			orbit.siblings("div.slider-nav").addClass('small')
 		    		}
 		    		else{
-		    			jQuery(this).siblings("div.slider-nav").removeClass('small')
+		    			orbit.siblings("div.slider-nav").removeClass('small')
 		    		}
 	    		});	
     		
-	    		if(jQuery(this).width()<options.navigationSmallTreshold){
-		    			jQuery(this).siblings("div.slider-nav").addClass('small')
+	    		if(orbit.width()<options.navigationSmallTreshold){
+		    			orbit.siblings("div.slider-nav").addClass('small')
 		    	}
 			}
 		
@@ -329,7 +332,8 @@
             //Bullet Nav Setup
             if(options.bullets) { 
             	var bulletHTML = '<ul class="orbit-bullets"></ul>';            	
-            	var bulletHTMLWrapper = '<div class="orbit-bullet-wrapper"></div>';            	
+
+            	var bulletHTMLWrapper = "<div class='orbit-bullet-wrapper ' ></div>";            	
             	orbitWrapper.append(bulletHTML);
             
             	

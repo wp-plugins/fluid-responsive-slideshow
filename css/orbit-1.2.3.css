@@ -8,7 +8,7 @@
  ================================================== */
 
 .featured { 
-    min-height:200px;
+    min-height:150px;
 	background: #000 url('orbit/loading.gif') no-repeat center center;
 	overflow: hidden; 
 }

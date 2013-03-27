@@ -5,11 +5,12 @@
 	}
 </style>
 <br>
-Fluid Responsive Slideshow by <a href='http://www.tonjoo.com'>tonjoo</a> ~ 
-<a href='http://www.tonjoo.com/wordpress-plugin-fluid-responsive-slideshow-plugin/'>Plugin Page</a> | 
-<a href='http://wordpress.org/support/view/plugin-reviews/fluid-responsive-slideshow?filter=5'>Please Rate :)</a> |
-<a href='http://wordpress.org/extend/plugins/fluid-responsive-slideshow/'>Comment</a> Or <a href='http://wordpress.org/support/plugin/fluid-responsive-slideshow'>Bug Report</a> |
-<a href='http://wordpress.org/extend/plugins/fluid-responsive-slideshow/faq/'>FAQ</a> 
+Fluid Responsive Slideshow by <a href='http://www.tonjoo.com' target='blank'>tonjoo</a> ~ 
+<a href='http://www.tonjoo.com/wordpress-plugin-fluid-responsive-slideshow-plugin/' target='blank'>Plugin Page</a> | 
+<a href='http://wordpress.org/support/view/plugin-reviews/fluid-responsive-slideshow?filter=5' target='blank'>Please Rate :)</a> |
+<a href='http://wordpress.org/extend/plugins/fluid-responsive-slideshow/' target='blank'>Comment</a> Or <a href='http://wordpress.org/support/plugin/fluid-responsive-slideshow' target='blank'>Bug Report</a> |
+<a href='http://wordpress.org/extend/plugins/fluid-responsive-slideshow/faq/' target='blank'>FAQ</a> |  
+<a href='http://www.tonjoo.com/donate' target='blank'>Donate</a> 
 <br>
 <br>
 <table class="meta">
@@ -61,4 +62,5 @@ Fluid Responsive Slideshow by <a href='http://www.tonjoo.com'>tonjoo</a> ~
 	</tr>
 </table>
 
-<p>If you have any questions,comment or suggestion please contact me via todi.adiatmo[at]yahoo.com or <a href="http://www.tonjoo.com/wordpress-plugin-fluid-responsive-slideshow-plugin/">visit our plugin site</a></p>
+<p>If you have any questions,comment or suggestion please contact me via suport[at]tonjoo.com or <a href="http://www.tonjoo.com/wordpress-plugin-fluid-responsive-slideshow-plugin/" target='blank'>visit our plugin site</a></p>
+<p>Please support this plugin by donate for our development team <a href='http://www.tonjoo.com/donate' target='blank'>Donate</a> 

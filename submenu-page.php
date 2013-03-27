@@ -473,7 +473,7 @@ function pjc_slideshow_tab($current = 'plugin'){
 					</td>
 				</tr>
 				<tr valign="top" class='tonjoo_nav_option'>
-					<th scope="row">Small Navigation Arrow</th>
+					<th scope="row">Small Navigation Arrow (not available on all themes)</th>
 					<td>
 						<select name="pjc_slideshow_options<?php echo "[$current][small_navigation]"?>">
 							<?php
