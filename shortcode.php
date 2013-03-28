@@ -143,7 +143,7 @@ function pjc_gallery_print($attr) {
 			})
 		
 		</script>
-		<!--[if lt IE10]>
+		<!--[if lt IE 9]>
 			<style type='text/css'>
 			#$attr[slide_type_id]wrap  .timer { display: none !important; }
 			#$attr[slide_type_id]wrap  div.caption { background:transparent; filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000,endColorstr=#99000000);zoom: 1; }
@@ -163,7 +163,8 @@ function pjc_gallery_print($attr) {
 		$condition  = array('orderby' => 'tonjoo_frs_order_number meta_value_num',
 							'order' => 'ASC',
 							'meta_key' => 'tonjoo_frs_order_number',
-							'slide_type' => $attr['slide_type'] );
+							'slide_type' => $attr['slide_type'],
+							'post_per_page'=>100 );
 			
 	    $query = new WP_Query( $condition);  
 	    $i =1;

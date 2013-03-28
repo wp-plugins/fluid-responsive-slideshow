@@ -31,9 +31,10 @@ function tonjoo_frs_print_notification_box(){
 
 		Thank you for choosing Fluid Responsive Slideshow.
 
-		In version 0.92 we have made several improvement :
+		Version 0.93 is hotfix for version 0.92 we have made several improvement :
 		<ol>
-			<li>Fix some options value that does not wor</li>
+			<li>Fix some options value that does not work</li>
+			<li>Fix maximal number of slide</li>
 			<li>Add 3 new skin ~ modern,minimalist,corporate</li>
 		</ol>
 
