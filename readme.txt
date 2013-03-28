@@ -87,11 +87,15 @@ All of the slide must have a slide order and slide type.
 
 == Changelog ==
 
-= 0.92=
+= 0.93 =
+* Hotfix for 0.92 , fix broken css rules
+* Fix maximal slide problem
+
+= 0.92 =
 * Fix options bug
 * Add 3 Skin
 
-= 0.91=
+= 0.91 =
 * Support IE 7
 * Fix Option Saving Bug
 * Add skin support ~ skin available on next release 
