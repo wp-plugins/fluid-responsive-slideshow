@@ -169,7 +169,6 @@ function pjc_gallery_print($attr) {
 	    $query = new WP_Query( $condition);  
 	    $i =1;
 	    global $post;
-	    
 	    $slide="";
 	    
     	while ( $query->have_posts() ) : $query->the_post();
@@ -199,8 +198,8 @@ function pjc_gallery_print($attr) {
 
 			}
 	       $i+=1;
-        endwhile;
-
+        endwhile; //end get slide
+ 
         if($options[$current]['skin']=='modern'){
         	$i=$i-1;
 			$li_width= 100/$i;
@@ -263,8 +262,6 @@ function pjc_gallery_print($attr) {
 			 $query = new WP_Query( $condition );  
 		     $i =1;
 
-
-		     
 		     while ( $query->have_posts() ) : $query->the_post();
 
 			 	  $postmeta = get_post_meta($post->ID, 'tonjoo_frs_meta',true);
@@ -296,8 +293,11 @@ function pjc_gallery_print($attr) {
 				     </style>";
 				 }
 			    $i+=1;
-			endwhile;
+			endwhile; // end get caption
 		}
+
+
+
 		
 		$html ="
 		<div class='pjc-slideshow-container'>
@@ -311,8 +311,11 @@ function pjc_gallery_print($attr) {
 
 		
 		";
+
+		wp_reset_query(); // restore main query 
 		
 		$shortcode = $style.$javascript.$html;
+		
 		
 		return $shortcode;
 	endif;

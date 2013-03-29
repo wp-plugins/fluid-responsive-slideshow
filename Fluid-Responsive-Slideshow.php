@@ -38,10 +38,14 @@ $tonjoo_frs_version = "0.93";
  * Add featured image support for this plugin
  */ 
 
-add_theme_support( 'post-thumbnails', array() );
 
 
 
+add_action('after_setup_theme','after_setup_theme_pjc',5);
+
+function after_setup_theme_pjc(){
+	add_theme_support( 'post-thumbnails', array() );
+}
 
 
 
@@ -49,10 +53,33 @@ add_theme_support( 'post-thumbnails', array() );
  *  Init pjc_slideshow post-type
  */
 
-add_action( 'init', 'create_pjc_slideshow' );
+add_action( 'init', 'create_pjc_slideshow',5 );
 
 function create_pjc_slideshow() {
-
+	// register_taxonomy( $taxonomy, $object_type, $args );  
+	
+	 // Add new taxonomy, make it hierarchical (like categories)
+	  $labels = array(
+	    'name' => _x( 'Slide Type', 'taxonomy general name' ),
+	    'singular_name' => _x( 'Slide Type', 'taxonomy singular name' ),
+	    'search_items' =>  __( 'Search Slide Type' ),
+	    'all_items' => __( 'All Slide Type' ),
+	    'parent_item' => __( 'Parent Slide Type' ),
+	    'parent_item_colon' => __( 'Parent Slide Type:' ),
+	    'edit_item' => __( 'Edit Slide Type' ), 
+	    'update_item' => __( 'Update Slide Type' ),
+	    'add_new_item' => __( 'Add New Slide Type' ),
+	    'new_item_name' => __( 'New Slide Type Name' ),
+	    'menu_name' => __( 'Slide Type' ),
+	  ); 	
+	
+	  register_taxonomy('slide_type',array('pjc_slideshow'), array(
+	    'hierarchical' => true,
+	    'labels' => $labels,
+	    'show_ui' => true,
+	    'query_var' => true,
+	    'rewrite' => array( 'slug' => 'slide-type' ),
+	  ));
 
 
 
@@ -78,36 +105,13 @@ function create_pjc_slideshow() {
             'public' => true,
             // 'menu_position' => 77.76,
            'supports' => array( 'editor','title','thumbnail'),
-           'taxonomies' => array( '' ),
+           'taxonomies' => array( 'slide_type' ),
             // 'menu_icon' => plugins_url( 'images/image.png', __FILE__ ),
             'has_archive' => true
         )
     );	
 	
-	// register_taxonomy( $taxonomy, $object_type, $args );  
 	
-	 // Add new taxonomy, make it hierarchical (like categories)
-	  $labels = array(
-	    'name' => _x( 'Slide Type', 'taxonomy general name' ),
-	    'singular_name' => _x( 'Slide Type', 'taxonomy singular name' ),
-	    'search_items' =>  __( 'Search Slide Type' ),
-	    'all_items' => __( 'All Slide Type' ),
-	    'parent_item' => __( 'Parent Slide Type' ),
-	    'parent_item_colon' => __( 'Parent Slide Type:' ),
-	    'edit_item' => __( 'Edit Slide Type' ), 
-	    'update_item' => __( 'Update Slide Type' ),
-	    'add_new_item' => __( 'Add New Slide Type' ),
-	    'new_item_name' => __( 'New Slide Type Name' ),
-	    'menu_name' => __( 'Slide Type' ),
-	  ); 	
-	
-	  register_taxonomy('slide_type',array('pjc_slideshow'), array(
-	    'hierarchical' => true,
-	    'labels' => $labels,
-	    'show_ui' => true,
-	    'query_var' => true,
-	    'rewrite' => array( 'slug' => 'slide-type' ),
-	  ));
 		  
 	
 
