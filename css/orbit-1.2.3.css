@@ -148,7 +148,9 @@ div.timer:hover span.pause, span.pause.active {
 /* CAPTIONS
  ================================================== */
  
- span.orbit-caption{
+ span.orbit-caption p,span.orbit-caption h4{
      display:none;
+     height:0px;
  }
  
+
