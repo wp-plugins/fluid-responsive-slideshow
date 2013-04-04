@@ -102,7 +102,7 @@
 }
 
 .pjc-slideshow-container .orbit-wrapper.minimalist ul.orbit-bullets li.pjc-slideshow-navbullets {
-	text-indent:9999999px;
+	text-indent:-99999px;
 	float: left;
 	margin: auto 5px;
 	cursor: pointer;
