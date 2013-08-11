@@ -164,7 +164,7 @@ function pjc_gallery_print($attr) {
 							'order' => 'ASC',
 							'meta_key' => 'tonjoo_frs_order_number',
 							'slide_type' => $attr['slide_type'],
-							'post_per_page'=>100 );
+							'posts_per_page'=>-1);
 			
 	    $query = new WP_Query( $condition);  
 	    $i =1;
