@@ -86,12 +86,17 @@ All of the slide must have a slide order and slide type.
 5. Skin Options
 
 == Changelog ==
+= 0.95 =
+* Add support for ozh Admin
 
-= 0.92=
+= 0.94 =
+* Fix maximal number of slide
+
+= 0.92 =
 * Fix options bug
 * Add 3 Skin
 
-= 0.91=
+= 0.91 =
 * Support IE 7
 * Fix Option Saving Bug
 * Add skin support ~ skin available on next release 

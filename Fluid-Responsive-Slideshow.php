@@ -32,7 +32,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'notification/notification.php');
 
 
 global $tonjoo_frs_version;
-$tonjoo_frs_version = "0.93";
+$tonjoo_frs_version = "0.95";
 
 /*
  * Add featured image support for this plugin

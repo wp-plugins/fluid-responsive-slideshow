@@ -31,21 +31,12 @@ function tonjoo_frs_print_notification_box(){
 
 		Thank you for choosing Fluid Responsive Slideshow.
 
-		Version 0.93 is hotfix for version 0.92 we have made several improvement :
+		Version 0.95 is hotfix for version 0.94 we have made several improvement :
 		<ol>
-			<li>Fix some options value that does not work</li>
 			<li>Fix maximal number of slide</li>
-			<li>Add 3 new skin ~ modern,minimalist,corporate</li>
+			<li>Add support for Ozh Admin</li>
 		</ol>
 
-		<b>Installation instruction for upgrade user from 0.90</b>
-		<br>
-		<br>
-		Due to improvement we made to the new version user upgrading this plugin from previous version will have to do the following things :
-		<ol>
-			<li>Update each slide options on the slide page</li>
-			<li>Update the FR Slideshow Option for each slide type</li>
-		</ol>
 
 		<button  class="button button-primary button-large" id="tonjoo-notification-close"  >Dismiss</button>
 	</div>
