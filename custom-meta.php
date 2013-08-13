@@ -72,17 +72,21 @@ function tonjoo_slideshow_meta( $post ) {
 
   if(!$order_number)
      $order_number=0;
+     
+  if($postmeta=='')
+  $postmeta=array();
+
   
-  if(!$postmeta['show_text'])
+  if(!array_key_exists('show_text',$postmeta))
     $postmeta['show_text']='yes';
   
-  if(!$postmeta['text_color'])
+  if(!array_key_exists('text_color',$postmeta))
    $postmeta['text_color']="ffffff";
   
-  if(!$postmeta['title_color'])
+  if(!array_key_exists('title_color',$postmeta))
    $postmeta['title_color']="ffffff";
   
-  if(!$postmeta['href'])
+  if(!array_key_exists('href',$postmeta))
   $postmeta['href']="#";
   
 
@@ -227,5 +231,4 @@ function tonjoo_slideshow_save_postdata( $post_id ) {
     }
     update_post_meta($post_ID,'tonjoo_frs_order_number', $order_number);
 }
-
 

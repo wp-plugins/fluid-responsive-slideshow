@@ -17,7 +17,7 @@ jQuery(document).ready(function($){
 	$("#tonjoo_show_navigation_arrow select").change(function(){
 		value = $(this).attr('value')
 
-		console.log("tes")
+	
 
 		if(value=='true'){
 

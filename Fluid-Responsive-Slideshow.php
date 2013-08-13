@@ -3,7 +3,7 @@
  *Plugin Name: Fluid Responsive Slideshow
  *Plugin URI: http://www.tonjoo.com/wordpress-plugin-fluid-responsive-slideshow-plugin/
  *Description: Fluid and Responsive Slideshow for wordpress.
- *Version: 0.9.5
+ *Version: 0.9.6
  *Author: tonjoo
  *Author URI: http://www.tonjoo.com/
  *License: GPLv2
@@ -32,7 +32,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'notification/notification.php');
 
 
 global $tonjoo_frs_version;
-$tonjoo_frs_version = "0.95";
+$tonjoo_frs_version = "0.96";
 
 /*
  * Add featured image support for this plugin
@@ -44,7 +44,7 @@ $tonjoo_frs_version = "0.95";
 add_action('after_setup_theme','after_setup_theme_pjc',5);
 
 function after_setup_theme_pjc(){
-	add_theme_support( 'post-thumbnails', array() );
+	add_theme_support( 'post-thumbnails', array('pjc_slideshow') );
 }
 
 

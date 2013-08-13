@@ -86,13 +86,17 @@ All of the slide must have a slide order and slide type.
 5. Skin Options
 
 == Changelog ==
-= 0.95 =
+= 0.9.6 =
+* Fix featured image bug
+* Fix post meta bug
+
+= 0.9.5 =
 * Add support for ozh Admin
 
-= 0.94 =
+= 0.9.4 =
 * Fix maximal number of slide
 
-= 0.92 =
+= 0.9.2 =
 * Fix options bug
 * Add 3 Skin
 

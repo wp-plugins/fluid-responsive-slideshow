@@ -31,12 +31,12 @@ function tonjoo_frs_print_notification_box(){
 
 		Thank you for choosing Fluid Responsive Slideshow.
 
-		Version 0.95 is hotfix for version 0.94 we have made several improvement :
+		Version 0.9.6 bring several improvement :
 		<ol>
-			<li>Fix maximal number of slide</li>
-			<li>Add support for Ozh Admin</li>
+			<li>Fix post meta problem</li>
+			<li>Fix set featured image on some wp instalation</li>
 		</ol>
-
+		If you like this plugin, please <a href='http://tonjoo.com/donate'>donate</a> for development and support :)</a>
 
 		<button  class="button button-primary button-large" id="tonjoo-notification-close"  >Dismiss</button>
 	</div>
