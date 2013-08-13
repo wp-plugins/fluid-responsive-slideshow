@@ -80,8 +80,9 @@ function pjc_slideshow_tab($current = 'plugin'){
 		
 		foreach( $tabs as $tab => $name ){
         $class = ( $tab == $current ) ? ' nav-tab-active' : '';
-        	echo "<a class='nav-tab$class' href='?page=setting-page&tab=$tab'>$name</a>";
+        	echo "<a class='nav-tab$class' href='".get_admin_url()."edit.php?post_type=pjc_slideshow&page=setting-page&tab=$tab'>$name</a>";
     	}
+		
 		?>
 		</h2>
 		
