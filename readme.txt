@@ -26,7 +26,7 @@ Fluid Responsive Slideshow / image slider is a wordpress plugin that enable you 
 
 **Usage Instruction**
 
-1. Add a Slide Type in the , Slide Type page. One Slide Type equal to one album. Slide type must not contain white space, so don't use term like "Best Cars" use "best-cars" or "bestcars"
+1. Add a Slide Type in the , Slide Type page. One Slide Type equal to one album. Slide type must only contain character space, so don't use term like "Best Cars" or "Best - Car" use "bestCars" or "bestcars"
 2. Add Slide, add the title and the text content of the Slide.
 3. Insert the picture using featured image. Choose the picture, select show and then click the “use as featured image” button.
 4. Add the Slide Type to the Slide.The slide will not working without the Slide Type.
