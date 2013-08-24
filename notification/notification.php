@@ -10,6 +10,7 @@ add_action('admin_notices','tonjoo_frs_print_notification_box');
 function tonjoo_frs_print_notification_box(){
 
 	global $tonjoo_frs_version;
+	$run = false;
 
 	//Display notification when the plugin is installed
 	if (get_site_option('tonjoo_frs_version') != $tonjoo_frs_version) {
@@ -29,12 +30,11 @@ function tonjoo_frs_print_notification_box(){
     <div class='widget' id='tonjoo-notification'  >
 		<h3>Notification ~ Fluid Responsive Slideshow by <a href='http://tonjoo.com' >tonjoo</a></h3>
 
-		Thank you for choosing Fluid Responsive Slideshow.
+		Thank you for using Fluid Responsive Slideshow.
 
-		Version 0.9.6 bring several improvement :
+		Version 0.9.7 bring several improvement :
 		<ol>
-			<li>Fix post meta problem</li>
-			<li>Fix set featured image on some wp instalation</li>
+			<li>Fix featured image problem</li>
 		</ol>
 		If you like this plugin, please <a href='http://tonjoo.com/donate'>donate</a> for development and support :)</a>
 
