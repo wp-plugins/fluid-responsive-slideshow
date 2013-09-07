@@ -3,7 +3,7 @@
  *Plugin Name: Fluid Responsive Slideshow
  *Plugin URI: http://www.tonjoo.com/wordpress-plugin-fluid-responsive-slideshow-plugin/
  *Description: Fluid and Responsive Slideshow for wordpress.
- *Version: 0.9.7
+ *Version: 0.9.8
  *Author: tonjoo
  *Author URI: http://www.tonjoo.com/
  *License: GPLv2
@@ -32,7 +32,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'notification/notification.php');
 
 
  global $tonjoo_frs_version;
- $tonjoo_frs_version = "0.97";
+ $tonjoo_frs_version = "0.98";
 
 /*
  * Add featured image support for this plugin
@@ -46,9 +46,12 @@ add_action('after_setup_theme','after_setup_theme_pjc',5);
 function after_setup_theme_pjc(){
 	
 
+	//check if post-thumbnails support defined
 	if(isset($_wp_theme_features['post-thumbnails'])){
-		global $_wp_theme_features;
-		$_wp_theme_features['post-thumbnails'] = array_merge($_wp_theme_features['post-thumbnails'], array('pjc_slideshow'));
+		//check if post-thumbails is set to true ( means all post have featured image), skip if true
+		if(  $_wp_theme_features['post-thumbnails']!=true)
+			//if post thumbnails only defined for specific post, merge the array
+			$_wp_theme_features['post-thumbnails'] = array_merge((array)$_wp_theme_features['post-thumbnails'], array('pjc_slideshow'));
 	}
 	//no other post type using post-thumbnails
 	else

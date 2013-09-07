@@ -32,9 +32,12 @@ function tonjoo_frs_print_notification_box(){
 
 		Thank you for using Fluid Responsive Slideshow.
 
-		Version 0.9.7 bring several improvement :
+		Version 0.9.8 bring several improvement :
 		<ol>
 			<li>Fix featured image problem</li>
+			<li>Minor code refactoring</li>
+			<li>Fixed slideshow animation on certain themes</li>
+			<li>Better readme</li>
 		</ol>
 		If you like this plugin, please <a href='http://tonjoo.com/donate'>donate</a> for development and support :)</a>
 

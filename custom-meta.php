@@ -176,7 +176,7 @@ function tonjoo_slideshow_save_postdata( $post_id ) {
 
   // verify this came from the our screen and with proper authorization,
   // because save_post can be triggered at other times
-
+  $_POST['tonjoo_slideshow_noncename'] = isset($_POST['tonjoo_slideshow_noncename']) ? $_POST['tonjoo_slideshow_noncename'] : '';
   if ( !wp_verify_nonce( $_POST['tonjoo_slideshow_noncename'], plugin_basename( __FILE__ ) ) )
       return;
 

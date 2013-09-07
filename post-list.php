@@ -26,7 +26,7 @@ function pjc_slideshow_custom_column($column_name) {
 	global $post;
 
 	if ($column_name == 'pjc_slideshow_title') {
-		echo "<a href='",   get_edit_post_link($post -> ID), "'>",   get_the_post_thumbnail($post -> ID, 'medium'), "</a>";
+		echo "<a href='",   get_edit_post_link($post -> ID), "'>",   get_the_post_thumbnail($post -> ID, 'thumbnail'), "</a>";
 
 	}
 	if ($column_name == 'pjc_slideshow_order') {
@@ -72,8 +72,8 @@ function pjc_slideshow_metaboxes($post) {
 
 	global $wp_meta_boxes;
 
-	remove_meta_box('postimagediv', 'pjc_slideshow', 'side');
-	add_meta_box('postimagediv', __('Featured Image'), 'post_thumbnail_meta_box', 'pjc_slideshow', 'normal', 'high');
+	remove_meta_box('postimagediv', 'pjc_slideshow', 'normal');
+	add_meta_box('postimagediv', __('Featured Image'), 'post_thumbnail_meta_box', 'pjc_slideshow', 'side', 'low');
 }
 
 add_action('add_meta_boxes_pjc_slideshow', 'pjc_slideshow_metaboxes');

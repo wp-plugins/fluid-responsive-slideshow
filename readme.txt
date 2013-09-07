@@ -26,11 +26,19 @@ Fluid Responsive Slideshow / image slider is a wordpress plugin that enable you 
 
 **Usage Instruction**
 
-1. Add a Slide Type in the , Slide Type page. One Slide Type equal to one album. Slide type must only contain alphabet character, so don't use term like "Best Cars" or "Best - Car" use "bestCars" or "bestcars"
-2. Add Slide, add the title and the text content of the Slide.
-3. Insert the picture using featured image. Choose the picture, select show and then click the “use as featured image” button.
-4. Add the Slide Type to the Slide.The slide will not working without the Slide Type.
-5. Publish the slide.
+
+1. Create a 'Slide Type'. Each `Slide type` equal to one gallery.
+   - The `Slide Type` must only contain alphabet and letter (do not use whitespace and number ). So `Best Car` won't work, use `Best_Car`
+   - One slide type can only be made to one slideshow
+2. After creating a `Slide type`, configure the slideshow on the option page . The skin, slide time, etc can be modified here.
+3. To add a picture (Slide) to the `Slide Type` (Gallery) add a new slide .
+4. Add Slide title and content, add the `Slide Type` and order number to the Slide.The slide will not working without the Slide Type and order number
+5. Insert the picture using featured image.
+   - Choose the picture, select show and then click the "use as featured image" button
+   - Picture size must be equal for all Images in a slide type
+6.	Publish the slide
+7.	Use shortcode [pjc_slideshow slide_type='name_of_the_slide_type'] to show the slideshow on your post
+8.	Use <?php echo do_shortcode("[pjc_slideshow slide_type='name_of_the_slide_type']"); ?> to show the slide on the theme
 
 **Publish your slideshow on a Page/Post/Custom Post Type**
 
@@ -86,6 +94,11 @@ All of the slide must have a slide order and slide type.
 5. Skin Options
 
 == Changelog ==
+= 0.9.8 =
+* Minor code refactoring
+* Improved usage instruction
+* Fixed slidshow animation on certain themes
+
 = 0.9.6 =
 * Fix featured image bug
 * Fix post meta bug

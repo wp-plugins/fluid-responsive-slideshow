@@ -182,19 +182,19 @@ function pjc_gallery_print($attr) {
 
 
 			if($i==1){
-				$slide .= "<div data-caption='#caption{$attr[slide_type_id]}$i'>";
+				$slide .= "<div data-caption='#caption{$attr[slide_type_id]}$i' class='first-slide'>";
 
 				if($href!="")
-	        		$slide .= "<a title='$href' href='$href' >";    
-
-	        	$slide .= "<img src=".$url." /></a>";         
+	        		$slide .= "<a title='$href' href='$href' ><img src=".$url." /></a>";    
+	        	else
+	        		$slide .= "<img src=".$url." />";         
 				$slide .= "</div>";
 			}
 			else{
 				if($href!="")
-					$slide .= "<a title='$href' href='$href' class='pjc-preload' data-caption='#caption{$attr[slide_type_id]}$i' ><img src='$url' alt='' /></a>";           
+					$slide .= "<div data-caption='#caption{$attr[slide_type_id]}$i' class='pjc-preload' ><a title='$href' href='$href'   ><img src='$url' alt='' /></a></div>";           
 				else
-					$slide .= "<img data-caption='#caption{$attr[slide_type_id]}$i' src='$url' alt='' />";           
+					$slide .= "<div data-caption='#caption{$attr[slide_type_id]}$i' class='pjc-preload' ><img  src='$url' alt='' /></div>";           
 
 			}
 	       $i+=1;

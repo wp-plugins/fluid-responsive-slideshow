@@ -16,14 +16,30 @@ Fluid Responsive Slideshow by <a href='http://www.tonjoo.com' target='blank'>ton
 <table class="meta">
 	<tr>
 		<td style="width:5px;">1.</td>
-		<td>Add the title and the text content of the Slide.</td>
+		<td>Create a 'Slide Type' <a href='<?php echo admin_url('post-new.php?post_type=pjc_slideshow') ?>'>here</a>. Each `Slide type` equal to one gallery.
+	</tr>
+	<tr>
+		<td style="width:5px;"></td>
+		<td>The `Slide Type` must only contain alphabet and letter <b>(do not use whitespace and number )</b>. So `Best Car` won't work, use `Best_Car`</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>One slide type can only be made to one slideshow</td>
 	</tr>
 	<tr>
 		<td style="width:5px;">2.</td>
-		<td>Add the Slide Type and order number to the Slide.<b>The slide will not working without the Slide Type and order number<b></td>
+		<td>After creating a `Slide type`, configure the slideshow <a href='<?php echo admin_url('edit.php?post_type=pjc_slideshow&page=setting-page') ?>'>here.</a> The skin, slide time, etc can be modified here.</td>
 	</tr>
 	<tr>
-		<td>3.</td>
+		<td style="width:5px;">3.</td>
+		<td>To add a picture (Slide) to the `Slide Type` (Gallery) add a new slide <a href='<?php echo admin_url('post-new.php?post_type=pjc_slideshow') ?>'> here.</a></td>
+	</tr>
+	<tr>
+		<td style="width:5px;">4.</td>
+		<td>Add Slide title and content, add the `Slide Type` and order number to the Slide.<b>The slide will not working without the Slide Type and order number<b></td>
+	</tr>
+	<tr>
+		<td style="width:5px;">5.</td>
 		<td>Insert the picture using featured image.</td>
 	</tr>
 	<tr>
@@ -37,29 +53,18 @@ Fluid Responsive Slideshow by <a href='http://www.tonjoo.com' target='blank'>ton
 
 	</tr>
 	<tr>
-		<td>4.</td>
+		<td style="width:5px;">6.</td>
 		<td>Publish the slide</td>
 	</tr>
 	<tr>
-		<td>5.</td>
+		<td style="width:5px;">7.</td>
 		<td>Use shortcode <b>[pjc_slideshow slide_type='name_of_the_slide_type']</b> to show the slideshow on your post</td>
 	</tr>
 	<tr>
-		<td>6.</td>
+		<td style="width:5px;">8.</td>
 		<td>Use <b>&lt?php echo do_shortcode("[pjc_slideshow slide_type='name_of_the_slide_type']"); ?&gt</b> to show the slide on the theme</td>
 	</tr>
-	<tr>
-		<td>7.</td>
-		<td>The slide_type paramater is <b>case sensitive</b></td>
-	</tr>
-	<tr>
-		<td>8</td>
-		<td>Image size must be less or equal than parrent container</td>
-	</tr>
-	<tr>
-		<td>9</td>
-		<td>One slide type can only be made to one slideshow</td>
-	</tr>
+
 </table>
 
 <p>If you have any questions,comment or suggestion please contact me via suport[at]tonjoo.com or <a href="http://www.tonjoo.com/wordpress-plugin-fluid-responsive-slideshow-plugin/" target='blank'>visit our plugin site</a></p>

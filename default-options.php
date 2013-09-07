@@ -2,71 +2,71 @@
 
 $options = get_option('pjc_slideshow_options');
 
-if ($options[$current]["height"] == "")
+if (!isset($options[$current]["height"]))
 	$options[$current]["height"] = '370';
 
-if ($options[$current]["arrow_position"] == "")
+if (!isset($options[$current]["arrow_position"]))
 	$options[$current]["arrow_position"] = '45%';
 
 
 
-if ($options[$current]["width"] == "")
+if (!isset($options[$current]["width"]))
 	$options[$current]["width"] = "650";
 
-if ($options[$current]["is_fluid"] == "")
+if (!isset($options[$current]["is_fluid"]))
 	$options[$current]["is_fluid"] = "false";
 
-if ($options[$current]["show_textbox"] == "")
+if (!isset($options[$current]["show_textbox"]))
 	$options[$current]["show_textbox"] = "true";
 
-if ($options[$current]["textbox_height"] == "")
+if (!isset($options[$current]["textbox_height"]))
 	$options[$current]["textbox_height"] = "100";
 
-if ($options[$current]["fade_time"] == "")
+if (!isset($options[$current]["fade_time"]))
 	$options[$current]["fade_time"] = "2500";
 
-if ($options[$current]["textbox_p_size"] == "")
+if (!isset($options[$current]["textbox_p_size"]))
 	$options[$current]["textbox_p_size"] = "10";
 
-if ($options[$current]["textbox_h4_size"] == "")
+if (!isset($options[$current]["textbox_h4_size"]))
 	$options[$current]["textbox_h4_size"] = "14";
 
-if ($options[$current]["textbox_padding"] == "")
+if (!isset($options[$current]["textbox_padding"]))
 	$options[$current]["textbox_padding"] = "10";
 
-if ($options[$current]["hover"] == "")
+if (!isset($options[$current]["hover"]))
 	$options[$current]["hover"] = "true";
 
-if ($options[$current]["navigation"] == "")
+if (!isset($options[$current]["navigation"]))
 	$options[$current]["navigation"] = "true";
 
-if ($options[$current]["bullet"] == "")
+if (!isset($options[$current]["bullet"]))
 	$options[$current]["bullet"] = "true";
 
-if ($options[$current]["bullet_thumbs"] == "")
+if (!isset($options[$current]["bullet_thumbs"]))
 	$options[$current]["bullet_thumbs"] = "false";
 
-if ($options[$current]["animation"] == "")
+if (!isset($options[$current]["animation"]))
 	$options[$current]["animation"] = "fade";
 
-if ($options[$current]["animation_time"] == "")
+if (!isset($options[$current]["animation_time"]))
 	$options[$current]["animation_time"] = "800";
 
-if ($options[$current]["show_timer"] == "")
+if (!isset($options[$current]["show_timer"]))
 	$options[$current]["show_timer"] = "true";
 
-if ($options[$current]["pause"] == "")
+if (!isset($options[$current]["pause"]))
 	$options[$current]["pause"] = "true";
 
-if ($options[$current]["small_navigation"] == "")
+if (!isset($options[$current]["small_navigation"]))
 	$options[$current]["small_navigation"] = "false";
 
-if ($options[$current]["small_navigation_treshold"] == "")
+if (!isset($options[$current]["small_navigation_treshold"]))
 	$options[$current]["small_navigation_treshold"] = "600";
 
-if ($options[$current]["start_mouseout"] == "")
+if (!isset($options[$current]["start_mouseout"]))
 	$options[$current]["start_mouseout"] = "true";
 
-if ($options[$current]["start_mouseout_after"] == "")
+if (!isset($options[$current]["start_mouseout_after"] ))
 	$options[$current]["start_mouseout_after"] = "800";
 ?>
