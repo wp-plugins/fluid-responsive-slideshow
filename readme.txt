@@ -1,5 +1,5 @@
 === Plugin Name ===
-Tags: slideshow, gallery, image, responsive, fluid, images
+Tags: slideshow, gallery, image, responsive, fluid, images,slider
 Donate link: http://tonjoo.com/donate/
 Requires at least: 3.0.1
 Tested up to: 3.5
@@ -28,9 +28,9 @@ Fluid Responsive Slideshow / image slider is a wordpress plugin that enable you 
 
 If you are migrating from previous version, please clear your browser cache after installing new version of FRS.
 
-**Manual : **
+**Manual :**
 
-You can read the manual here [skins demo](https://tonjoo.com/addons/fluid-responsive-slideshow/#manual "manual")*;
+You can read the manual here [manual](https://tonjoo.com/addons/fluid-responsive-slideshow/#manual "manual")
 
 *if you have any questions,comment,customization request please use [tonjoo forum](https://forum.tonjoo.com/thread-category/fluid-responsive-slideshow/ "tonjoo forum")*
 
