@@ -34,7 +34,7 @@ You can read the manual here [manual](https://tonjoo.com/addons/fluid-responsive
 
 *if you have any questions,comment,customization request please use [tonjoo forum](https://forum.tonjoo.com/thread-category/fluid-responsive-slideshow/ "tonjoo forum")*
 
-*You can view available skins on [skins demo](https://tonjoo.com/skins-for-fluid-responsive-slideshow/ "skins demo")*
+*You can view available skins on [skins demo](https://tonjoo.com/fluid-responsive-slideshow-skins/ "skins demo")*
 
 == Installation ==
 
