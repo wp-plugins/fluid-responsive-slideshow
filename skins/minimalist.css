@@ -1,52 +1,100 @@
 /* CAPTIONS
  ================================================== */
 
-.minimalist .orbit-caption {
+.frs-slideshow-container .minimalist .frs-caption {
 	display: none;
-	font-family: "HelveticaNeue", "Helvetica-Neue", Helvetica, Arial, sans-serif;
+	font-family: 'Open Sans','Helvetica','Arial','sans-serif';
 }
 
-.orbit-wrapper.minimalist .orbit-caption {
-	
-	background: url(../css/bg-transparent.png) repeat;
-	z-index: 1000;
+.frs-wrapper.minimalist .frs-caption div.frs-caption-outer div.frs-caption-inner h4 {	
+	margin-top: 0px;
+	margin-bottom: 10px !important;
+	line-height: 25px;
+}
+
+.frs-wrapper.minimalist .frs-caption div.frs-caption-outer div.frs-caption-inner p {	
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+/* position: left */
+.frs-wrapper.minimalist .frs-caption.left {
 	color: #fff;
-	text-align: center;
-	padding: 7px 0;
+	padding: 0 20px 0 50px;
+	font-size: 13px;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	min-width: 150px;
+	width: 65%;
+	-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;	
+}
+
+/* position: right */
+.frs-wrapper.minimalist .frs-caption.right {
+	color: #fff;
+	padding: 0 50px 0 20px;
+	font-size: 13px;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	min-width: 150px;
+	width: 65%;
+	-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;	
+}
+
+/* position: bottom */
+.frs-wrapper.minimalist .frs-caption.bottom {
+	color: #fff;
+	padding: 0 30px 0 30px;
 	font-size: 13px;
 	position: absolute;
 	right: 0;
 	bottom: 0;
 	width: 100%;
-	text-align:justify;
+	min-height: 100px !important;
+	-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;	
 }
+
+/* position: center */
+.frs-wrapper.minimalist .frs-caption.center {
+	color: #fff;
+	padding: 0 50px;
+	font-size: 13px;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100% !important;
+	-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;	
+}
+
 
 /* DIRECTIONAL div
  ================================================== */
 
-.minimalist NAV.slider-nav {
+.frs-slideshow-container .minimalist nav.slider-nav {
 	display: block
 }
 
-.minimalist div.slider-nav span {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;   
-	width: 60px;
-	height: 60px;
+.frs-slideshow-container .minimalist div.slider-nav span {	
+	font-family: OpenSans, Helvetica, Arial, sans-serif;   
+	width: 38px;
+	height: 38px;
 	position: absolute;
-	z-index: 1000;
-	margin-top: -30px;
+	z-index: 1000;uj
+	font-weight: bold;
+	top: 45%;
 	cursor: pointer;	
-  	font-size: 60px;
-  	font-weight: bold;
-  	line-height: 43px;
- 	color: #FFF;
+  	font-size: 1px;  	
+  	line-height: 33px;
+ 	color: #ffffff;
   	text-align:center;
   	opacity: 0.9;
-  	filter: alpha(opacity=50);
-	
+  	filter: alpha(opacity=90);
 }
 
-.minimalist div.small span{
+.frs-slideshow-container .minimalist div.small span{
     top: 40%;
 	width: 40px;
 	height: 40px;
@@ -56,100 +104,76 @@
   	margin-top: -20px;
 }
 
-.minimalist div.slider-nav span:hover {
+.frs-slideshow-container .minimalist div.slider-nav span:hover {
   color: #ffffff;
   text-decoration: none;
-  opacity: 0.9;
-  filter: alpha(opacity=90);
+  opacity: 1;
+  filter: alpha(opacity=100);
 }
 
-
-.minimalist div.slider-nav span.right {
-    margin-right:5px;
-/*	background: url(orbit/right_button.png);*/
-	right: 0;
+.frs-slideshow-container .minimalist div.slider-nav span.right {
+	background: url("images/arrow_right_white.png");
+	right: 0px;
 	
 }
 
-.minimalist div.slider-nav span.left {
-    margin-left:5px;
-/*	background: url(orbit/left_button.png);*/
-	left: 10;
+.frs-slideshow-container .minimalist div.slider-nav span.left {
+	background: url("images/arrow_left_white.png");
+	left: 0px;
 }
 
 /* BULLET NAV
  ================================================== */
 
-.pjc-slideshow-container .minimalist .orbit-bullets-wrapper{
+.frs-slideshow-container .minimalist .frs-bullets-wrapper{
     position:absolute;
     width:100%;
-    height:10px;
-    margin-top:-30px;
-    text-align:center;
+    height:13px;
+    text-align: center;   
 }
 
-.pjc-slideshow-container .minimalist .orbit-bullets-wrapper ul.orbit-bullets {
-    
+.frs-slideshow-container .minimalist .frs-bullets-wrapper ul.frs-bullets {
 	position: relative;
 	z-index: 1000;
 	list-style: none;
-	bottom: -5px;
+	bottom: -10px;
 	display: inline-block;
-	margin: 0px;
+	margin: 0px;	
 	padding:0px;
-	height:10px;
-	
+	height:13px;	
 }
 
-.pjc-slideshow-container .orbit-wrapper.minimalist ul.orbit-bullets li.pjc-slideshow-navbullets {
-	text-indent:-99999px;
+.frs-slideshow-container .frs-wrapper.minimalist ul.frs-bullets li.frs-slideshow-nav-bullets {
 	float: left;
-	margin: auto 5px;
+	margin-left: 10px;
 	cursor: pointer;
-	color: #999;
-	width: 10px;
-	height: 10px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
+	color: #999;		
+	width: 14px;
+	height: 14px;
+	overflow: hidden;
 	padding:0px;
-	font-size: 1em;
-	background-color:#333;
-	color:#ffffff;
-	background-image: none;
+	
+	-webkit-border-radius: 90px;
+	-moz-border-radius: 90px;
+	border-radius: 90px;
+	background-color: #000;
 }
 
-.pjc-slideshow-container .orbit-wrapper.minimalist ul.orbit-bullets li.pjc-slideshow-navbullets:hover {
-	background-color:#FFF;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-	border-radius: 6px;
-	width: 12px;
-	height: 12px;
-	margin:auto 4px;
-	margin-top:-1px;
+.frs-slideshow-container .frs-wrapper.minimalist ul.frs-bullets li.active {
+	color: #222;
+	background-color: #888;
+	margin-left:auto;
+	margin-right:auto;
+	margin-left: 10px;
 }
 
-
-.pjc-slideshow-container .orbit-wrapper.minimalist ul.orbit-bullets li.active {
-	color: #ffffff;
-	background-color:#FFF;
-	-webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-	border-radius: 6px;
-	width: 12px;
-	height: 12px;
-	margin:auto 4px;
-	margin-top:-1px;
-}
-
-.pjc-slideshow-container .orbit-wrapper.minimalist ul.orbit-bullets  li.has-thumb {
+.frs-slideshow-container .frs-wrapper.minimalist ul.frs-bullets  li.has-thumb {
 	background: none;
 	width: 100px;
 	height: 75px;
 }
 
-.pjc-slideshow-container .orbit-wrapper.minimalist ul.orbit-bullets  li.active.has-thumb {
+.frs-slideshow-container .frs-wrapper.minimalist ul.frs-bullets  li.active.has-thumb {
 	background-position: 0 0;
 	border-top: 2px solid #000;
 }

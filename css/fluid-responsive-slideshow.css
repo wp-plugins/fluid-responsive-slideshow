@@ -41,3 +41,7 @@
 .pjc-preload{
     display:none;
 }
+
+#tonjoo-frs-textbox-bg td select{
+  float: left;
+}

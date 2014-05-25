@@ -22,53 +22,19 @@ Fluid Responsive Slideshow / image slider is a wordpress plugin that enable you 
 * Custom text and font size.
 * And many custumizable parameter.
 * Multiple Skin
+* CSS 3 Skins
 
+**Important :**
 
-**Usage Instruction**
+If you are migrating from previous version, please clear your browser cache after installing new version of FRS.
 
+**Manual : **
 
-1. Create a 'Slide Type'. Each `Slide type` equal to one gallery.
-   - The `Slide Type` must only contain alphabet and letter (do not use whitespace and number ). So `Best Car` won't work, use `Best_Car`
-   - One slide type can only be made to one slideshow
-2. After creating a `Slide type`, configure the slideshow on the option page . The skin, slide time, etc can be modified here.
-3. To add a picture (Slide) to the `Slide Type` (Gallery) add a new slide .
-4. Add Slide title and content, add the `Slide Type` and order number to the Slide.The slide will not working without the Slide Type and order number
-5. Insert the picture using featured image.
-   - Choose the picture, select show and then click the "use as featured image" button
-   - Picture size must be equal for all Images in a slide type
-6.	Publish the slide
-7.	Use shortcode [pjc_slideshow slide_type='name_of_the_slide_type'] to show the slideshow on your post
-8.	Use <?php echo do_shortcode("[pjc_slideshow slide_type='name_of_the_slide_type']"); ?> to show the slide on the theme
+You can read the manual here [skins demo](https://tonjoo.com/addons/fluid-responsive-slideshow/#manual "manual")*;
 
-**Publish your slideshow on a Page/Post/Custom Post Type**
+*if you have any questions,comment,customization request please use [tonjoo forum](https://forum.tonjoo.com/thread-category/fluid-responsive-slideshow/ "tonjoo forum")*
 
-Put the line bellow on your post/page :
-
-[pjc_slideshow slide_type='your_slide_type']
-
-**Publish your slideshow on a theme**
-
-Put the line bellow on your theme file :
-
-<?php echo do_shortcode("[pjc_slideshow slide_type='your_slide_type']"); ?>
-
-**Notes**
-
-* The slide_type paramater is case sensitive
-* Image size must be less or equal than parrent container
-* One slide type can only be made to one slideshow
-
-**Upgrade Instruction from 0.90**
-
-* Update each slide options on the slide page
-* Update the FR Slideshow Option for each slide type
-
-
-*if you have any questions,comment,customization request or suggestion please contact me via support[at]tonjoo.com or [visit plugin site](http://www.tonjoo.com/wordpress-plugin-fluid-responsive-slideshow-plugin/ "visit plugin site")*
-
-*You can view available skins on [skins demo](http://tonjoo.com/skins-for-fluid-responsive-slideshow/ "skins demo")*
-
-
+*You can view available skins on [skins demo](https://tonjoo.com/skins-for-fluid-responsive-slideshow/ "skins demo")*
 
 == Installation ==
 
@@ -87,13 +53,23 @@ All of the slide must have a slide order and slide type.
 
 == Screenshots ==
 
-1. The slideshow is easy embed on post/page by using shortcode.
-2. Adding a new slideshow is as easy as adding a new categories/tags.
-3. You can easily browse and manage your slide just like managing normal post.
-4. This plugin already provide you with a bunch of option to custumize the slideshow based on your preference. Every slide type also has it owns options
-5. Skin Options
+1. 50++ beautiful skins to choose for your slideshow.
+2. Easy, multiple customization with slideshow preview.
+3. Easy slideshow management, with drag and drop slide ordering.
 
 == Changelog ==
+
+= 1.0.0 =
+* Updated jQuery animation to CSS 3 animation, more lighter, more beautiful
+* Automaticaly use jQuery animation in non-supported CSS 3 browser (< IE 10)
+* Added new options in options page
+* Added new options in slide option page
+* Now you can add button link
+* Redesign stock skins
+* 50+ slideshow skins in premium edition
+* 25+ button skins in premium edition
+* And much more, for more info visit: https://tonjoo.com/addons/fluid-responsive-slideshow/
+
 = 0.9.8 =
 * Minor code refactoring
 * Improved usage instruction

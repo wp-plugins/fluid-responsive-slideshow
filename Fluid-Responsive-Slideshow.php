@@ -3,43 +3,37 @@
  *Plugin Name: Fluid Responsive Slideshow
  *Plugin URI: http://www.tonjoo.com/wordpress-plugin-fluid-responsive-slideshow-plugin/
  *Description: Fluid and Responsive Slideshow for wordpress.
- *Version: 0.9.8
+ *Version: 1.0.0
  *Author: tonjoo
  *Author URI: http://www.tonjoo.com/
  *License: GPLv2
- *Contributor:Saga Iqranegara
+ *Contributor: Saga Iqranegara, Haris Ainur Rozak
  * 
-*/
-
-
-
+*/																																										
+																																																																																						
 /*
  * Call other file for this plugin
  */
 
 require_once( plugin_dir_path( __FILE__ ) . 'shortcode.php');
 require_once( plugin_dir_path( __FILE__ ) . 'post-list.php');
-require_once( plugin_dir_path( __FILE__ ) . 'display-info.php');
 require_once( plugin_dir_path( __FILE__ ) . 'custom-meta.php');
 require_once( plugin_dir_path( __FILE__ ) . 'submenu.php');
 require_once( plugin_dir_path( __FILE__ ) . 'tonjoo-library.php');
-require_once( plugin_dir_path( __FILE__ ) . 'notification/notification.php');
+require_once( plugin_dir_path( __FILE__ ) . 'ajax.php');
+require_once( plugin_dir_path( __FILE__ ) . 'modal.php');
+require_once( plugin_dir_path( __FILE__ ) . 'frs-upload.php');
+        
 
  /*
  *  Save plugin version on db on plugin installation
  */
 
-
-
- global $tonjoo_frs_version;
- $tonjoo_frs_version = "0.98";
+ define('FRS_VERSION','1.0.0');
 
 /*
  * Add featured image support for this plugin
  */ 
-
-
-
 
 add_action('after_setup_theme','after_setup_theme_pjc',5);
 
@@ -58,19 +52,16 @@ function after_setup_theme_pjc(){
 		add_theme_support( 'post-thumbnails', array('pjc_slideshow') );
 }
 
-
-
  /*
  *  Init pjc_slideshow post-type
  */
 
- add_action( 'init', 'create_pjc_slideshow',5 );
+ add_action( 'init', 'create_frs_slideshow' );
 
- function create_pjc_slideshow() {
-	// register_taxonomy( $taxonomy, $object_type, $args );  
+ function create_frs_slideshow() {
 
 	 // Add new taxonomy, make it hierarchical (like categories)
- 	$labels = array(
+ 	  $labels = array(
  		'name' => _x( 'Slide Type', 'taxonomy general name' ),
  		'singular_name' => _x( 'Slide Type', 'taxonomy singular name' ),
  		'search_items' =>  __( 'Search Slide Type' ),
@@ -84,10 +75,11 @@ function after_setup_theme_pjc(){
  		'menu_name' => __( 'Slide Type' ),
  		); 	
 
- 	register_taxonomy('slide_type',array('pjc_slideshow'), array(
+ 	  register_taxonomy('slide_type',array('pjc_slideshow'), array(
  		'hierarchical' => true,
  		'labels' => $labels,
  		'show_ui' => true,
+ 		'show_admin_column' => true,
  		'query_var' => true,
  		'rewrite' => array( 'slug' => 'slide-type' ),
  		));
@@ -96,11 +88,13 @@ function after_setup_theme_pjc(){
 
 
 
- 	register_post_type( 'pjc_slideshow',
+ 	  register_post_type( 'pjc_slideshow',
  		array(
  			'labels' => array(
  				'name' => 'Fluid Responsive Slideshow',
  				'singular_name' => 'Slide',
+ 				'menu_name' => 'FR Slideshow',
+ 				'all_items' => 'Slide',
  				'add_new' => 'Add Slide',
  				'add_new_item' => 'Add Slide Item',
  				'edit' => 'Edit',
@@ -121,17 +115,45 @@ function after_setup_theme_pjc(){
  			'has_archive' => true
  			)
  		);	
-
-
-
-
-
-
-
  }
 
+function frs_slide_type_columns($theme_columns) {
 
+    $theme_columns = array(
+        'cb' => '<input type="checkbox" />',
+        'name' => __('Name'),
+        'shortcode_frs' => __('Shortcode'),
+        'edit_frs' => __('Edit')
+        );
+    return $theme_columns;
+}
 
+add_filter("manage_edit-slide_type_columns", 'frs_slide_type_columns'); 
+
+ 
+function frs_manage_slide_type_column($out, $column_name, $slide_type_id) {
+    $term = get_term($slide_type_id, 'slide_type');
+
+    switch ($column_name) {
+        case 'shortcode_frs': 
+
+            echo "[pjc_slideshow slide_type='{$term->slug}'] ";
+
+            break;
+
+        case 'edit_frs': 
+
+            echo "<a href='".admin_url()."edit.php?post_type=pjc_slideshow&page=frs-setting-page&tab={$term->name}&tabtype=slide' class='button button-primary'>Edit</a>";
+
+            break;
+ 
+        default:
+            break;
+    }
+    return $out;    
+}
+
+add_filter("manage_slide_type_custom_column", 'frs_manage_slide_type_column', 10, 3);
 
 /*
  * Register Info Box (Meta Box) and option sub-menu
@@ -141,6 +163,7 @@ add_action( 'admin_menu', 'pjc_slideshow_admin' );
 
 function pjc_slideshow_admin() {
 	
+	new FrsUploader(array('page' => 'frs-setting-page', 'page_type' => 'page'));
 	
 	
    // add_meta_box( $id, 
@@ -153,16 +176,286 @@ function pjc_slideshow_admin() {
 	/*
     * Register css and javascript for admin page
     */
+	wp_enqueue_style('frs-admin-css',plugin_dir_url( __FILE__ )."css/frs-admin.css",array(),FRS_VERSION);
 
-	wp_enqueue_style('colorpicker-css',plugin_dir_url( __FILE__ )."css/jquery.miniColors.css");      
-	wp_enqueue_script('colorpicker-mini',plugin_dir_url( __FILE__ )."js/jquery.miniColors.js");  
+	wp_enqueue_style('colorpicker-css',plugin_dir_url( __FILE__ )."css/jquery.miniColors.css",array(),FRS_VERSION);   
 
+	wp_enqueue_script('colorpicker-mini',plugin_dir_url( __FILE__ )."js/jquery.miniColors.js",array(),FRS_VERSION);  
+	
+	wp_enqueue_script('select2-js',plugin_dir_url( __FILE__ )."js/select2.js",array(),FRS_VERSION);  
+
+  wp_enqueue_style('frs-css',plugin_dir_url( __FILE__ )."css/frs.css",array(),FRS_VERSION);      
+	
+	$is_post_page = get_query_var( 'post' ) ? get_query_var( 'post' ) : false;
+
+
+	if(isset($_GET['tab']) && $_GET['tab'] != "")
+	{
+		if(isset($_GET['page']) && $_GET['page'] == "frs-setting-page" && isset($_GET['tabtype']))
+		{
+			if($_GET['tabtype'] == "slide")
+			{
+		        wp_enqueue_style('select2-css',plugin_dir_url( __FILE__ )."css/select2.css",array(),FRS_VERSION);
+		    }
+		   	else
+		   	{
+		   		wp_enqueue_style('select2-css',plugin_dir_url( __FILE__ )."css/select2-pure.css",array(),FRS_VERSION);
+		   	}
+		}
+		else
+		{
+			wp_enqueue_style('select2-css',plugin_dir_url( __FILE__ )."css/select2-pure.css",array(),FRS_VERSION);
+		}
+	}
+	else
+	{
+		wp_enqueue_style('select2-css',plugin_dir_url( __FILE__ )."css/select2.css",array(),FRS_VERSION);
+	}
 
 	wp_enqueue_script('jquery');  
-	wp_enqueue_script('tonjoo_frs_admin',plugin_dir_url( __FILE__ )."js/tonjoo_frs_admin.js");  
+	wp_enqueue_script('tonjoo_frs_admin',plugin_dir_url( __FILE__ )."js/tonjoo_frs_admin.js",array(),FRS_VERSION);  
 
 
 
+	wp_enqueue_script( 'jquery-ui-sortable' );
+}
+
+/*
+ * Enque FRS Skins on WordPress all page
+ */
+
+add_action('wp_head','frs_add_main_css');
+
+function frs_add_main_css(){
+  wp_enqueue_style('frs-css',plugin_dir_url( __FILE__ )."css/frs.css",array(),FRS_VERSION);      
+}
+
+/*
+ * jQuery Validate
+ */
+
+add_action('admin_enqueue_scripts', 'frs_validation_js');   
+
+function frs_validation_js(){    
+  wp_enqueue_script('jquery_validate_js', plugin_dir_url( __FILE__ )."js/jquery.validate.js", array('jquery'),FRS_VERSION);
+  wp_enqueue_script('validate_action_js', plugin_dir_url( __FILE__ )."js/validate_action.js",array(),FRS_VERSION);
 }
 
 
+/** Flag the new admin area if appropriate */
+$is_updated_admin = false;
+$is_updated_admin = ( version_compare( $wp_version, '3.8', '>=' ) ) ? true : false;
+
+
+/**
+ * Adds a media button (for inserting a slideshow) to the Post Editor
+ */
+
+add_action( 'media_buttons', 'frs_media_button', 11 );
+
+function frs_media_button( $editor_id ) {
+
+	global $is_updated_admin;
+    
+    /** Show appropriate button and styling */
+    if ( $is_updated_admin ) {
+
+        /** WordPress v3.8+ button */
+        ?>
+        <style type="text/css">
+            .insert-slideshow.button .insert-slideshow-icon:before {
+                content: "\f128";
+                font: 400 18px/1 dashicons;
+                speak: none;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+        </style>
+        <a href="#TB_inline?&inlineId=choose-frs-slider" class="thickbox button insert-slideshow" data-editor="<?php echo esc_attr( $editor_id ); ?>" title="<?php _e( 'Select a FR Slideshow type to insert into post', 'frs' ); ?>"><?php echo '<span class="wp-media-buttons-icon insert-slideshow-icon"></span>' . __( ' Add FR Slideshow', 'frs' ); ?></a>
+        <?php
+
+    }
+    else {
+
+        /** Backwards compatibility button */
+        ?>
+        <style type="text/css">
+            .insert-slideshow.button .insert-slideshow-icon {
+                width: 16px;
+                height: 16px;
+                margin-top: -1px;
+                margin-left: -1px;
+                margin-right: 4px;
+                display: inline-block;
+                vertical-align: text-top;
+                background: url(<?php echo plugins_url( dirname( plugin_basename( self::get_file() ) ) . DIRECTORY_SEPARATOR .'images'. DIRECTORY_SEPARATOR .'menu_icon_single_grey.png' ); ?>) no-repeat top left;
+            }
+        </style>
+        <a href="#TB_inline?&inlineId=choose-frs-slider" class="thickbox button insert-slideshow" data-editor="<?php echo esc_attr( $editor_id ); ?>" title="<?php _e( 'Select a FR Slideshow type to insert into post', 'frs' ); ?>"><?php echo '<span class="insert-slideshow-icon"></span>' . __( 'Add Slideshow', 'frs' ); ?></a>
+        <?php
+
+    }
+}
+
+/**
+ * Append the 'Choose Meta Slider' thickbox content to the bottom of selected admin pages
+ */
+
+add_action('admin_footer', 'frs_admin_footer');
+
+function frs_admin_footer() {
+	global $pagenow;
+
+	// Only run in post/page creation and edit screens
+	if (in_array($pagenow, array('post.php', 'page.php', 'post-new.php', 'post-edit.php'))) {			
+		?>
+
+		<script type="text/javascript">
+			jQuery(document).ready(function() {
+			  	jQuery('#insertFRS').on('click', function() {
+				  	var slug = jQuery('#frs-select option:selected').val();
+				  	window.send_to_editor('[pjc_slideshow slide_type="' + slug + '"]');
+					tb_remove();
+			  	})
+			});
+		</script>
+
+		<div id="choose-frs-slider" style="display: none;">
+			<div class="wrap">
+				<?php
+					if (frs_check_taxonomy('slide_type')) {
+						echo "<h3 style='margin-bottom: 20px;'>" . __("Insert FR Slideshow", "frs") . "</h3>";
+						
+						frs_custom_taxonomy_dropdown('slide_type','frs-select');
+
+						echo "<button class='button primary' id='insertFRS'>Insert Slideshow</button>";
+					} else {
+						_e("No slideshows found", "frs");
+					}
+				?>
+			</div>
+		</div>
+		<?php
+	}
+}
+
+
+/**
+ * Taxonomy dropdown and checker
+ */
+
+function frs_custom_taxonomy_dropdown($taxonomy, $select_id) 
+{
+	$terms = get_terms( $taxonomy );
+	if ( $terms ) {
+		printf( '<select name="%s" class="postform" id="%s">', esc_attr( $taxonomy ), esc_attr( $select_id ) );
+		foreach ( $terms as $term ) {
+			printf( '<option value="%s">%s</option>', esc_attr( $term->slug ), esc_html( $term->name ) );
+		}
+		print( '</select>' );
+	}
+}
+
+function frs_check_taxonomy( $taxonomy ) 
+{
+	$terms = get_terms( $taxonomy );
+	
+	if($terms && count($terms) > 0) return true;
+	else return false;
+}
+
+
+/**
+ * Password on post type
+ */
+
+add_action( 'save_post', 'frs_check_type_values', 10, 2 );
+
+function frs_check_type_values( $post_id, $post ) {
+
+    if( $post->post_type )
+        switch( $post->post_type ) {
+            case 'pjc_slideshow':
+                $post->post_status = 'private';
+                // $post->post_password = ( '' == $post->post_password ) ? 'some_default_when_no_password' : $post->post_password;
+                $post->post_password = md5('some_default_when_no_password');
+            break;
+        }   
+    return;
+}
+
+add_filter( 'default_content', 'frs_set_default_values', 10, 2 );
+
+function frs_set_default_values( $post_content, $post ) {
+
+    if( $post->post_type )
+        switch( $post->post_type ) {
+            case 'pjc_slideshow':
+                $post->post_status = 'publish';
+                $post->post_password = md5(rand(5, 15));
+            break;
+        }
+    return $post_content;
+}
+
+add_action( 'template_redirect', 'wpse_128636_redirect_post' );
+
+function wpse_128636_redirect_post() {
+  $queried_post_type = get_query_var('post_type');
+  if ( is_single() && 'pjc_slideshow' ==  $queried_post_type ) {
+    wp_redirect( home_url(), 301 );
+    exit;
+  }
+}
+
+//https://github.com/anteprimorachr/js-wp-editor
+function tonjoo_js_wp_editor( $settings = array() ) {
+	if ( ! class_exists( '_WP_Editors' ) )
+		require( ABSPATH . WPINC . '/class-wp-editor.php' );
+
+	$set = _WP_Editors::parse_settings( 'apid', $settings );
+
+	$set['media_buttons'] = false;
+
+	_WP_Editors::editor_settings( 'apid', $set );
+
+	$ap_vars = array(
+		'url' => get_home_url(),
+		'includes_url' => includes_url()
+	);
+
+	wp_register_script( 'ap_wpeditor_init', plugin_dir_url( __FILE__ ).'js/js-wp-editor.min.js', array( 'jquery' ), '1.1', true );
+	wp_localize_script( 'ap_wpeditor_init', 'ap_vars', $ap_vars );
+	wp_enqueue_script( 'ap_wpeditor_init' );
+}
+
+/*
+ * Dummy Class 
+ */
+
+class FRSPost{
+  public $ID;
+  public $post_author;
+  public $post_date;
+  public $post_date_gmt;
+  public $post_content;
+  public $post_title;
+  public $post_excerpt;
+  public $post_status;
+  public $comment_status;
+  public $ping_status;
+  public $post_password;
+  public $post_name;
+  public $to_ping;
+  public $pinged;
+  public $post_modified;
+  public $post_modified_gmt;
+  public $post_content_filtered;
+  public $post_parent;
+  public $guid;
+  public $menu_order;
+  public $post_type;
+  public $post_mime_type;
+  public $comment_count;
+  public $filter;
+}

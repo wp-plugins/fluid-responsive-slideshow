@@ -19,10 +19,10 @@ function pjc_slideshow_add_submenu() {
 	
 	
 	add_submenu_page('edit.php?post_type=pjc_slideshow',
-		'FR Slideshow Options', 
-		'FR Slideshow Options', 
+		'Slideshow', 
+		'Slideshow', 
 		'administrator', 
-		'setting-page', 
+		'frs-setting-page', 
 		'pjc_slideshow_submenu_page', plugins_url('myplugin/images/icon.png')); 
 	
 }
