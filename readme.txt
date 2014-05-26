@@ -7,15 +7,15 @@ Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Fluid Responsive Slideshow / image slider is a wordpress plugin that enable you to put slideshow easily into post,page, or template. 
+Easy to use image slider with drag and drop system with responsive support
 == Description ==
 
-Fluid Responsive Slideshow / image slider is a wordpress plugin that enable you to put slideshow easily into post,page, or template. This plugin is based on a jquery plugin called orbit.js
+Fluid Responsive Slideshow / image slider is a wordpress plugin that enable you to put slideshow easily into post,page, or template. 
 
 **Features :**
 
 * Manage your slideshow as you manage your post / page.
-* Ordering of Image in a slideshow.
+* Drag and Drop user interface
 * Multiple slideshow on single page/post.
 * Responsive Image.
 * Hiperlink on image.
