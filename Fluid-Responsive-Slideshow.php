@@ -29,7 +29,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'modal.php');
  *  Save plugin version on db on plugin installation
  */
 
-define('FRS_VERSION','1.0.0');
+define('FRS_VERSION','1.0.1');
 
 /*
  * Add featured image support for this plugin
