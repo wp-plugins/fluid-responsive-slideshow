@@ -3,7 +3,7 @@
  *Plugin Name: Fluid Responsive Slideshow
  *Plugin URI: http://www.tonjoo.com/wordpress-plugin-fluid-responsive-slideshow-plugin/
  *Description: Fluid and Responsive Slideshow for wordpress.
- *Version: 1.0.0
+ *Version: 1.0.1
  *Author: tonjoo
  *Author URI: http://www.tonjoo.com/
  *License: GPLv2
