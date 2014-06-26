@@ -20,8 +20,11 @@
         ?>
 
         </div>
-        <div class='frs_slide_edit'>
-            <h3><?php the_title() ?></h3>
+        <div class='frs_slide_info'>
+        <h3><?php the_title() ?></h3>
+        <?php echo apply_filters('the_content',$post->post_content) ?>
+        </div>
+        <div class='frs_slide_edit'>           
             <a class='button button-frs button-primary button-large' frs-edit-slide data-post-id='<?php echo the_ID() ?>'>Edit Slide</a><span class="spinner frs-button-spinner" ></span><br><br>    
             <a href='<?php echo $edit ?>'  target='_blank' class='button-frs  button  button-large' >Edit Slide In New Tab</a><br><br>            
             <a class='button button-frs  button-danger button-large' data-post-id='<?php echo the_ID() ?>'frs-delete-slide>Delete Slide</a><span class="spinner frs-button-spinner" ></span><br>

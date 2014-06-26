@@ -27,13 +27,8 @@
 	cursor:pointer;
 }
 
-.frs-table-left .frs-modal-options{
-	margin:0px;
-	padding:0px;
-	margin-left:-15px;
-	margin-top:-10px;
-	margin-bottom:15px;
-	
+.frs-table-left .minicolors-swatch{
+	height:23px;
 }
 
 /*Modal for FRS Add slide*/
@@ -41,41 +36,40 @@
 #frs-tonjoo-modal{
   
     position:fixed;
-    z-index:1000000;
 	position: fixed;
 	top: 30px;
 	left: 30px;
 	right: 30px;
-	bottom: 80px;
-	z-index: 160000;
+	bottom: 80px;	
+    z-index: 100005;
    
 }
-.floating-modal-button{
+.postbox-container .floating-modal-button{
 
 	background-color: #ccc;
 	position:absolute;
 	bottom:-60px;
-	z-index: 161000;
+	z-index: 100010;
 	height:60px;
 	width:100%;
 }
-.floating-modal-button .button-primary {
+.postbox-container  .floating-modal-button .button-primary {
+	float: right !important;
+	margin: 16px 15px 0 0 !important;
+}
+.postbox-container .floating-modal-button .button-danger {
 	float: right;
 	margin: 16px 15px 0 0;
 }
-.floating-modal-button .button-danger {
-	float: right;
-	margin: 16px 10px 0 0;
-}
-.floating-modal-button .frs-modal-close {
-	float: left;
-	margin: 16px;
+.postbox-container .floating-modal-button .frs-modal-close {
+	float: left !important;
+	margin: 16px !important;
 }
 
-.frs-button-spinner-modal.frs-button-spinner {
-	float: right;
-	margin-top:20px;	
-	margin-right:20px;
+.postbox-container .frs-button-spinner-modal.frs-button-spinner {
+	float: right !important;
+	margin-top:20px !important;	
+	margin-right: 10px !important;
 	
 }
 
@@ -112,8 +106,19 @@
 	margin:5px 0px;
 }
 
+.frs-modal-post h3.meta-subtitle{
+	border-bottom: 1px solid rgb(238, 238, 238);
+	padding: 8px 13px;
+	color: #333;
+	font-size: 15px
+}
+
 .frs-modal-title{
 	display:inline-block;
+}
+
+#frs-tonjoo-modal #wp-frs-modal-content-wrap iframe {
+	height: 300px !important;
 }
 
 /*
@@ -121,19 +126,47 @@
  */
 
 .frs-table-right{
+	margin-right:600px;
+	background-color:white;
+	padding:20px;	
+}
+
+.frs-table-left{
 	position: absolute;
 	top: 0;
 	right: 0;
 	bottom: 0;
-	width: 449px;
+	width: 550px;
 	z-index: 150;
 	padding:20px;
 }
 
-.frs-table-left{
-	margin-right:490px;
-	background-color:white;
-	padding:30px;
+.frs-table-left .minicolors-swatch,
+.frs-table-left .minicolors-swatch span{
+	width:40px
+}
+
+.wp-admin .frs-table-left select{
+	height:auto;
+}
+
+.frs-table-left .tonjoo_slideshow th{
+	width:120px;	
+	margin-right:0px;
+	padding-right:0px;
+}
+
+.frs-table-left .regular-text.minicolors.minicolors-input{
+	height:20px !important;
+}
+
+.frs-table-left .description{
+	line-height:1.8;
+}
+
+.form-table td.description{
+	padding-left:0px;
+	margin-left:0px;
 }
 
 /*
@@ -143,6 +176,7 @@
 .frs-modal-image{
 	max-width:100%;
 	height:auto;
+	max-height:200px;
 }
 
 /*
@@ -237,14 +271,14 @@ input[name='title']{
 }
 
 .frs-button-spinner{
-	float:none;
-	display:inline-block;
-	visibility:hidden;
+	float:none !important;
+	display:inline-block !important;
+	visibility:hidden !important; 
 }
 
 
 .frs-button-spinner.active{
-	visibility:visible;
+	visibility:visible !important;
 }
 
 /*
@@ -297,6 +331,16 @@ div.frs_slide_thumbnail{
 div.frs_slide_edit{  
     float:left;
     margin-left:30px;
+	padding-top:10px;
+	padding-left:15px;
+	height:140px;
+	border-left:1px solid #ccc;
+}
+
+div.frs_slide_info{
+	float:left;
+	margin-left:20px;
+	width:300px;
 }
 
 /*
@@ -312,4 +356,14 @@ div.frs_slide_edit{
 .frs-notice-wrapper.active{
 	height:38px;
 	
+}
+
+/**
+ * popup options
+ */
+#frs_title, #frs_image_img_default, #frs_image_post_thumbnail_id, #frs_image_src {
+	display: none;
+}
+#frs-tonjoo-modal .floating-modal-button .button-danger {
+	display: none;
 }

@@ -45,7 +45,7 @@ if (!isset($options[$current]["animation_time"]))
 	$options[$current]["animation_time"] = "800";
 
 if (!isset($options[$current]["show_timer"]))
-	$options[$current]["show_timer"] = "false";
+	$options[$current]["show_timer"] = "true";
 
 if (!isset($options[$current]["pause"]))
 	$options[$current]["pause"] = "false";
@@ -55,4 +55,7 @@ if (!isset($options[$current]["start_mouseout"]))
 
 if (!isset($options[$current]["start_mouseout_after"] ))
 	$options[$current]["start_mouseout_after"] = "800";
+
+if (!isset($options[$current]["custom_css"] ))
+	$options[$current]["custom_css"] = "";
 ?>

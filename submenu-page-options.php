@@ -111,7 +111,7 @@ jQuery(document).ready(function($){
 	$("#tonjoo-frs-textbox-bg select").change(function(){
 		value = $(this).attr('value')
 
-		$("#picture_prev").css('background-image',"url('<?php echo plugins_url( 'fluid-responsive-slideshow/backgrounds/' , dirname(__FILE__) ) ?>" + value + ".png')");
+		$("#picture_prev").css('background-image',"url('<?php echo plugins_url( FRS_DIR_NAME.'/backgrounds/' , dirname(__FILE__) ) ?>" + value + ".png')");
 	})
 
 	$("select[name='pjc_slideshow_options[<?php echo $current ?>][skin]']").css({"width":'250px'});
@@ -137,7 +137,7 @@ jQuery(document).ready(function($){
 
 	
 	if(! isset($options[$current]['skin']))
-			$options[$current]['skin']="default";
+			$options[$current]['skin']="frs-skin-default";
 
 
 	$skins = scandir($dir);
@@ -152,6 +152,7 @@ jQuery(document).ready(function($){
 		$the_value = strtolower($filename);
 		$filename_ucwords = str_replace('-', ' ', ucwords($filename));
 		$filename_ucwords = ucwords($filename_ucwords);
+		$filename_ucwords = str_replace('Frs Skin ', '', ucwords($filename_ucwords));
 
 		if($extension=='css'){
 			$data = array(
@@ -165,10 +166,10 @@ jQuery(document).ready(function($){
 		}
 	}
 
-	if(is_plugin_active("fluid-responsive-slideshow-premium/Fluid-Responsive-Slideshow-Premium.php") && function_exists('is_frs_premium_exist')) 
+	if(function_exists('is_frs_premium_exist')) 
 	{
 		
-		$dir =  ABSPATH . 'wp-content/plugins/fluid-responsive-slideshow-premium/skins';
+		$dir =  ABSPATH . 'wp-content/plugins/'.FRS_PREMIUM_DIR_NAME.'/skins';
 
 		$skins = scandir($dir);
 
@@ -180,6 +181,7 @@ jQuery(document).ready(function($){
 			$the_value = strtolower($filename);
 			$filename_ucwords = str_replace('-', ' ', $filename);
 			$filename_ucwords = ucwords($filename_ucwords);
+			$filename_ucwords = str_replace('Frs Skin ', '', ucwords($filename_ucwords));
 
 
 			if($extension=='css'){
@@ -411,9 +413,9 @@ jQuery(document).ready(function($){
 		</td>
 	</tr>
 
-	<!-- <tr><td colspan=2><h3 class="meta-subtitle">Timer</h3></td></tr> -->
+	<tr><td colspan=2><h3 class="meta-subtitle">Timer</h3></td></tr>
 
-<!-- 	<tr valign="top">
+	<tr valign="top">
 		<th scope="row">Show Timer</th>
 		<td>
 			<select name="pjc_slideshow_options<?php echo "[$current][show_timer]"?>">
@@ -447,7 +449,7 @@ jQuery(document).ready(function($){
 			</select>
 			<label class="description" >Display a small timer on the slideshow</label>
 		</td>
-	</tr> -->
+	</tr>
 
 	<tr><td colspan=2><h3 class="meta-subtitle">Arrow Navigation</h3></td></tr>
 
@@ -525,6 +527,60 @@ jQuery(document).ready(function($){
 		</td>
 	</tr>
 
+	<tr><td colspan=2><h3 class="meta-subtitle">Custom CSS</h3></td></tr>
+
+	<tr valign="top">
+		<th colspan=2>
+			<script type="text/javascript">
+				jQuery(document).ready(function($){
+					/**
+					 * Ace editor
+					 */
+					var editor = ace.edit("ace-editor");
+				    editor.setTheme("ace/theme/monokai");
+				    editor.getSession().setMode("ace/mode/css");
+				    editor.getSession().on('change', function(e) {
+				    	var code = editor.getSession().getValue();
+
+				    	jQuery("#ace_editor_value").val(code);
+					});
+				});
+			</script>
+			
+			<style type="text/css">
+				#ace-editor { 
+			        width: 100%;
+			        height:350px;
+			        margin-left: auto;
+					padding-right: 10px;
+					font-size: 16px;
+			    }
+
+			    #ace_editor_value {
+			    	display: none;
+			    }
+			</style>
+
+			<?php 
+				$default_custom_css = ".frs-slideshow-container#".$attr['slide_type']."pjc {
+	margin-top: 25px;
+	margin-bottom: 75px;
+}";
+
+				$custom_css = $options[$current]["custom_css"] == '' ? $default_custom_css : $options[$current]["custom_css"];
+			?>
+
+			<p style="margin-top:-25px;">
+				<ol>
+					<li>To localize your css affect, always use wraper <code>.frs-slideshow-container#<?php echo $attr['slide_type'] ?>pjc</code></li>
+					<li>Some css attribute need to use <code>!important</code> value to affect</li>
+				</ol>
+			</p>
+			<div id="ace-editor"><?php echo $custom_css ?></div>
+			<textarea id="ace_editor_value" name="pjc_slideshow_options<?php echo "[$current][custom_css]"?>" ><?php echo $custom_css ?></textarea>
+		</th>
+	</tr>
+
 </table>
 
 <br>
@@ -546,9 +602,10 @@ jQuery(document).ready(function($){
 			<br>
 			<br>
 			<input type="submit" class="button-primary" value="<?php _e('Save Options', 'pjc_slideshow_options'); ?>" />			
-			</form>
+			
 		</div>
 	</div>
+
 	<div class="postbox">
 		<script type="text/javascript">
 			jQuery(function(){
@@ -572,32 +629,25 @@ jQuery(document).ready(function($){
 		<div class="inside" style="margin: 23px 10px 6px 10px;">
 			<div id="promo_1" style="text-align: center;padding-bottom:17px;">
 				<a href="http://tonjoo.com" target="_blank">
-					<img src="<?php echo plugins_url("fluid-responsive-slideshow/assets/loading-big.gif") ?>" width="100%" alt="WordPress Security - A Pocket Guide">
+					<img src="<?php echo plugins_url(FRS_DIR_NAME."/assets/loading-big.gif") ?>" width="100%" alt="WordPress Security - A Pocket Guide">
 				</a>
 			</div>
 			<div id="promo_2" style="text-align: center;">
 				<a href="http://tonjoo.com" target="_blank">
-					<img src="<?php echo plugins_url("fluid-responsive-slideshow/assets/loading-big.gif") ?>" width="100%" alt="WordPress Security - A Pocket Guide">
+					<img src="<?php echo plugins_url(FRS_DIR_NAME."/assets/loading-big.gif") ?>" width="100%" alt="WordPress Security - A Pocket Guide">
 				</a>
 			</div>
-
-			<!-- <p>Get the lastest Fluid Responsive Slideshow Premium Edition and make your website more beauty with 35+ awesome FRS theme! <br><br> Visit our website for more information</p>
-			<a href="http://tonjoo.com" class="button" target="_blank">Visit Tonjoo</a>	 -->			
 		</div>
 	</div>
-	<!-- <div id="prioritysupport" class="postbox">
-		<h3 class="hndle"><span>Donate</span></h3>
-		<div class="inside">
-			<p>You can always support this free plugin by donate for our development team</p>
-			<a href="http://tonjoo.com/donate" class="button" target="_blank">Donate</a>				
-		</div>
-	</div> -->
 </div>
 </div>
 </div>	
 
 </div>
-			
-	<?php
+
+</form>	
+
+<?php
 	break;
-} ?>
+	} 
+?>

@@ -115,6 +115,7 @@ function pjc_slideshow_tab($current = 'plugin'){
 
 		<a href="javascript:;" id="button-slide-type" class="button">Show</a>
 		<a href="http://tonjoo.com/addons/fluid-responsive-slideshow/" target="_blank">Fluid Responsive Slideshow Manual</a>
+		<a href="http://wordpress.org/support/view/plugin-reviews/fluid-responsive-slideshow?rate=5#postform" target="_blank" style="margin-left:10px;">Enjoy with the plugin?, rate us!</a>
 
 		<!-- Add Buton -->
 		<?php if( (isset($_GET['tabtype'])&&$_GET['tabtype']=='slide') || (!isset($_GET['tab'])) ): ?>
@@ -172,7 +173,6 @@ function pjc_slideshow_tab($current = 'plugin'){
 			/**
 			 * load slide page
 			 */
-
 			require_once( plugin_dir_path( __FILE__ ) . 'submenu-page-slide.php');
 		}
 		elseif(! isset($_GET['tab']))
@@ -180,7 +180,6 @@ function pjc_slideshow_tab($current = 'plugin'){
 			/**
 			 * load slide page if not defined current slideshow
 			 */
-
 			require_once( plugin_dir_path( __FILE__ ) . 'submenu-page-slide.php');
 		}
 		else
@@ -188,7 +187,6 @@ function pjc_slideshow_tab($current = 'plugin'){
 			/**
 			 * load options page
 			 */
-
 			require_once( plugin_dir_path( __FILE__ ) . 'submenu-page-options.php');
 		}
 

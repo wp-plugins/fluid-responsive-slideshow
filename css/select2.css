@@ -160,7 +160,7 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
     width: 100%;
     margin-top: -1px;
     position: absolute;
-    z-index: 160009;
+    z-index: 100010;
     top: 100%;
 
     background: #fff;

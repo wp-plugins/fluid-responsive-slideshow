@@ -54,7 +54,10 @@ function tonjoo_slideshow_meta( $post )
         $postmeta["slider_bg"] = "#000000";
 
     if(!array_key_exists('text_position',$postmeta))
-        $postmeta['text_position']='left';
+        $postmeta['text_position']='frs-caption-position-left';
+
+    if(!array_key_exists('textbox_width',$postmeta))
+        $postmeta['textbox_width']=5;
 
     if(!array_key_exists('text_align',$postmeta))
         $postmeta['text_align']='left';
@@ -69,7 +72,7 @@ function tonjoo_slideshow_meta( $post )
         $postmeta['show_button']='yes';
 
     if(!array_key_exists('button_skin',$postmeta))
-        $postmeta['button_skin']="white";
+        $postmeta['button_skin']="frs-buttonskin-white";
 
     if(!array_key_exists('button_caption',$postmeta))
         $postmeta['button_caption']="Button Is Here";
@@ -87,7 +90,7 @@ function tonjoo_slideshow_meta( $post )
         $postmeta["textbox_color"] = "";
 
     if (!isset($postmeta["textbox_padding"] ))
-        $postmeta["textbox_padding"] = "0px 0px 0px 0px";
+        $postmeta["textbox_padding"] = "25px 25px 25px 25px";
 
     if(!array_key_exists('padding_type',$postmeta))
         $postmeta['padding_type']='auto';
@@ -156,7 +159,7 @@ function tonjoo_slideshow_meta( $post )
         #picture_prev{
             width: 80px;
             height: 27px;
-            background-image: url("<?php echo plugins_url( 'fluid-responsive-slideshow/backgrounds/'.$postmeta['textbox_bg'].'.png' , dirname(__FILE__) ) ?>");
+            background-image: url("<?php echo plugins_url( FRS_DIR_NAME.'/backgrounds/'.$postmeta['textbox_bg'].'.png' , dirname(__FILE__) ) ?>");
             float: left;
             margin-left: 5px;
             border: solid 1px #CCC;
@@ -185,7 +188,7 @@ function tonjoo_slideshow_meta( $post )
             $("#tonjoo-frs-textbox-bg select").change(function(){
                 value = $(this).attr('value')
 
-                $("#picture_prev").css('background-image',"url('<?php echo plugins_url( 'fluid-responsive-slideshow/backgrounds/' , dirname(__FILE__) ) ?>" + value + ".png')");
+                $("#picture_prev").css('background-image',"url('<?php echo plugins_url( FRS_DIR_NAME.'/backgrounds/' , dirname(__FILE__) ) ?>" + value + ".png')");
             })
 
             function format(state) {
@@ -196,11 +199,11 @@ function tonjoo_slideshow_meta( $post )
 
                 if(name_select_array[1] == 'true')
                 {
-                    var button = "<?php echo plugins_url( 'fluid-responsive-slideshow-premium/buttons/' , dirname(__FILE__) ) ?>" + name_select_array[0];
+                    var button = "<?php echo plugins_url( FRS_PREMIUM_DIR_NAME.'/buttons/' , dirname(__FILE__) ) ?>" + name_select_array[0];
                 }
                 else
                 {
-                    var button = "<?php echo plugins_url( 'fluid-responsive-slideshow/buttons/' , dirname(__FILE__) ) ?>" + name_select_array[0];
+                    var button = "<?php echo plugins_url( FRS_DIR_NAME.'/buttons/' , dirname(__FILE__) ) ?>" + name_select_array[0];
                 }
 
                 return "<div><img class='images' src='" + button + ".png'/></div>" + "<p>" + state.text + "</p>";
@@ -218,8 +221,18 @@ function tonjoo_slideshow_meta( $post )
     <input type="hidden" name="tonjoo_frs_order_number" value="<?php esc_attr_e($order_number); ?>" />
 
     <table class="form-table tonjoo_slideshow">
-        <tr><td colspan=2><h3 class="meta-subtitle" style="margin-top:-23px !important;">General</h3></td></tr>
-     
+        <tr><td colspan=2><h3 class="meta-subtitle" style="margin-top:-23px !important;">Background Color</h3></td></tr>
+        <th scope="row">Background Color</th>
+            <td>
+                <input class="regular-text minicolors" style="width:150px;height:30px;float:left;margin-right:17px;" name="tonjoo_frs_meta[slider_bg]" value="<?php esc_attr_e($postmeta['slider_bg']); ?>" />
+            </td>
+        </tr>
+        <tr>
+            <td class='description' colspan="2">Background color will be shown if no image are selected</td>
+        </tr>
+        <tr>
+            <td colspan=2><h3 class="meta-subtitle">Text Box</h3></td>
+        </tr>
         <?php
             $show_text = array(
                             '0' => array(
@@ -234,8 +247,8 @@ function tonjoo_slideshow_meta( $post )
 
             $option_select = array(
                 "name"=>"tonjoo_frs_meta[show_text]",
-                "description" => "Select yes if you want to make the text displayed",
-                "label" => "Show Text",
+                "description" => "Select no to hide textbox",
+                "label" => "Show Text Box",
                 "value" => $postmeta['show_text'],
                 "select_array" => $show_text,
                 "id"=>"tonjoo-frs-show_text"
@@ -243,14 +256,6 @@ function tonjoo_slideshow_meta( $post )
             
             tj_print_select_option($option_select);
         ?>
-
-        <th scope="row">Background</th>
-            <td>
-                <input class="regular-text minicolors" style="width:150px;height:30px;float:left;margin-right:17px;" name="tonjoo_frs_meta[slider_bg]" value="<?php esc_attr_e($postmeta['slider_bg']); ?>" />
-                <label class="description" > Background show when no image is available</label>
-            </td>
-        </tr>
-
         <tr><td colspan=2><h3 class="meta-subtitle">Text Box Background</h3></td></tr>
 
         <?php 
@@ -271,8 +276,8 @@ function tonjoo_slideshow_meta( $post )
 
             $option_select = array(
                                 "name"=>"tonjoo_frs_meta[bg_textbox_type]",
-                                "description" => "Select both two options, transparent or solid color",
-                                "label" => "Type",
+                                "description" => "Transparent / Solid Color",
+                                "label" => "Background Type",
                                 "value" => $postmeta['bg_textbox_type'],
                                 "select_array" => $bg_textbox_type,
                                 "id"=>"tonjoo-frs-bg-textbox-type"
@@ -326,39 +331,134 @@ function tonjoo_slideshow_meta( $post )
                 <label class="description" ></label>
             </td>
         </tr>
-
-        <tr><td colspan=2><h3 class="meta-subtitle">Text Box Position</h3></td></tr>
+        <tr>
+            <td colspan=2><h3 class="meta-subtitle">Text Box Position</h3></td>
+        </tr>
 
         <?php 
             $text_position = array(
                                 '0' => array(
-                                    'value' =>  'left',
+                                    'value' =>  'frs-caption-position-left',
                                     'label' =>  'Left'
                                 ),
                                 '1' => array(
-                                    'value' =>  'right',
-                                    'label' =>  'Right' 
+                                    'value' =>  'frs-caption-position-top-left',
+                                    'label' =>  'Top Left'
                                 ),
                                 '2' => array(
-                                    'value' =>  'bottom',
-                                    'label' =>  'Bottom' 
+                                    'value' =>  'frs-caption-position-top',
+                                    'label' =>  'Top'
                                 ),
                                 '3' => array(
-                                    'value' =>  'center',
+                                    'value' =>  'frs-caption-position-top-right',
+                                    'label' =>  'Top Right'
+                                ),
+                                '4' => array(
+                                    'value' =>  'frs-caption-position-right',
+                                    'label' =>  'Right' 
+                                ),
+                                '5' => array(
+                                    'value' =>  'frs-caption-position-bottom-right',
+                                    'label' =>  'Bottom Right' 
+                                ),
+                                '6' => array(
+                                    'value' =>  'frs-caption-position-bottom',
+                                    'label' =>  'Bottom' 
+                                ),
+                                '7' => array(
+                                    'value' =>  'frs-caption-position-bottom-left',
+                                    'label' =>  'Bottom Left' 
+                                ),
+                                '8' => array(
+                                    'value' =>  'frs-caption-position-center',
                                     'label' =>  'Center' 
+                                ),
+                                '9' => array(
+                                    'value' =>  'frs-caption-position-sticky-top',
+                                    'label' =>  'Sticky Top' 
+                                ),
+                                '10' => array(
+                                    'value' =>  'frs-caption-position-sticky-bottom',
+                                    'label' =>  'Sticky Bottom' 
                                 )
                             );
 
 
             $option_select = array(
                                 "name"=>"tonjoo_frs_meta[text_position]",
-                                "description" => "Slide text position",
-                                "label" => "Position",
+                                "description" => "",
+                                "label" => "Text Box Position",
                                 "value" => $postmeta['text_position'],
                                 "select_array" => $text_position,
                                 "id"=>"tonjoo-frs-text_position"
                             );
               
+            tj_print_select_option($option_select);
+        ?>
+
+        <?php 
+            $textbox_width = array(
+                                '0' => array(
+                                    'value' =>  1,
+                                    'label' =>  '1 / 12'
+                                ),
+                                '1' => array(
+                                    'value' =>  2,
+                                    'label' =>  '2 / 12' 
+                                ),
+                                '2' => array(
+                                    'value' =>  3,
+                                    'label' =>  '3 / 12' 
+                                ),
+                                '3' => array(
+                                    'value' =>  4,
+                                    'label' =>  '4 / 12' 
+                                ),
+                                '4' => array(
+                                    'value' =>  5,
+                                    'label' =>  '5 / 12' 
+                                ),
+                                '5' => array(
+                                    'value' =>  6,
+                                    'label' =>  '6 / 12' 
+                                ),
+                                '6' => array(
+                                    'value' =>  7,
+                                    'label' =>  '7 / 12' 
+                                ),
+                                '7' => array(
+                                    'value' =>  8,
+                                    'label' =>  '8 / 12' 
+                                ),
+                                '8' => array(
+                                    'value' =>  9,
+                                    'label' =>  '9 / 12' 
+                                ),
+                                '9' => array(
+                                    'value' =>  10,
+                                    'label' =>  '10 / 12' 
+                                ),
+                                '10' => array(
+                                    'value' =>  11,
+                                    'label' =>  '11 / 12' 
+                                ),
+                                '11' => array(
+                                    'value' =>  12,
+                                    'label' =>  '12 / 12' 
+                                )
+                            );
+
+
+            $option_select = array(
+                                "name"=>"tonjoo_frs_meta[textbox_width]",
+                                "description" => "",
+                                "label" => "Text Box Width",
+                                "value" => $postmeta['textbox_width'],
+                                "select_array" => $textbox_width,
+                                "id"=>"tonjoo-frs-textbox_width"
+                            );
+
+            
             tj_print_select_option($option_select);
         ?>
 
@@ -381,8 +481,8 @@ function tonjoo_slideshow_meta( $post )
 
             $option_select = array(
                                 "name"=>"tonjoo_frs_meta[text_align]",
-                                "description" => "Slide text align",
-                                "label" => "Align",
+                                "description" => "",
+                                "label" => "Text Align",
                                 "value" => $postmeta['text_align'],
                                 "select_array" => $text_align,
                                 "id"=>"tonjoo-frs-text_align"
@@ -425,7 +525,7 @@ function tonjoo_slideshow_meta( $post )
 
             $option_select = array(
                                 "name"=>"tonjoo_frs_meta[show_button]",
-                                "description" => "Select yes if you want to make the button displayed",
+                                "description" => "",
                                 "label" => "Show Button",
                                 "value" => $postmeta['show_button'],
                                 "select_array" => $show_button,
@@ -451,6 +551,7 @@ function tonjoo_slideshow_meta( $post )
                 $the_value = strtolower($filename);
                 $filename_ucwords = str_replace('-', ' ', ucwords($filename));
                 $filename_ucwords = ucwords($filename_ucwords);
+                $filename_ucwords = str_replace('Frs Buttonskin ', '', ucwords($filename_ucwords));
 
                 if($extension=='css'){
                     $data = array(
@@ -464,10 +565,9 @@ function tonjoo_slideshow_meta( $post )
                 }
             }
 
-           if(is_plugin_active("fluid-responsive-slideshow-premium/Fluid-Responsive-Slideshow-Premium.php") && function_exists('is_frs_premium_exist')) 
-            {
-                
-                $dir =  ABSPATH . 'wp-content/plugins/fluid-responsive-slideshow-premium/buttons';
+            if(function_exists('is_frs_premium_exist')) 
+            {                
+                $dir =  ABSPATH . 'wp-content/plugins/'.FRS_PREMIUM_DIR_NAME.'/buttons';
 
                 $skins = scandir($dir);
 
@@ -479,6 +579,7 @@ function tonjoo_slideshow_meta( $post )
                     $the_value = strtolower($filename);
                     $filename_ucwords = str_replace('-', ' ', $filename);
                     $filename_ucwords = ucwords($filename_ucwords);
+                    $filename_ucwords = str_replace('Frs Buttonskin ', '', ucwords($filename_ucwords));
 
 
                     if($extension=='css'){
@@ -497,7 +598,7 @@ function tonjoo_slideshow_meta( $post )
 
             $option_select = array(
                             "name"=>"tonjoo_frs_meta[button_skin]",
-                            "description" => " Select button skin",
+                            "description" => "",
                             "label" => "Button Skin",
                             "value" => $postmeta['button_skin'],
                             "select_array" => $button_skin,
@@ -509,60 +610,52 @@ function tonjoo_slideshow_meta( $post )
         ?>
 
         <tr class="button_attr">
-            <th scope="row">Caption</th>
+            <th scope="row">Button Caption</th>
             <td>
                 <input class="regular-text" name="tonjoo_frs_meta[button_caption]" value="<?php esc_attr_e($postmeta['button_caption']); ?>" />
-                <label class="description" >Button caption</label>
             </td>
         </tr>
         <tr class="button_attr">
-            <th scope="row">Href</th>
+            <th scope="row">Button Link</th>
             <td>
                 <input class="regular-text"  name="tonjoo_frs_meta[button_href]" value="<?php esc_attr_e($postmeta['button_href']); ?>" />
-                <label class="description" >Button hiperlink location</label>
             </td>
         </tr>
 
-        <!-- 
-            Keputusan sementara fungsi ini (Text Box Padding) dimatikan
-            karena akan membingungkan user 
-            lihat juga di shortcode.php
-        -->
-
-        <!-- <tr><td colspan=2><h3 class="meta-subtitle">Text Box Padding</h3></td></tr>  -->
+        <tr><td colspan=2><h3 class="meta-subtitle">Text Box Padding</h3></td></tr> 
 
         <?php
-            // $padding_type = array(
-            //                     '0' => array(
-            //                         'value' =>  'auto',
-            //                         'label' =>  'Auto'
-            //                     ),
-            //                     '1' => array(
-            //                         'value' =>  'manual',
-            //                         'label' =>  'Manual'
-            //                     )
-            //                 );
+            $padding_type = array(
+                                '0' => array(
+                                    'value' =>  'auto',
+                                    'label' =>  'Auto'
+                                ),
+                                '1' => array(
+                                    'value' =>  'manual',
+                                    'label' =>  'Manual'
+                                )
+                            );
 
 
-            // $option_select = array(
-            //                         "name"=>"tonjoo_frs_meta[padding_type]",
-            //                         "description" => "Select textbox padding type",
-            //                         "label" => "Type",
-            //                         "value" => $postmeta['padding_type'],
-            //                         "select_array" => $padding_type,
-            //                         "id"=>"tonjoo-frs-padding_type"
-            //                     );
+            $option_select = array(
+                                    "name"=>"tonjoo_frs_meta[padding_type]",
+                                    "description" => "Select textbox padding type",
+                                    "label" => "Type",
+                                    "value" => $postmeta['padding_type'],
+                                    "select_array" => $padding_type,
+                                    "id"=>"tonjoo-frs-padding_type"
+                                );
             
-            // tj_print_select_option($option_select);
+            tj_print_select_option($option_select);
         ?>
 
-        <!-- <tr id="textbox_padding" >
+        <tr id="textbox_padding" >
             <th scope="row">Padding</th>
             <td>
                 <input class="regular-text" name="tonjoo_frs_meta[textbox_padding]" value="<?php esc_attr_e($postmeta['textbox_padding']); ?>" />
                 <label class="description">[top]px [right]px [bottom]px [left]px</label>
             </td>
-        </tr> -->
+        </tr>
     </table>
 
 <?php 

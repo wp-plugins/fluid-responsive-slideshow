@@ -7,22 +7,20 @@ Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Fluid Responsive Slideshow / image slider is a wordpress plugin that enable you to put slideshow easily into post,page, or template. 
+Easy to use responsive image slider with 50+ beautifull skin.
 == Description ==
 
-Fluid Responsive Slideshow / image slider is a wordpress plugin that enable you to put slideshow easily into post,page, or template. This plugin is based on a jquery plugin called orbit.js
+Easy to use responsive image slider with 50+ beautifull skin.
 
 **Features :**
 
-* Manage your slideshow as you manage your post / page.
-* Ordering of Image in a slideshow.
+* Drag and drop 
 * Multiple slideshow on single page/post.
-* Responsive Image.
-* Hiperlink on image.
+* Responsive slider image.
 * Custom text and font size.
 * And many custumizable parameter.
-* Multiple Skin
-* CSS 3 Skins
+* 50+ Skins
+* 20+ Button
 
 **Important :**
 
@@ -59,8 +57,17 @@ All of the slide must have a slide order and slide type.
 
 == Changelog ==
 
+= 1.0.1 =
+* Update jQuery animation to non CSS 3 browser (< IE 10) with rollingback animation and more lighter
+* Added new text box position to 11 position
+* Added new 12 text box width
+* Added new bullets slider animation for text-bullet skin
+* Redesign some skins
+* Fix known bugs
+
 = 1.0.0 =
 * Updated jQuery animation to CSS 3 animation, more lighter, more beautiful
+* Update admin UI, more easy and intuitive
 * Automaticaly use jQuery animation in non-supported CSS 3 browser (< IE 10)
 * Added new options in options page
 * Added new options in slide option page

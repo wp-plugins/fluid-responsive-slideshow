@@ -21,13 +21,11 @@
     position: relative;    
 }
 
-.frs-slideshow-container .frs-slideshow-content  > div >  div > div.frs-caption.left,
-.frs-slideshow-container .frs-slideshow-content  > div >  div > div.frs-caption.right,
-.frs-slideshow-container .frs-slideshow-content  > div >  div > div.frs-caption.center {
+.frs-slideshow-container .frs-slideshow-content  > div >  div > div.frs-caption {
     height: 100% !important;
 }
 
-.frs-slideshow-container > .frs-wrapper > .slider-nav {
+.frs-slideshow-container > .frs-wrapper > .frs-slider-nav {
     position: static;
 }
 
@@ -42,7 +40,10 @@
     position: relative;
     overflow: hidden;
 }
-.frs-slideshow-container > .frs-wrapper > .frs-slideshow-content > .slide-img-wrapper > .slide-img {
+.frs-slideshow-container > .frs-wrapper > .frs-slideshow-content > .frs-slide-img-wrapper {
+    position: absolute;
+}
+.frs-slideshow-container > .frs-wrapper > .frs-slideshow-content > .frs-slide-img-wrapper > .frs-slide-img {
     position: absolute;
     top: 0;
     left: 0;
@@ -54,10 +55,11 @@
 .frs-slideshow-content > div,
 .frs-slideshow-content > a { display: none } 
 
+
 /* Note: If your slider only uses content or anchors, you're going to want to put the width and height declarations on the ".frs>div" and "div.frs>a" tags in addition to just the .frs-wrapper 
 /* TIMER
  ================================================== */
-.frs-slideshow-container div.timer {
+.frs-slideshow-container div.frs-timer {
     position: absolute;
     width: 40px;
     height: 40px;
@@ -65,32 +67,32 @@
     right: 10px;
     opacity: 0.6;
     cursor: pointer;
-    z-index: 9999999999;
+    z-index: 99999;
 }
-.frs-slideshow-container span.rotator {
+.frs-slideshow-container span.frs-timer-rotator {
     position: absolute;
     top: 0px;
     left: -20px;
     width: 40px;
     height: 40px;
     background-image: url('frs/rotator-left.png');
-    z-index: 9999999999;
+    z-index: 99999;
 }
-.frs-slideshow-container span.mask {
+.frs-slideshow-container span.frs-timer-mask {
     position: absolute;
     top: 0px;
     right: 0px;
     width: 20px;
     height: 40px;
-    z-index: 99999999999;
+    z-index: 99999;
     overflow: hidden;
 }
-.frs-slideshow-container span.move {
+.frs-slideshow-container span.frs-timer-move {
     top: 0px;
     position: absolute;
     left: 0px;
 }
-.frs-slideshow-container span.mask-turn {
+.frs-slideshow-container span.frs-timer-mask-turn {
     display: none;
     position: absolute;
     top: 0px;
@@ -98,9 +100,9 @@
     width: 40px;
     height: 40px;
     background-image: url('frs/rotator-right.png');
-    z-index: 99999999999;
+    z-index: 999999;
 }
-.frs-slideshow-container span.pause {
+.frs-slideshow-container span.frs-timer-pause {
     display: block;
     width: 40px;
     height: 40px;
@@ -111,9 +113,11 @@
     z-index: 4;
     opacity: 1;
 }
-.frs-slideshow-container span.pause.active { background: url('frs/pause-black.png') no-repeat 0 -40px }
-.frs-slideshow-container div.timer:hover span.pause,
-.frs-slideshow-container span.pause.active { opacity: 1 }
+.frs-slideshow-container span.frs-timer-pause.frs-timer-active { background: url('frs/pause-black.png') no-repeat 0 -40px }
+.frs-slideshow-container div.frs-timer:hover span.frs-timer-pause,
+.frs-slideshow-container span.frs-timer-pause.frs-timer-active { opacity: 1 }
+
+
 /* CAPTIONS
  ================================================== */
 .frs-slideshow-container span.frs-caption 
@@ -121,11 +125,9 @@
     display: none;
     height: 0px;
 }
- 
 
 
-
-/* 
+/**
  * FRS Container
  */
 
@@ -180,8 +182,60 @@
   
 }
 
-.frs-slideshow-container .timer, 
-.frs-slideshow-container .slider-nav, 
+.frs-slideshow-container .frs-timer, 
+.frs-slideshow-container .frs-slider-nav, 
 .frs-slideshow-container .frs-bullets-wrapper {
     display: none;
+    line-height: normal;
+}
+.frs-slideshow-container .frs-bullets-wrapper .frs-bullets {
+    line-height: normal;
+}
+
+/**
+ * Responsive class
+ */
+.frs-slideshow-container .frs-wrapper.frs-responsive-mobile-small .frs-caption .frs-caption-content{
+    display: none;
+}
+
+.frs-slideshow-container .frs-wrapper.frs-responsive-mobile-medium .frs-caption .frs-caption-content{
+    width: 100% !important;
+}
+
+.frs-slideshow-container .frs-wrapper.frs-responsive-mobile-medium .frs-caption .frs-caption-content div{
+    display: none;
+}
+
+.frs-slideshow-container .frs-wrapper.frs-responsive-mobile-medium .frs-caption .frs-caption-content h4{
+    text-align: center !important;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.frs-slideshow-container .frs-wrapper.frs-responsive-mobile-medium .frs-caption .frs-caption-content p{
+    text-align: center !important;    
+}
+
+.frs-slideshow-container .frs-wrapper.frs-responsive-mobile-medium .frs-caption .frs-caption-content p a{
+    font-size: 12px;
+}
+
+.frs-slideshow-container .frs-wrapper.frs-responsive-mobile-medium .frs-caption{
+    padding: 0px 70px !important;
+}
+
+.frs-slideshow-container .frs-wrapper.frs-responsive-mobile-medium .frs-caption .frs-caption-inner{
+    vertical-align: middle;
+}
+
+.frs-slideshow-container .frs-wrapper.frs-responsive-mobile-medium .frs-timer{
+    display: none !important;
+}
+
+/**
+ * buttton
+ */
+p.frs-caption-button a span {  
+    white-space: nowrap;
 }

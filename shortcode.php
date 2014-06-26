@@ -17,12 +17,8 @@ function pjc_jq_scripts()
 	$frs_js = $plugin_url . "js/frs.js";
 	
 	$images_loaded = $plugin_url . "js/imagesloaded.min.js";
-
-	$pjc_slideshow_css = $plugin_url . "css/fluid-responsive-slideshow.css";
 	
 	$touchSwipe_js = $plugin_url . "js/jquery.touchSwipe.min.js";	
-
-	wp_enqueue_style('fluid-responsive-slideshow', $pjc_slideshow_css,array(),FRS_VERSION);
 	
 	wp_enqueue_style('Open Sans',"http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700",array(),FRS_VERSION);
 
@@ -35,12 +31,12 @@ function pjc_jq_scripts()
 	global $is_IE;
 
 	if ( $is_IE ) {
-	    wp_enqueue_style( 'tonjoo_frs_ie', plugins_url("fluid-responsive-slideshow/css/ie.css"),array(),FRS_VERSION );
+	    wp_enqueue_style( 'tonjoo_frs_ie', plugins_url(FRS_DIR_NAME."/css/ie.css"),array(),FRS_VERSION );
 	}
 }
 
 
-/*
+/**
  * For admin slide preview
  */
 
@@ -57,12 +53,8 @@ function pjc_jq_scripts_admin()
 	
 	$images_loaded = $plugin_url . "js/imagesloaded.min.js";
 	
-	$pjc_slideshow_css = $plugin_url . "css/fluid-responsive-slideshow.css";
-	
 	$touchSwipe_js = $plugin_url . "js/jquery.touchSwipe.min.js";	
 
-	wp_enqueue_style('fluid-responsive-slideshow', $pjc_slideshow_css,array(),FRS_VERSION);
-	
 	wp_enqueue_script('fluid-responsive-slideshow', $frs_js,array(),FRS_VERSION);
 	
 	wp_enqueue_script('touchSwipe_js', $touchSwipe_js);
@@ -72,12 +64,92 @@ function pjc_jq_scripts_admin()
 	global $is_IE;
 
 	if ( $is_IE ) {
-	    wp_enqueue_style( 'tonjoo_frs_ie', plugins_url("fluid-responsive-slideshow/css/ie.css"),array(),FRS_VERSION );
+	    wp_enqueue_style( 'tonjoo_frs_ie', plugins_url(FRS_DIR_NAME."/css/ie.css"),array(),FRS_VERSION );
 	}
 }
 
+function get_array_skins()
+{
+	$skins = scandir(dirname(__FILE__)."/skins");
 
-/*
+	$slideshow_skin =  array();
+
+	foreach ($skins as $key => $value) {
+
+		$extension = pathinfo($value, PATHINFO_EXTENSION); 
+		$filename = pathinfo($value, PATHINFO_FILENAME); 
+		$extension = strtolower($extension);
+		$the_value = strtolower($filename);
+
+		if($extension=='css')
+		{			
+			array_push($slideshow_skin,$the_value);
+		}
+	}
+
+	if(function_exists('is_frs_premium_exist')) 
+	{
+		$skins = scandir(ABSPATH . 'wp-content/plugins/'.FRS_PREMIUM_DIR_NAME.'/skins');
+
+		foreach ($skins as $key => $value) {
+
+			$extension = pathinfo($value, PATHINFO_EXTENSION); 
+			$filename = pathinfo($value, PATHINFO_FILENAME); 
+			$extension = strtolower($extension);
+			$the_value = strtolower($filename);
+
+			if($extension=='css')
+			{
+				array_push($slideshow_skin,$the_value.'-PREMIUMtrue');
+			}
+		}
+	}
+
+	return $slideshow_skin;
+}
+
+function get_array_buttonskins()
+{
+    $skins = scandir(dirname(__FILE__)."/buttons");
+
+    $button_skin =  array();
+
+    foreach ($skins as $key => $value) {
+
+        $extension = pathinfo($value, PATHINFO_EXTENSION); 
+        $filename = pathinfo($value, PATHINFO_FILENAME); 
+        $extension = strtolower($extension);
+        $the_value = strtolower($filename);
+
+        if($extension=='css')
+        {
+            array_push($button_skin,$the_value);
+        }
+    }
+
+    if(function_exists('is_frs_premium_exist')) 
+    {
+        $skins = scandir(ABSPATH . 'wp-content/plugins/'.FRS_PREMIUM_DIR_NAME.'/buttons');
+
+        foreach ($skins as $key => $value) {
+
+            $extension = pathinfo($value, PATHINFO_EXTENSION); 
+            $filename = pathinfo($value, PATHINFO_FILENAME); 
+            $extension = strtolower($extension);
+            $the_value = strtolower($filename);
+
+            if($extension=='css')
+            {
+                array_push($button_skin,$the_value.'-PREMIUMtrue');
+            }
+        }
+    }
+
+    return $button_skin;
+}
+
+
+/**
  * Generate shortcode
  */
 
@@ -85,20 +157,18 @@ add_shortcode('pjc_slideshow', 'pjc_gallery_print');
 
 function pjc_gallery_print($attr) 
 {
-	/*
+	/**
  	 * Query get post type
  	 */
-
 	$condition  = array('orderby' => 'CONVERT(tonjoo_frs_order_number,signed) meta_value_num',
 					'order' => 'ASC',
 					'meta_key' => 'tonjoo_frs_order_number',
 					'slide_type' => $attr['slide_type'],
 					'posts_per_page'=>-1);
 
-	/* 
+	/**
 	 * Initialize slug shortcode
 	 */
-
 	$current = get_term_by('name', $attr['slide_type'], 'slide_type', 'ARRAY_A');
 	if($current == NULL)
 	{
@@ -109,15 +179,20 @@ function pjc_gallery_print($attr)
 
 	require (plugin_dir_path(__FILE__) . 'default-options.php');
 
+	/**
+	 * Check skin name is available in skin folder
+	 */
+	$array_skin = get_array_skins();
 
-	if(! isset($options[$current]['skin']))
-	 	$options[$current]['skin']="default";
+	if(! isset($options[$current]['skin']) || ! in_array($options[$current]['skin'], $array_skin))
+	{
+	 	$options[$current]['skin']="frs-skin-default";
+	}
 
 
-	/*
+	/**
 	 * Get skin
 	 */
-
 	if(isset($_GET['skin'])) {
 
 		//Safe yourselef from hacker
@@ -130,14 +205,29 @@ function pjc_gallery_print($attr)
 	$exp = explode('-PREMIUM', $options[$current]['skin']);
 	if(count($exp) > 1 AND $exp[1] == 'true')
 	{
-		$skin = plugins_url("fluid-responsive-slideshow-premium/skins/{$exp[0]}.css");
+		if(function_exists('is_frs_premium_exist'))
+		{
+			$skin = plugins_url(FRS_PREMIUM_DIR_NAME."/skins/{$exp[0]}.css");
 
-		$options[$current]['skin'] = $exp[0];
+			$options[$current]['skin'] = $exp[0];
+		}
+		else
+		{
+			$skin = plugins_url("skins/default.css" , __FILE__ );
+
+			$options[$current]['skin'] = 'default';
+		}		
 	}
 	else
 	{
 		$skin = plugins_url("skins/{$options[$current]['skin']}.css" , __FILE__ );
 	}
+
+	/**
+	 * Skin css enqueue
+	 */
+	wp_enqueue_style("{$options[$current]['skin']}",$skin,array(),FRS_VERSION);
+
 
 
 	if (!$attr) {
@@ -145,7 +235,7 @@ function pjc_gallery_print($attr)
 	}
 
 
-	/*
+	/**
 	 * Check if taxonomy exist
 	 */
 
@@ -168,6 +258,22 @@ function pjc_gallery_print($attr)
 		$attr['slide_type_id'] = $attr['slide_type'] . "pjc";
 
 		$textbox_style = "";
+
+
+		/**
+		 * Slider bullets
+		 */
+		$slider_bullets_skin = array('leaves','bric','prosix');
+		$sbullets = "false";
+
+		$skin_cutted = $options[$current]['skin'];
+		$skin_cutted = explode('-', $skin_cutted);
+		$skin_cutted = $skin_cutted[2];
+
+		if(in_array($skin_cutted,$slider_bullets_skin))
+		{
+			$sbullets = "true";
+		}
 		
 		$javascript = "
 		<!-- Slideshow generated using Fluid-Responsive-Slideshow, http://www.tonjoo.com/wordpress-plugin-fluid-responsive-slideshow-plugin/ -->
@@ -193,22 +299,26 @@ function pjc_gallery_print($attr)
 					navigationSmall: 600,
 					skinClass: '{$options[$current]['skin']}',
 					width: {$options[$current]['width']},
-					height: {$options[$current]['height']}
+					height: {$options[$current]['height']},
+					sbullets: $sbullets,
+					sbulletsItemWidth: 200,
+					continousSliding: false,
+					jsOnly: false
 				});
 				
 				/**
 				 * touchSwipe
 				 */
-				jQuery('#$attr[slide_type_id]-slideshow .slide-img').swipe( 
+				jQuery('#$attr[slide_type_id]-slideshow .frs-slide-img').swipe( 
 				{			    
 			        swipe:function(event, direction, distance, duration, fingerCount) {
 			          	if(direction == 'right')
 			          	{
-			          		$('#$attr[slide_type_id]-slideshow .slider-nav .left').click();
+			          		$('#$attr[slide_type_id]-slideshow .frs-slider-nav .frs-arrow-left').click();
 			          	}
 			          	else if(direction == 'left')
 			          	{
-			          		$('#$attr[slide_type_id]-slideshow .slider-nav .right').click();
+			          		$('#$attr[slide_type_id]-slideshow .frs-slider-nav .frs-arrow-right').click();
 			          	}
 			        },
 			        triggerOnTouchLeave:true
@@ -218,15 +328,16 @@ function pjc_gallery_print($attr)
 		</script>
 		<!--[if lt IE 9]>
 			<style type='text/css'>
-			#$attr[slide_type_id]-slideshow  .timer { display: none !important; }
+			#$attr[slide_type_id]-slideshow  .frs-timer { display: none !important; }
 			#$attr[slide_type_id]-slideshow  div.caption { background:transparent; filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000,endColorstr=#99000000);zoom: 1; }
 			</style>
 		<![endif]-->
 		";
 
+
 		if($options[$current]['show_timer']=="false")
 		{
-			$timer ="#$attr[slide_type_id]-slideshow  .timer { display: none !important; }";
+			$timer ="#$attr[slide_type_id]-slideshow  .frs-timer { display: none !important; }";
 		}
 		else
 		{
@@ -235,7 +346,7 @@ function pjc_gallery_print($attr)
 
  		if($options[$current]['navigation'] == 'false')
  		{
- 			$directionalNav = "#$attr[slide_type_id]-slideshow .slider-nav { display:none; }";
+ 			$directionalNav = "#$attr[slide_type_id]-slideshow .frs-slider-nav { display:none; }";
  		}
  		else
  		{
@@ -243,39 +354,28 @@ function pjc_gallery_print($attr)
  		}
 
 
-
-		
-
-        /*
+        /**
          * Get addon style
          */
-
         $addon_style = "";
-
-
+        $addon_script = "<script type='text/javascript'>jQuery(document).ready(function($){";
 
         require( plugin_dir_path( __FILE__ ) . 'skins.php');
 		
 		require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
-        if(is_plugin_active("fluid-responsive-slideshow-premium/Fluid-Responsive-Slideshow-Premium.php") && function_exists('is_frs_premium_exist')) 
+        if(function_exists('is_frs_premium_exist')) 
 		{
-			$dir_skinphp =  ABSPATH . 'wp-content/plugins/fluid-responsive-slideshow-premium/skins.php';
+			$dir_skinphp =  ABSPATH . 'wp-content/plugins/'.FRS_PREMIUM_DIR_NAME.'/skins.php';
 			require($dir_skinphp);
  		}
-
 
  		$li = isset($li) ? $li : "";
 
 
- 		/*
- 		 * Print style
- 		 */
-
- 		/*
+ 		/**
  		 * Kill Switch Bullet Navigation, only for old template skins
  		 */
-
 		$killswitchBullet =""; 		
 	
  		if($options[$current]['bullet']=='false'){
@@ -304,9 +404,12 @@ function pjc_gallery_print($attr)
 
  		}
 
-        $style="
-		<link rel='stylesheet' href='$skin' type='text/css'>
+ 		$addon_script .= "})</script>";
 
+ 		/**
+ 		 * Print style
+ 		 */
+        $style="		
 		<style>
 		$timer
 		$li		
@@ -315,17 +418,16 @@ function pjc_gallery_print($attr)
 		$directionalNav	
 
 		#$attr[slide_type_id] .frs-wrapper .frs-caption {
-				display:none;
-			}
+			display:none;
+		}
 
 		#$attr[slide_type_id]-slideshow .frs-caption h4, #$attr[slide_type_id]-slideshow .frs-caption-inner h4{
 			font-size:{$options[$current]['textbox_h4_size']}px;
-		    margin:0px;
-		
+		    margin:0px;		
 		}
+
 		#$attr[slide_type_id]-slideshow .frs-caption p, #$attr[slide_type_id]-slideshow .frs-caption-inner p{
-		    margin:0px;
-		
+		    margin:0px;		
 		    font-size:{$options[$current]['textbox_p_size']}px;
 		}
 
@@ -340,16 +442,14 @@ function pjc_gallery_print($attr)
 			line-height: 1.5;
 		}
 
-		$killswitchBullet  
+		$killswitchBullet
 
-		</style>
-		";
+		</style>";
       
 
-		/*
+		/**
 		 * Button skin
 		 */
-
 		if($options[$current]['show_textbox']=="false"){
 			$caption="";
 		}
@@ -366,9 +466,14 @@ function pjc_gallery_print($attr)
 
 		    	$postmeta = get_post_meta($post->ID,'tonjoo_frs_meta',true);
 
-		    	if(! isset($postmeta['button_skin']))
-			 	{
-			 		$postmeta['button_skin'] = 'white';
+		    	/**
+				 * Check button skin name is available in button skin folder
+				 */
+		    	$array_buttonskins = get_array_buttonskins();
+
+				if(! isset($postmeta['button_skin']) || ! in_array($postmeta['button_skin'], $array_buttonskins))
+				{
+			 		$postmeta['button_skin'] = 'frs-buttonskin-white';
 			 	}	
 
 		    	if(! in_array($postmeta['button_skin'], $arr_loaded_button_skin))
@@ -379,41 +484,32 @@ function pjc_gallery_print($attr)
 					$exp = explode('-PREMIUM', $postmeta['button_skin']);
 					if(count($exp) > 1 AND $exp[1] == 'true')
 					{
-						$button_skin = plugins_url("fluid-responsive-slideshow-premium/buttons/{$exp[0]}.css");
+						$button_skin = plugins_url(FRS_PREMIUM_DIR_NAME."/buttons/{$exp[0]}.css");
 			    		$style .= "<link rel='stylesheet' href='$button_skin' type='text/css'>";			    		
 			    	}
 			    	else
 			    	{
-			    		$button_skin = plugins_url("fluid-responsive-slideshow/buttons/{$exp[0]}.css");
+			    		$button_skin = plugins_url(FRS_DIR_NAME."/buttons/{$exp[0]}.css");
 			    		$style .= "<link rel='stylesheet' href='$button_skin' type='text/css'>";
 			    	}
 		    	}
 		    }
 
-			/*
+			/**
 			 * Always reset query after perfor wp query
 			 */
-
 		    wp_reset_query();
 		}
 
-
 		 
-		/*
+		/**
 		 * Loop  the slide
 		 */
-	   
-
         $query = new WP_Query( $condition);
-
-
 	    $slide = "";
 	    
     	while ( $query->have_posts() )
     	{    	
-
-
-
     		$query->the_post();
 
     		$post = get_post(get_the_ID());
@@ -423,22 +519,37 @@ function pjc_gallery_print($attr)
 			$url = $thumb['0'];
 
 
-			/*
+			/**
 			 * Caption
 			 */
-
         	$caption = "";
-        	$arr_position = array('left','right','bottom','center');
+        	$arr_position = array('left','top-left','top','top-right','right','bottom-right','bottom','bottom-left','center','sticky-top','sticky-bottom');
+
+        	foreach ($arr_position as $key => $value) 
+        	{
+        		$arr_position[$key] = "frs-caption-position-".$value;
+        	}
 
 		 	if(! isset($postmeta['text_position']) || ! in_array($postmeta['text_position'], $arr_position))
 		 	{
-		 		$postmeta['text_position'] = 'left';
-		 	}	
+		 		$postmeta['text_position'] = 'frs-caption-position-left';
+		 	}
+		 	/* end caption position options */
 
-		 	if(! isset($postmeta['button_skin']))
+		 	if(! isset($postmeta['textbox_width']))
 		 	{
-		 		$postmeta['button_skin'] = 'white';
-		 	}			 	  	
+		 		$postmeta['textbox_width'] = 5;
+		 	}
+
+		 	/**
+			 * Check button skin name is available in button skin folder
+			 */
+	    	$array_buttonskins = get_array_buttonskins();
+
+			if(! isset($postmeta['button_skin']) || ! in_array($postmeta['button_skin'], $array_buttonskins))
+			{
+		 		$postmeta['button_skin'] = 'frs-buttonskin-white';
+		 	}	 	  	
 		
 			if($postmeta['show_text']=='true')
 			{
@@ -471,36 +582,70 @@ function pjc_gallery_print($attr)
 					$textbox_style .= 'background: none !important;';
 				}
 
-				$frs_caption_style = "$textbox_style";
-				$frs_caption_content_style = "";
+				/* frs-caption-content style */
 
-				if(isset($inner_bg) && $inner_bg == true)
-				{
-					$frs_caption_style = "";
-					$frs_caption_content_style = "padding: 25px; $textbox_style";
-				}
-
-				/* center margin style */
-				$outer_style = "height:100%;width:100%;display:table;";
-				$inner_style = "vertical-align:middle;height:100%;display:table-cell;padding: 20px 0;";
-
-				/** 
-				 * textbox padding 
-				 * Keputusan sementara fungsi ini (Text Box Padding) dimatikan
-            	 * karena akan membingungkan user 
-            	 * lihat juga di custom-meta.php
-				 */
-
-				$postmeta['padding_type'] = 'auto';
+				$textbox_width = ($postmeta['textbox_width'] / 12) * 100;
+				$textbox_padding = "padding:25px;";
 
 				if(isset($postmeta['padding_type']) && $postmeta['padding_type'] == 'manual')
+				{					
+					$textbox_padding = "padding:{$postmeta['textbox_padding']};";
+				}
+				else
 				{
-					$outer_style = "";
-					$inner_style = "padding:{$postmeta['textbox_padding']};";
+					/**
+					 * there is different padding style in some skin with sticky position
+					 */
+					$skin_padding_1 = array('elegant','autum-blue','autum-green','autum-orange',
+											'autum-purple','cherryl-blue','cherryl-green','cherryl-orange',
+											'cherryl-purple');
+					$skin_padding_2 = array('leaves-blue','leaves-green','leaves-orange','leaves-red');
+					$skin_padding_3 = array('modern');
+
+					foreach ($skin_padding_1 as $key => $value) 
+			    	{
+			    		$skin_padding_1[$key] = "frs-skin-".$value;
+			    	}
+
+			    	foreach ($skin_padding_2 as $key => $value) 
+			    	{
+			    		$skin_padding_2[$key] = "frs-skin-".$value;
+			    	}
+
+			    	foreach ($skin_padding_3 as $key => $value) 
+			    	{
+			    		$skin_padding_3[$key] = "frs-skin-".$value;
+			    	}
+
+					if($postmeta['text_position'] == 'frs-caption-position-sticky-bottom')
+					{
+						if(in_array($options[$current]['skin'],$skin_padding_1))
+						{
+							$textbox_padding = "padding:25px 25px 60px 25px;";							
+						}
+						elseif(in_array($options[$current]['skin'],$skin_padding_2))
+						{
+							$textbox_padding = "padding:25px 25px 40px 25px;";
+						}
+					}					
+
+					if($postmeta['text_position'] == 'frs-caption-position-sticky-top')
+					{
+						if(in_array($options[$current]['skin'], $skin_padding_3))
+						{
+							$textbox_padding = "padding:25px 25px 25px 100px;";
+						}
+					}
 				}
 
+				$frs_caption_content_style = "width: $textbox_width%; $textbox_style $textbox_padding";
+
+				/* outer and inner style */
+				$outer_style = "height:100%;width:100%;display:table;";
+				$inner_style = "height:100%;display:table-cell;";
+
 				/* print caption */
-				$caption .= "<div class='frs-caption {$postmeta['text_position']}' style='display: block;$frs_caption_style' id='".$class_name."'>";					
+				$caption .= "<div class='frs-caption {$postmeta['text_position']}' style='display: block;' id='".$class_name."'>";					
 				$caption .= "<div class='frs-caption-outer' style='$outer_style'>";
 				$caption .= "<div class='frs-caption-inner' style='text-align:$text_align $inner_style'>";					
 				$caption .= "<div class='frs-caption-content' style='$frs_caption_content_style'>";
@@ -519,7 +664,7 @@ function pjc_gallery_print($attr)
 				{
 					$button_skin = explode('-PREMIUM', $postmeta['button_skin']);
 
-					$caption .= "<p style='padding-bottom:0px;text-align:$text_align' class='caption-button {$button_skin[0]}'><a href='{$postmeta['button_href']}'>";
+					$caption .= "<p style='padding-bottom:0px;text-align:$text_align' class='frs-caption-button {$button_skin[0]}'><a href='{$postmeta['button_href']}'>";
 					$caption .= "<span>{$postmeta['button_caption']}</span></a></p>";
 				}
 
@@ -533,7 +678,6 @@ function pjc_gallery_print($attr)
 			/**
 			 * Print slides
 			 */
-
 			$slider_style = "";			
 
 			if(! isset($postmeta['slider_bg']))
@@ -543,7 +687,7 @@ function pjc_gallery_print($attr)
 
 			$slider_style = "style = 'display:none;background:{$postmeta['slider_bg']}'";
 			
-			$slide .= "<div class='slide-img' $slider_style >";
+			$slide .= "<div class='frs-slide-img' $slider_style >";
 
 			if(! empty($url))
 			{
@@ -559,14 +703,19 @@ function pjc_gallery_print($attr)
 
         } //end get slide
 
+
+        /**
+         * custom css
+         */
+        $style .= "<style>{$options[$current]["custom_css"]}</style>";
+
 		
 		/**
 		 * frs-slideshow-container, css width and height must be declared!
 		 */
-
 		$html ="
 		<div class='frs-slideshow-container' id='{$attr['slide_type_id']}'> 
-			<div class='slide-img-wrapper' style='display:none;'>
+			<div class='frs-slide-img-wrapper' style='display:none;'>
 				$slide
 			</div>
 		</div>";
@@ -577,10 +726,9 @@ function pjc_gallery_print($attr)
 		/**
 		 * Return shortcode
 		 */
-
 		if($query->have_posts()) 
 		{
-			$shortcode = $style.$javascript.$html;
+			$shortcode = $style.$javascript.$html.$addon_script;
 		}
 		else
 		{

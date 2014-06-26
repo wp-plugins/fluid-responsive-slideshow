@@ -9,11 +9,13 @@
  *License: GPLv2
  *Contributor: Saga Iqranegara, Haris Ainur Rozak
  * 
-*/																																										
+ */																																										
 																																																																																						
 /*
  * Call other file for this plugin
  */
+
+define('FRS_DIR_NAME', str_replace("/Fluid-Responsive-Slideshow.php", "", plugin_basename(__FILE__)));
 
 require_once( plugin_dir_path( __FILE__ ) . 'shortcode.php');
 require_once( plugin_dir_path( __FILE__ ) . 'post-list.php');
@@ -22,14 +24,12 @@ require_once( plugin_dir_path( __FILE__ ) . 'submenu.php');
 require_once( plugin_dir_path( __FILE__ ) . 'tonjoo-library.php');
 require_once( plugin_dir_path( __FILE__ ) . 'ajax.php');
 require_once( plugin_dir_path( __FILE__ ) . 'modal.php');
-require_once( plugin_dir_path( __FILE__ ) . 'frs-upload.php');
-        
 
- /*
+/*
  *  Save plugin version on db on plugin installation
  */
 
- define('FRS_VERSION','1.0.0');
+define('FRS_VERSION','1.0.0');
 
 /*
  * Add featured image support for this plugin
@@ -37,8 +37,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'frs-upload.php');
 
 add_action('after_setup_theme','after_setup_theme_pjc',5);
 
-function after_setup_theme_pjc(){
-	
+function after_setup_theme_pjc(){	
 
 	//check if post-thumbnails support defined
 	if(isset($_wp_theme_features['post-thumbnails'])){
@@ -155,7 +154,7 @@ function frs_manage_slide_type_column($out, $column_name, $slide_type_id) {
 
 add_filter("manage_slide_type_custom_column", 'frs_manage_slide_type_column', 10, 3);
 
-/*
+/**
  * Register Info Box (Meta Box) and option sub-menu
  */
 
@@ -163,28 +162,22 @@ add_action( 'admin_menu', 'pjc_slideshow_admin' );
 
 function pjc_slideshow_admin() {
 	
-	new FrsUploader(array('page' => 'frs-setting-page', 'page_type' => 'page'));
+    // add_meta_box( $id, 
+    // $title, 
+    // $callback, 
+    // $post_type, $context, $priority, $callback_args );
+	wp_enqueue_media();
 	
-	
-   // add_meta_box( $id, 
-   // $title, 
-   // $callback, 
-   // $post_type, $context, $priority, $callback_args );
-
-
-	
-	/*
-    * Register css and javascript for admin page
-    */
+    /**
+     * Register css and javascript for admin page
+     */
 	wp_enqueue_style('frs-admin-css',plugin_dir_url( __FILE__ )."css/frs-admin.css",array(),FRS_VERSION);
-
 	wp_enqueue_style('colorpicker-css',plugin_dir_url( __FILE__ )."css/jquery.miniColors.css",array(),FRS_VERSION);   
-
-	wp_enqueue_script('colorpicker-mini',plugin_dir_url( __FILE__ )."js/jquery.miniColors.js",array(),FRS_VERSION);  
-	
+	wp_enqueue_script('colorpicker-js',plugin_dir_url( __FILE__ )."js/jquery.miniColors.js",array(),FRS_VERSION);  	
 	wp_enqueue_script('select2-js',plugin_dir_url( __FILE__ )."js/select2.js",array(),FRS_VERSION);  
 
-  wp_enqueue_style('frs-css',plugin_dir_url( __FILE__ )."css/frs.css",array(),FRS_VERSION);      
+    wp_enqueue_style('frs-css',plugin_dir_url( __FILE__ )."css/frs.css",array(),FRS_VERSION);      
+    wp_enqueue_style('frs-position',plugin_dir_url( __FILE__ )."css/frs-position.css",array(),FRS_VERSION);      
 	
 	$is_post_page = get_query_var( 'post' ) ? get_query_var( 'post' ) : false;
 
@@ -199,12 +192,16 @@ function pjc_slideshow_admin() {
 		    }
 		   	else
 		   	{
+                /* configuration page */
 		   		wp_enqueue_style('select2-css',plugin_dir_url( __FILE__ )."css/select2-pure.css",array(),FRS_VERSION);
-		   	}
+                wp_enqueue_script('ace-js',plugin_dir_url( __FILE__ )."js/ace-min-noconflict-css-monokai/ace.js",array(),FRS_VERSION);
+            }
 		}
-		else
+		else if(isset($_GET['page']) && $_GET['page'] == "frs-setting-page" && ! isset($_GET['tabtype']))
 		{
-			wp_enqueue_style('select2-css',plugin_dir_url( __FILE__ )."css/select2-pure.css",array(),FRS_VERSION);
+            /* configuration page */
+            wp_enqueue_style('select2-css',plugin_dir_url( __FILE__ )."css/select2-pure.css",array(),FRS_VERSION);
+			wp_enqueue_script('ace-js',plugin_dir_url( __FILE__ )."js/ace-min-noconflict-css-monokai/ace.js",array(),FRS_VERSION);
 		}
 	}
 	else
@@ -213,7 +210,7 @@ function pjc_slideshow_admin() {
 	}
 
 	wp_enqueue_script('jquery');  
-	wp_enqueue_script('tonjoo_frs_admin',plugin_dir_url( __FILE__ )."js/tonjoo_frs_admin.js",array(),FRS_VERSION);  
+	wp_enqueue_script('frs-admin-js',plugin_dir_url( __FILE__ )."js/tonjoo_frs_admin.js",array(),FRS_VERSION);  
 
 
 
@@ -227,7 +224,8 @@ function pjc_slideshow_admin() {
 add_action('wp_head','frs_add_main_css');
 
 function frs_add_main_css(){
-  wp_enqueue_style('frs-css',plugin_dir_url( __FILE__ )."css/frs.css",array(),FRS_VERSION);      
+    wp_enqueue_style('frs-css',plugin_dir_url( __FILE__ )."css/frs.css",array(),FRS_VERSION);  
+    wp_enqueue_style('frs-position',plugin_dir_url( __FILE__ )."css/frs-position.css",array(),FRS_VERSION);          
 }
 
 /*
@@ -237,8 +235,8 @@ function frs_add_main_css(){
 add_action('admin_enqueue_scripts', 'frs_validation_js');   
 
 function frs_validation_js(){    
-  wp_enqueue_script('jquery_validate_js', plugin_dir_url( __FILE__ )."js/jquery.validate.js", array('jquery'),FRS_VERSION);
-  wp_enqueue_script('validate_action_js', plugin_dir_url( __FILE__ )."js/validate_action.js",array(),FRS_VERSION);
+    wp_enqueue_script('jquery_validate_js', plugin_dir_url( __FILE__ )."js/jquery.validate.js", array('jquery'),FRS_VERSION);
+    wp_enqueue_script('validate_action_js', plugin_dir_url( __FILE__ )."js/validate_action.js",array(),FRS_VERSION);
 }
 
 
@@ -401,61 +399,41 @@ function frs_set_default_values( $post_content, $post ) {
 add_action( 'template_redirect', 'wpse_128636_redirect_post' );
 
 function wpse_128636_redirect_post() {
-  $queried_post_type = get_query_var('post_type');
-  if ( is_single() && 'pjc_slideshow' ==  $queried_post_type ) {
+    $queried_post_type = get_query_var('post_type');
+    if ( is_single() && 'pjc_slideshow' ==  $queried_post_type ) {
     wp_redirect( home_url(), 301 );
-    exit;
-  }
+        exit;
+    }
 }
 
-//https://github.com/anteprimorachr/js-wp-editor
-function tonjoo_js_wp_editor( $settings = array() ) {
-	if ( ! class_exists( '_WP_Editors' ) )
-		require( ABSPATH . WPINC . '/class-wp-editor.php' );
-
-	$set = _WP_Editors::parse_settings( 'apid', $settings );
-
-	$set['media_buttons'] = false;
-
-	_WP_Editors::editor_settings( 'apid', $set );
-
-	$ap_vars = array(
-		'url' => get_home_url(),
-		'includes_url' => includes_url()
-	);
-
-	wp_register_script( 'ap_wpeditor_init', plugin_dir_url( __FILE__ ).'js/js-wp-editor.min.js', array( 'jquery' ), '1.1', true );
-	wp_localize_script( 'ap_wpeditor_init', 'ap_vars', $ap_vars );
-	wp_enqueue_script( 'ap_wpeditor_init' );
-}
 
 /*
  * Dummy Class 
  */
 
 class FRSPost{
-  public $ID;
-  public $post_author;
-  public $post_date;
-  public $post_date_gmt;
-  public $post_content;
-  public $post_title;
-  public $post_excerpt;
-  public $post_status;
-  public $comment_status;
-  public $ping_status;
-  public $post_password;
-  public $post_name;
-  public $to_ping;
-  public $pinged;
-  public $post_modified;
-  public $post_modified_gmt;
-  public $post_content_filtered;
-  public $post_parent;
-  public $guid;
-  public $menu_order;
-  public $post_type;
-  public $post_mime_type;
-  public $comment_count;
-  public $filter;
+    public $ID;
+    public $post_author;
+    public $post_date;
+    public $post_date_gmt;
+    public $post_content;
+    public $post_title;
+    public $post_excerpt;
+    public $post_status;
+    public $comment_status;
+    public $ping_status;
+    public $post_password;
+    public $post_name;
+    public $to_ping;
+    public $pinged;
+    public $post_modified;
+    public $post_modified_gmt;
+    public $post_content_filtered;
+    public $post_parent;
+    public $guid;
+    public $menu_order;
+    public $post_type;
+    public $post_mime_type;
+    public $comment_count;
+    public $filter;
 }

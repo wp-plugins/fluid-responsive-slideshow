@@ -3,7 +3,6 @@
 if ( ! function_exists( 'tj_print_select_option' ) ) :
 function tj_print_select_option($options){
 
-	$p = "";
 	$r = "";
 
 
@@ -11,7 +10,7 @@ function tj_print_select_option($options){
 		$label = $select['label'];
 
 		if ( $options['value'] == $select['value'] ) // Make default first in list
-			$p = "<option selected='selected' value='" . esc_attr( $select['value'] ) . "'>$label</option>";
+			$r .= "<option selected='selected' value='" . esc_attr( $select['value'] ) . "'>$label</option>";
 		else
 			$r .= "<option value='" . esc_attr( $select['value'] ) . "'>$label</option>";
 	}
@@ -23,7 +22,7 @@ function tj_print_select_option($options){
 						<th scope='row'>{$options['label']}</th>
 						<td>
 							<select name='{$options['name']}'>
-							{$p}{$r}
+							{$r}
 							</select>
 							<label class='description' >{$options['description']}</label>
 						</td>

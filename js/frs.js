@@ -1,4 +1,4 @@
-/*
+/**
  * Tonjoo Fluid Responsive Slideshow
  * Copyright 2013, Tonjoo
  * Free to use under the MIT license.
@@ -30,11 +30,15 @@
             'skinClass': 'default',
             'width': 650,
             'height': 350,
+            'sbullets': false,
+            'sbulletsItemWidth': 200,
+            'continousSliding': false,
+            'jsOnly': false,
             'slideParameter': []
         };
 
 
-        //Extend those options
+        // Extend those options
         var options = jQuery.extend(defaults, options);
 
         frs_id = "#" + this.attr("id") + "-slideshow";
@@ -44,9 +48,9 @@
             // ==============
             // ! SETUP   
             // ==============
-
-            //Global Variables
+            // Global Variables
             var activeSlide = 0,
+                activeSlideContinous = 0,
                 numberSlides = 0,
                 frsWidth,
                 frsHeight,
@@ -54,15 +58,18 @@
                 caption_position,
                 timeout;
 
-            //Initialize
-            var slideWrapper = jQuery(this).children('.slide-img-wrapper').addClass('slide-img-wrapper');
+            // Initialize
+            var slideWrapper = jQuery(this).children('.frs-slide-img-wrapper').addClass('frs-slide-img-wrapper');
             var frs = slideWrapper.wrap('<div class="frs-slideshow-content" />').parent();            
             var frsWrapper = frs.wrap('<div id="' + jQuery(this).attr("id") + '-slideshow" class="frs-wrapper ' + options.skinClass.toLowerCase() + '" />').parent();
-            
-            //Lock slider before all content loaded
-            lock();
+            var first_run = true
+            var old_responsive_class = 'responsive-full'
+            var responsiveClassLock = false
 
-            //Initialize and show slider after all content loaded
+            //Lock slider before all content loaded
+            frs_slider_lock();
+
+            // Initialize and show slider after all content loaded
             jQuery(slideWrapper.children()).imagesLoaded( function() {
                 slideWrapper.fadeIn(function(){
                     jQuery(this).css({"display": "block"});
@@ -76,11 +83,11 @@
                     jQuery(this).css({"display": "block"});
                 })
 
-                frsWrapper.children('.timer').fadeIn(function(){
+                frsWrapper.children('.frs-timer').fadeIn(function(){
                     jQuery(this).css({"display": "block"});
                 })
 
-                frsWrapper.children('.slider-nav').fadeIn(function(){
+                frsWrapper.children('.frs-slider-nav').fadeIn(function(){
                     jQuery(this).css({"display": "block"});
                 })
 
@@ -88,7 +95,7 @@
                     jQuery(this).css({"display": "block"});
 
                     //unlock event in last displayed element
-                    unlock();
+                    frs_slider_unlock();
                 })
             })
 
@@ -105,33 +112,33 @@
 
             frs.add(frsWidth)
 
-            //Collect all slides and set slider size of largest image
+            // Collect all slides and set slider size of largest image
             var slides = slideWrapper.children('div');
 
-            //count slide
+            // Count slide
             slides.each(function (index,slide) {
 
                 numberSlides++;
             });
 
-            //Animation locking functions
-            function unlock() {
+            // Animation locking functions
+            function frs_slider_unlock() {
                 locked = false;
             }
 
-            function lock() {
+            function frs_slider_lock() {
                 locked = true;
             }
 
-            //If there is only a single slide remove nav, timer and bullets
+            // If there is only a single slide remove nav, timer and bullets
             if (slides.length == 1) {
                 options.directionalNav = false;
                 options.timer = false;
                 options.bullets = false;
             }
 
-            //Set initial front photo z-index and fades it in
-            if(! css3support())
+            // Set initial front photo z-index and fades it in
+            if(options.continousSliding)
             {
                 slides.eq(activeSlide)
                     .css({
@@ -149,67 +156,12 @@
 
 
 
-            // ====================================
-            // ! RESIZE WINDOWS EVENT: RESPONSIVE   
-            // ====================================
-            
-            jQuery(window).bind('resize.frs-slideshow-container', function(event, force) {
-                calculateHeightWeight();
-
-                /**
-                 * resize elements
-                 */
-                slides.width(frsWidth);                
-                slides.height(frsHeight);
-                slides.children('img').width(frsWidth);
-
-                /* resize wrapper */
-                frs.css({'height': frsHeight + 'px'});
-                frsWrapper.parent().css({'height': frsHeight + 'px'});
-
-                if(css3support())
-                {
-                    if(options.animation == "horizontal-slide")
-                    {
-                        slideWrapper.css({
-                            'width': options.width * numberSlides + 'px'
-                        });
-
-                        var slide_action = frsWidth * activeSlide < numberSlides * frsWidth ? '-' + frsWidth * activeSlide : 0 ;
-
-                        /** Stabilize slide position */
-                        var properties = {};
-                        properties[ '-' + vendorPrefix + '-transform' ] = 'translate3d('+ slide_action +'px, 0, 0)';
-
-                        slides.parent().css(properties);
-                    }
-                    else if(options.animation == "vertical-slide")
-                    {
-                        slideWrapper.css({
-                            'height': options.height * numberSlides + 'px'
-                        });
-
-                        var slide_action = frsHeight * activeSlide < numberSlides * frsHeight ? '-' + frsHeight * activeSlide : 0 ;
-
-                        /** Stabilize slide position */
-                        var properties = {};
-                        properties[ '-' + vendorPrefix + '-transform' ] = 'translate3d(0, '+ slide_action +'px, 0)';
-
-                        slides.parent().css(properties);
-                    }
-                }
-            });
-
-            jQuery(window).trigger('resize.frs-slideshow-container', true);
-
-
-
             // ====================
             // ! CALCULATE SIZE   
             // ====================
-            function calculateHeightWeight() 
+            function calculateHeightWidth() 
             {
-                frsWidth = frs.outerWidth();
+                frsWidth = frs.innerWidth();
 
                 var minus_resize = options.width - frsWidth;
                 var percent_minus = (minus_resize / options.width) * 100;
@@ -229,21 +181,25 @@
                 for ( var i in props ) {
                     if ( typeof element.style[ props[ i ] ] !== 'undefined' ) {
                         vendorPrefix = props[i].replace('Perspective', '').toLowerCase();
-                        return true;
+                        return options.jsOnly ? false : true;
                     }
                 }
 
                 return false;
             };
 
-            if(css3support())
+
+
+            // ================
+            // ! SETUP LAYOUT
+            // ================
+            calculateHeightWidth();
+            var grouped_slideshow = "";
+
+            if(! options.continousSliding)
             {
                 if(options.animation == "horizontal-slide")
                 {
-                    calculateHeightWeight();
-
-                    slides.parent().css({"width": frsWidth * numberSlides + "px", "height": frsHeight + "px"});
-
                     slides.css({
                         "position": "relative",
                         "float": "left",
@@ -251,11 +207,11 @@
                         "width": frsWidth + "px",
                         "height": + "100%"
                     });
+                   
+                    slides.parent().css({"width": frsWidth * numberSlides + "px", "height": frsHeight + "px"});
                 }
                 else if(options.animation == "vertical-slide")
                 {
-                    calculateHeightWeight();
-
                     slides.parent().css({"width": frsWidth + "px", "height": frsHeight * numberSlides + "px"});
 
                     slides.css({
@@ -267,8 +223,6 @@
                 }
                 else if(options.animation == "fade")
                 {
-                    calculateHeightWeight();
-
                     slides.parent().css({"width": frsWidth + "px", "height": frsHeight + "px"});
 
                     slides.css({
@@ -300,44 +254,52 @@
 
 
             //Timer Execution
-            function startClock() {
+            function startCfrs_slider_lock() {
                 if (!options.timer || options.timer == 'false') {
                     return false;
-                    //if timer is hidden, don't need to do crazy calculations
-                } else if (timer.is(':hidden')) {
+                                
+                /**
+                 * Because in startup timer is always hidden
+                 * use this if you want to change the behaviour
+                 *
+                 * } else if (timer.is(':hidden')) {
+                 *       timerRunning = true;
+                 *       clock = setInterval(function (e) {
+                 *
+                 *           shift("next");
+                 *
+                 *      }, options.advanceSpeed);
+                 *
+                 */
+
+                } else if(! css3support()) {
                     timerRunning = true;
+                    pause.removeClass('frs-timer-active')
                     clock = setInterval(function (e) {
-
+                
                         shift("next");
-
+                
                     }, options.advanceSpeed);
-                    //if timer is visible and working, let's do some math
                 } else {
                     timerRunning = true;
-                    pause.removeClass('active')
+                    pause.removeClass('frs-timer-active')
                     clock = setInterval(function (e) {
 
                         var degreeCSS = "rotate(" + degrees + "deg)"
-                        rotator.css({
-                            "-webkit-transform": degreeCSS,
-                            "-ms-transform": degreeCSS,
-                            "-moz-transform": degreeCSS,
-                            "-o-transform": degreeCSS
-                        });
+                        rotator.css('-' + vendorPrefix + '-transform', degreeCSS);
                         degrees += 1
                         if (degrees >= 180) {
 
-                            mask.addClass('move')
-                            rotator.addClass('move')
+                            mask.addClass('frs-timer-move')
+                            rotator.addClass('frs-timer-move')
                             mask_turn.css("display", "block")
-
 
                         }
                         if (degrees >= 360) {
 
                             degrees = 0;
-                            mask.removeClass('move')
-                            rotator.removeClass('move')
+                            mask.removeClass('frs-timer-move')
+                            rotator.removeClass('frs-timer-move')
                             mask_turn.css("display", "none")
 
                             shift("next");
@@ -346,37 +308,36 @@
                 }
             }
 
-            function stopClock() {
+            function stop_slider_lock() {
                 if (!options.timer || options.timer == 'false') {
                     return false;
                 } else {
                     timerRunning = false;
                     clearInterval(clock);
-                    pause.addClass('active');
+                    pause.addClass('frs-timer-active');
                 }
             }
 
 
-
-            //Timer Setup
+            // Timer Setup
             if (options.timer) {
-                var timerHTML = '<div class="timer"><span class="mask"><span class="rotator"></span></span><span class="mask-turn"></span><span class="pause"></span></div>'
+                var timerHTML = '<div class="frs-timer"><span class="frs-timer-mask"><span class="frs-timer-rotator"></span></span><span class="frs-timer-mask-turn"></span><span class="frs-timer-pause"></span></div>'
                 frsWrapper.append(timerHTML);
-                var timer = frsWrapper.children('div.timer'),
+                var timer = frsWrapper.children('div.frs-timer'),
                     timerRunning;
                 if (timer.length != 0) {
-                    var rotator = jQuery(frs_id + ' div.timer span.rotator'),
-                        mask = jQuery(frs_id + ' div.timer span.mask'),
-                        mask_turn = jQuery(frs_id + ' div.timer span.mask-turn'),
-                        pause = jQuery(frs_id + ' div.timer span.pause'),
+                    var rotator = jQuery(frs_id + ' div.frs-timer span.frs-timer-rotator'),
+                        mask = jQuery(frs_id + ' div.frs-timer span.frs-timer-mask'),
+                        mask_turn = jQuery(frs_id + ' div.frs-timer span.frs-timer-mask-turn'),
+                        pause = jQuery(frs_id + ' div.frs-timer span.frs-timer-pause'),
                         degrees = 0,
                         clock;
-                    startClock();
+                    startCfrs_slider_lock();
                     timer.click(function () {
                         if (!timerRunning) {
-                            startClock();
+                            startCfrs_slider_lock();
                         } else {
-                            stopClock();
+                            stop_slider_lock();
                         }
                     });
                     if (options.startClockOnMouseOut) {
@@ -385,7 +346,7 @@
 
                             outTimer = setTimeout(function () {
                                 if (!timerRunning) {
-                                    startClock();
+                                    startCfrs_slider_lock();
                                 }
                             }, options.startClockOnMouseOutAfter)
                         })
@@ -396,11 +357,11 @@
                 }
             }
 
-            //Pause Timer on hover
+            // Pause Timer on hover
             if (options.pauseOnHover) {
                 frsWrapper.mouseenter(function () {
 
-                    stopClock();
+                    stop_slider_lock();
                 });
             }
 
@@ -409,39 +370,37 @@
             // ==================
             // ! DIRECTIONAL NAV   
             // ==================
-
-            //DirectionalNav { rightButton --> shift("next"), leftButton --> shift("prev");
+            // DirectionalNav { rightButton --> shift("next"), leftButton --> shift("prev");
             if (options.directionalNav) {
                 if (options.directionalNav == "false") {
                     return false;
                 }
-                var directionalNavHTML = '<div class="slider-nav ' + caption_position + '"><span class="right">›</span><span class="left">‹</span></div>';
+                var directionalNavHTML = '<div class="frs-slider-nav ' + caption_position + '"><span class="frs-arrow-right">›</span><span class="frs-arrow-left">‹</span></div>';
                 frsWrapper.append(directionalNavHTML);
-                var leftBtn = frsWrapper.children('div.slider-nav').children('span.left'),
-                    rightBtn = frsWrapper.children('div.slider-nav').children('span.right');
+                var leftBtn = frsWrapper.children('div.frs-slider-nav').children('span.frs-arrow-left'),
+                    rightBtn = frsWrapper.children('div.frs-slider-nav').children('span.frs-arrow-right');
                 leftBtn.click(function () {
-                    stopClock();
+                    stop_slider_lock();
                     shift("prev");
                 });
                 rightBtn.click(function () {
-                    stopClock();
+                    stop_slider_lock();
                     shift("next")
                 });
             }
-
 
             if (options.navigationSmall) {
 
                 jQuery(window).resize(function () {
                     if (jQuery(window).width() < options.navigationSmallTreshold) {
-                        frs.siblings("div.slider-nav").addClass('small')
+                        frs.siblings("div.frs-slider-nav").addClass('small')
                     } else {
-                        frs.siblings("div.slider-nav").removeClass('small')
+                        frs.siblings("div.frs-slider-nav").removeClass('small')
                     }
                 });
 
                 if (frs.width() < options.navigationSmallTreshold) {
-                    frs.siblings("div.slider-nav").addClass('small')
+                    frs.siblings("div.frs-slider-nav").addClass('small')
                 }
             }
 
@@ -450,11 +409,15 @@
             // ==================
             // ! BULLET NAV   
             // ==================
-
-            //Bullet Nav Setup
-            if (options.bullets) {
-
+            if (options.bullets) 
+            {                
                 var bulletHTML = '<ul class="frs-bullets"></ul>';
+
+                if(options.sbullets)
+                {
+                    bulletHTML = '<ul class="frs-bullets frs-sbullets"></ul>';
+                }
+
                 var bulletHTMLWrapper = "<div class='frs-bullet-wrapper'></div>";
                 frsWrapper.append(bulletHTML);
 
@@ -473,7 +436,7 @@
                     frsWrapper.children('ul.frs-bullets').append(liMarkup);
                     liMarkup.data('index', i);
                     liMarkup.click(function () {
-                        stopClock();
+                        stop_slider_lock();
                         shift(jQuery(this).data('index'));
                     });
                 }
@@ -482,12 +445,215 @@
                 setActiveBullet();
             }
 
-            //Bullet Nav Execution
+
+
+            /**
+             * SLIDING BULLETS
+             */
+            var sbullets = 0;
+            var bulletsWalkingWidth = 0;            
+            var bulletsMaxShowedIndex = 0;
+            var bulletsBackChild = 0;
+            var bulletsNextChild = 0;
+            var bulletsOffsetWidth = 0;
+            var bulletsPosition = 0;                        
+            var bulletsOffsetIsTooLarge = false;
+            var bulletsWidth = 0;
+
+            var each_width = options.sbulletsItemWidth;
+            var total_width = each_width * numberSlides;
+            
+            /** 
+             * generate slide bullet 
+             * this function will be recall every slideshow resized
+             */
+            function generate_slide_bullet()
+            {
+                sbullets = frsWrapper.find('ul.frs-sbullets');
+
+                bulletsWalkingWidth = 0;
+                bulletsMaxShowedIndex = 0;
+                bulletsBackChild = 0;
+                bulletsNextChild = 0;
+                bulletsOffsetWidth = 0;
+                bulletsPosition = 0;                        
+                bulletsOffsetIsTooLarge = false;              
+                bulletsWidth = sbullets.parent().outerWidth(true);
+
+                if(bulletsWidth > total_width)
+                {
+                    each_width = bulletsWidth / numberSlides;
+                    total_width = each_width * numberSlides;
+                }
+                                
+                sbullets.parent().css('overflow', 'hidden');
+                sbullets.css('background-color', sbullets.children('li').last().css("background-color"));
+                sbullets.children('li.frs-slideshow-nav-bullets').css('width',each_width + 'px');                
+                sbullets.css('width', total_width + 'px');
+
+                sbullets.find('li').each(function () {
+                    bulletsWalkingWidth += each_width;
+
+                    if (bulletsWalkingWidth + each_width > bulletsWidth) 
+                    {
+                        bulletsNextChild = jQuery(this).index();
+                        bulletsMaxShowedIndex = bulletsNextChild;
+                    }
+                    
+                    if (bulletsWalkingWidth > bulletsWidth) 
+                    {
+                        jQuery(this).addClass('frs-bullet-sliding-next');
+                        bulletsOffsetWidth = bulletsWalkingWidth - bulletsWidth;
+
+                        /* detect if bullets offset is too large */
+                        if(bulletsOffsetWidth > (each_width / 2))
+                        {
+                            bulletsOffsetIsTooLarge = true;
+                        }
+
+                        return false;
+                    }
+                });
+            }
+
+            function slide_bullet(navigate)
+            {
+                if(navigate == 'next')
+                {
+                    if(sbullets.children('li').eq(numberSlides - 1).hasClass("frs-bullet-sliding-next"))
+                    {
+                        bulletsNavPixelWidth = (each_width * bulletsPosition) + bulletsOffsetWidth;
+                    }
+                    else
+                    {
+                        sbullets.children('li').removeClass('frs-bullet-sliding-back').removeClass('frs-bullet-sliding-next');
+
+                        bulletsPosition++;
+                        bulletsBackChild++;
+                        bulletsNextChild++;
+
+                        bulletsNavPixelWidth = (each_width * bulletsPosition) + bulletsOffsetWidth;
+                    }
+
+                    if(bulletsOffsetIsTooLarge == true)
+                    {
+                        // sbullets.children('li').eq(bulletsBackChild + 1).addClass('frs-bullet-sliding-back');
+                    }                    
+                }
+                else if(navigate == 'back')
+                {
+                    sbullets.children('li').removeClass('frs-bullet-sliding-back').removeClass('frs-bullet-sliding-next');
+
+                    bulletsPosition--;
+                    bulletsBackChild--;
+                    bulletsNextChild--;
+
+                    bulletsNavPixelWidth = each_width * bulletsPosition;
+
+                    if(bulletsOffsetIsTooLarge == true)
+                    {
+                        // sbullets.children('li').eq(bulletsNextChild - 1).addClass('frs-bullet-sliding-next');
+                    }
+                }
+                else if(navigate == 'first')
+                {
+                    sbullets.children('li').removeClass('frs-bullet-sliding-back').removeClass('frs-bullet-sliding-next');
+
+                    bulletsPosition = 0;
+                    bulletsBackChild = 0;                    
+                    bulletsNextChild = bulletsMaxShowedIndex;
+
+                    bulletsNavPixelWidth = each_width * bulletsPosition;
+
+                    if(bulletsOffsetIsTooLarge == true)
+                    {
+                        // sbullets.children('li').eq(bulletsNextChild - 1).addClass('frs-bullet-sliding-next');
+                    }
+                }
+                else if(navigate == 'last')
+                {
+                    sbullets.children('li').removeClass('frs-bullet-sliding-back').removeClass('frs-bullet-sliding-next');
+
+                    var numberBulletsByIndex = numberSlides - 1;
+
+                    bulletsPosition = numberBulletsByIndex - bulletsMaxShowedIndex;
+                    bulletsBackChild = numberBulletsByIndex - bulletsMaxShowedIndex;
+                    bulletsNextChild = numberBulletsByIndex;
+
+                    bulletsNavPixelWidth = (each_width * bulletsPosition) + bulletsOffsetWidth;
+
+                    if(bulletsOffsetIsTooLarge == true)
+                    {
+                        // sbullets.children('li').eq(bulletsBackChild + 1).addClass('frs-bullet-sliding-back');
+                    }
+                }
+                
+                if(css3support())
+                {
+                    var properties = {};
+                    properties[ '-' + vendorPrefix + '-transition-duration' ] = options.animationSpeed + 'ms';
+                    properties[ '-' + vendorPrefix + '-transform' ] = 'translate3d(-' + bulletsNavPixelWidth + 'px, 0, 0)';
+
+                    sbullets.css(properties);
+                }
+                else
+                {
+                    sbullets
+                        .animate({
+                            "left": '-' + bulletsNavPixelWidth + 'px'
+                        }, options.animationSpeed);
+                }
+                
+                // Apply class to bullet
+                sbullets.children('li').eq(bulletsBackChild).addClass('frs-bullet-sliding-back');
+                sbullets.children('li').eq(bulletsNextChild).addClass('frs-bullet-sliding-next');
+            }
+
+
+            /**
+             * SET ACTIVE BULLETS
+             */
             function setActiveBullet() {
                 if (!options.bullets) {
                     return false;
                 } else {
-                    bullets.children('li').removeClass('active').eq(activeSlide).addClass('active');
+                    bullets.children('li').removeClass('frs-bullets-active').eq(activeSlide).addClass('frs-bullets-active');
+
+                    /**
+                     * begin slide bullets
+                     */
+                    if(options.sbullets)
+                    {
+                        if(bullets.children('li.frs-bullets-active').hasClass('frs-bullet-sliding-next'))
+                        {
+                            slide_bullet('next');
+                        }
+                        else if(bullets.children('li.frs-bullets-active').hasClass('frs-bullet-sliding-back'))
+                        {
+                            if(bullets.children('li.frs-bullets-active').index() > 0)
+                            {
+                                slide_bullet('back');
+                            }
+                            else
+                            {
+                                slide_bullet('first');
+                            }  
+                        }
+                        else
+                        {
+                            if(bulletsMaxShowedIndex > 0)
+                            {
+                                if(bullets.children('li.frs-bullets-active').index() == 0)
+                                {
+                                    slide_bullet('first');
+                                }
+                                else if(bullets.children('li.frs-bullets-active').index() == (numberSlides-1))
+                                {
+                                    slide_bullet('last');
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
@@ -497,40 +663,47 @@
             // ====================
             function set_caption_position()
             {
-                caption_position = slides.eq(activeSlide).find('div.frs-caption').attr('class').replace('frs-caption ','');
+                caption_position = slides.eq(activeSlide).find('div.frs-caption');
+
+                if(caption_position.length)
+                {
+                    caption_position = caption_position.attr('class').replace('frs-caption ','');
+                }
+                else
+                {
+                    caption_position = "undefined";
+                }
 
                 //set active caption position to bullet and navigation
                 frsWrapper.find('div.frs-bullets-wrapper').attr('class', 'frs-bullets-wrapper ' + caption_position);
-                frsWrapper.find('div.slider-nav').attr('class', 'slider-nav ' + caption_position);
+                frsWrapper.find('div.frs-slider-nav').attr('class', 'frs-slider-nav ' + caption_position);
             }
 
 
             // ====================
             // ! SHIFT ANIMATIONS   
             // ====================
-            function shift(direction) {
-
-                //remember previous activeSlide
+            function shift(direction) 
+            {
+                // remember previous activeSlide
                 var prevActiveSlide = activeSlide,
                     slideDirection = direction;
-                //exit function if bullet clicked is same as the current image
+                // exit function if bullet clicked is same as the current image
                 if (prevActiveSlide == slideDirection) {
                     return false;
                 }
-                //reset Z & Unlock
+                // reset Z & Unlock
                 function resetAndUnlock() {
-                    slides
-                        .eq(prevActiveSlide)
-                        .css({
-                            "z-index": 1
-                        });
-                    unlock();
-                    options.afterSlideChange.call(this);                    
-                }
-
-                //CSS3 reset Z & Unlock
-                function css3ResetAndUnlock() {
-                    unlock();
+                    if(options.continousSliding)
+                    {
+                        slides
+                            .eq(prevActiveSlide)
+                            .css({
+                                "z-index": 1
+                            });
+                    }
+                   
+                    frs_slider_unlock();
                     options.afterSlideChange.call(this);                    
                 }
 
@@ -538,15 +711,17 @@
                     return false;
                 }
                 if (!locked) {
-                    lock();
+                    frs_slider_lock();
                     //deduce the proper activeImage
                     if (direction == "next") {
                         activeSlide++
+                        activeSlideContinous++
                         if (activeSlide == numberSlides) {
                             activeSlide = 0;
                         }
                     } else if (direction == "prev") {
                         activeSlide--
+                        activeSlideContinous--
                         if (activeSlide < 0) {
                             activeSlide = numberSlides - 1;
                         }
@@ -558,11 +733,11 @@
                             slideDirection = "prev"
                         }
                     }
-                    //set to correct bullet
+                    // set to correct bullet
                     setActiveBullet();
 
-                    //set previous slide z-index to one below what new activeSlide will be
-                    if(! css3support())
+                    // set previous slide z-index to one below what new activeSlide will be
+                    if(options.continousSliding)
                     {
                         slides
                             .eq(prevActiveSlide)
@@ -572,7 +747,7 @@
                     }
 
                     
-                    calculateHeightWeight()
+                    calculateHeightWidth()
 
                     if(options.heightResize==true){
 
@@ -587,74 +762,108 @@
                      */
                     if (options.animation == "horizontal-slide") 
                     {
-                        calculateHeightWeight();
-
-                        var slide_action = frsWidth * activeSlide < numberSlides * frsWidth ? '-' + frsWidth * activeSlide : 0 ;
-
-                        if (slideDirection == "next") 
+                        calculateHeightWidth();
+                    
+                        if(options.continousSliding)
                         {
+                            var cssWidth = slideDirection == "next" ? frsWidth : -frsWidth;
+                            var aniWidth = slideDirection == "next" ? -frsWidth : frsWidth;                                
+
                             if(css3support())
                             {
-                                /** Get the properties to transition */
-                                var properties = {};
-                                properties[ '-' + vendorPrefix + '-transition-duration' ] = options.animationSpeed + 'ms';
-                                properties[ '-' + vendorPrefix + '-transform' ] = 'translate3d('+ slide_action +'px, 0, 0)';
+                                /**
+                                 * belum jadi yang css 3 continous slide
+                                 */
 
-                                /** Do the CSS3 transition */
-                                slides.parent().css(properties);
-                                css3ResetAndUnlock();
-                            }
-                            else
-                            {
                                 slides
                                     .eq(activeSlide)
                                     .css({
-                                        "left": frsWidth,
+                                        "left": cssWidth,
                                         "z-index": 3
                                     })
                                     .animate({
                                         "left": 0
 
                                     }, options.animationSpeed, resetAndUnlock);
+
                                 slides
                                     .eq(prevActiveSlide)
                                     .animate({
-                                        "left": -frsWidth
+                                        "left": aniWidth
                                     }, options.animationSpeed);
-                            }                                                        
+
+
+                                // var properties = {};
+                                // properties[ 'z-index' ] = 3;
+                                // properties[ 'left' ] = cssWidth;
+
+                                // slides.eq(activeSlide).css(properties);
+
+                                // var properties = {};
+                                // properties[ 'left' ] = 0;
+
+                                // slides.eq(prevActiveSlide).css(properties);
+
+                                // if(slides.eq(activeSlide).css('left') == cssWidth + 'px')
+                                // {
+                                //     var properties = {};
+                                //     properties[ '-' + vendorPrefix + '-transition-duration' ] = options.animationSpeed + 'ms';
+                                //     properties[ '-' + vendorPrefix + '-transform' ] = 'translate3d(-'+ cssWidth +'px, 0, 0)';
+
+                                //     slides.eq(activeSlide).css(properties);
+
+                                //     var properties = {};
+                                //     properties[ 'left' ] = 0;
+                                //     properties[ '-' + vendorPrefix + '-transition-duration' ] = options.animationSpeed + 'ms';
+                                //     properties[ '-' + vendorPrefix + '-transform' ] = 'translate3d('+ aniWidth +'px, 0, 0)';
+
+                                //     slides.eq(prevActiveSlide).css(properties);
+
+                                //     resetAndUnlock();
+                                // }                                    
+                            }
+                            else
+                            {
+                                slides
+                                    .eq(activeSlide)
+                                    .css({
+                                        "left": cssWidth,
+                                        "z-index": 3
+                                    })
+                                    .animate({
+                                        "left": 0
+
+                                    }, options.animationSpeed, resetAndUnlock);
+
+                                slides
+                                    .eq(prevActiveSlide)
+                                    .animate({
+                                        "left": aniWidth
+                                    }, options.animationSpeed);
+                            }  
                         }
-
-                        if (slideDirection == "prev")
+                        else
                         {
+                            var slide_action = frsWidth * activeSlide < numberSlides * frsWidth ? '-' + frsWidth * activeSlide : 0 ;
+
                             if(css3support())
                             {
-                                /** Get the properties to transition */
+                                // Get the properties to transition
                                 var properties = {};
                                 properties[ '-' + vendorPrefix + '-transition-duration' ] = options.animationSpeed + 'ms';
                                 properties[ '-' + vendorPrefix + '-transform' ] = 'translate3d('+ slide_action +'px, 0, 0)';
 
-                                /** Do the CSS3 transition */
+                                // Do the CSS3 transition
                                 slides.parent().css(properties);
-                                css3ResetAndUnlock();
+                                resetAndUnlock();
                             }
                             else
                             {
-                                slides
-                                    .eq(activeSlide)
-                                    .css({
-                                        "left": -frsWidth,
-                                        "z-index": 3
-                                    })
+                                slides.parent()
                                     .animate({
-                                        "left": 0
+                                        "left": slide_action + 'px'
                                     }, options.animationSpeed, resetAndUnlock);
-                                slides                            
-                                    .eq(prevActiveSlide)
-                                    .animate({
-                                        "left": frsWidth
-                                    }, options.animationSpeed);
                             }
-                            
                         }
                     }
 
@@ -663,60 +872,88 @@
                      */
                     if (options.animation == "vertical-slide") 
                     {
-                        calculateHeightWeight()
+                        calculateHeightWidth()
 
                         var slide_action = frsHeight * activeSlide < numberSlides * frsHeight ? '-' + frsHeight * activeSlide : 0 ;
 
-                        if (slideDirection == "prev") {
+                        if(options.continousSliding)
+                        {
+                            /**
+                             * BELUM JADI
+                             */
+                            if (slideDirection == "prev") {
+                                if(css3support())
+                                {
+                                    // Get the properties to transition
+                                    var properties = {};
+                                    properties[ '-' + vendorPrefix + '-transition-duration' ] = options.animationSpeed + 'ms';
+                                    properties[ '-' + vendorPrefix + '-transform' ] = 'translate3d(0, '+ slide_action +'px, 0)';
+
+                                    // Do the CSS3 transition
+                                    slides.parent().css(properties);
+                                    resetAndUnlock();
+                                }
+                                else
+                                {
+                                    slides
+                                        .eq(activeSlide)
+                                        .css({
+                                            "top": frsHeight,
+                                            "z-index": 3
+                                        })
+                                        .animate({
+                                            "top": 0
+                                        }, options.animationSpeed, resetAndUnlock);
+                                }
+                            }
+                            if (slideDirection == "next") {
+                                if(css3support())
+                                {
+                                    // Get the properties to transition
+                                    var properties = {};
+                                    properties[ '-' + vendorPrefix + '-transition-duration' ] = options.animationSpeed + 'ms';
+                                    properties[ '-' + vendorPrefix + '-transform' ] = 'translate3d(0, '+ slide_action +'px, 0)';
+
+                                    // Do the CSS3 transition
+                                    slides.parent().css(properties);
+                                    resetAndUnlock();
+                                }
+                                else
+                                {
+                                    slides
+                                        .eq(activeSlide)
+                                        .css({
+                                            "top": -frsHeight,
+                                            "z-index": 3
+                                        })
+                                        .animate({
+                                            "top": 0
+                                        }, options.animationSpeed, resetAndUnlock);
+                                }
+                            }
+                        }
+                        else
+                        {
                             if(css3support())
                             {
-                                /** Get the properties to transition */
+                                // Get the properties to transition
                                 var properties = {};
                                 properties[ '-' + vendorPrefix + '-transition-duration' ] = options.animationSpeed + 'ms';
                                 properties[ '-' + vendorPrefix + '-transform' ] = 'translate3d(0, '+ slide_action +'px, 0)';
 
-                                /** Do the CSS3 transition */
+                                // Do the CSS3 transition
                                 slides.parent().css(properties);
-                                css3ResetAndUnlock();
+                                resetAndUnlock();
                             }
                             else
                             {
-                                slides
-                                    .eq(activeSlide)
-                                    .css({
-                                        "top": frsHeight,
-                                        "z-index": 3
-                                    })
+                                slides.parent()
                                     .animate({
-                                        "top": 0
+                                        "top": slide_action + 'px'
                                     }, options.animationSpeed, resetAndUnlock);
                             }
                         }
-                        if (slideDirection == "next") {
-                            if(css3support())
-                            {
-                                /** Get the properties to transition */
-                                var properties = {};
-                                properties[ '-' + vendorPrefix + '-transition-duration' ] = options.animationSpeed + 'ms';
-                                properties[ '-' + vendorPrefix + '-transform' ] = 'translate3d(0, '+ slide_action +'px, 0)';
-
-                                /** Do the CSS3 transition */
-                                slides.parent().css(properties);
-                                css3ResetAndUnlock();
-                            }
-                            else
-                            {
-                                slides
-                                    .eq(activeSlide)
-                                    .css({
-                                        "top": -frsHeight,
-                                        "z-index": 3
-                                    })
-                                    .animate({
-                                        "top": 0
-                                    }, options.animationSpeed, resetAndUnlock);
-                            }
-                        }
+                        
                     }
 
                     /**
@@ -728,7 +965,7 @@
                         {                            
                             slides.eq(activeSlide).css({'z-index': 2});
 
-                            /** Get the properties to transition */
+                            // Get the properties to transition
                             var properties = {};
                             properties[ 'opacity' ] = 0;
                             properties[ '-' + vendorPrefix + '-transition' ] = 'all ' + options.animationSpeed + 'ms ease';
@@ -739,7 +976,7 @@
                             timeout = setTimeout(function() {
                                 slides.eq(activeSlide).css({'z-index': 3});
 
-                                /** Get the properties to transition */
+                                // Get the properties to transition
                                 var properties = {};
                                 properties[ 'opacity' ] = 1;
                                 properties[ 'z-index' ] = 1;
@@ -748,7 +985,7 @@
                                 slides.eq(prevActiveSlide).css(properties);
                             }, options.animationSpeed - (options.animationSpeed * 20 / 100));                            
 
-                            css3ResetAndUnlock();
+                            resetAndUnlock();
                         }
                         else
                         {
@@ -768,9 +1005,143 @@
                 } //lock                                
             } //frs function
 
+            // set caption position
             set_caption_position();
 
-        }); //each call
-    } //frs plugin call
+
+
+            // ====================================
+            // ! RESIZE WINDOWS EVENT: RESPONSIVE   
+            // ====================================            
+            jQuery(window).bind('resize.frs-slideshow-container', function(event, force) {
+                calculateHeightWidth();
+
+                /**
+                 * resize elements
+                 */
+                slides.width(frsWidth);                
+                slides.height(frsHeight);
+                slides.children('img').width(frsWidth);
+
+                // resize wrapper
+                frs.css({'height': frsHeight + 'px'});
+                frsWrapper.parent().css({'height': frsHeight + 'px'});
+
+                if(! options.continousSliding)
+                {
+                    if(options.animation == "horizontal-slide")
+                    {
+                        slideWrapper.css({
+                            'width': options.width * numberSlides + 'px'
+                        });
+
+                        var slide_action = frsWidth * activeSlide < numberSlides * frsWidth ? '-' + frsWidth * activeSlide : 0 ;
+
+                        // Stabilize slide position
+                        if(css3support())
+                        {
+                            var properties = {};
+                            properties[ '-' + vendorPrefix + '-transform' ] = 'translate3d('+ slide_action +'px, 0, 0)';
+
+                            slides.parent().css(properties);
+                        }
+                        else
+                        {
+                            slides.parent()
+                                .animate({
+                                    "left": slide_action + 'px'
+                                });
+
+                            //     slides
+                            //         .eq(activeSlide)
+                            //         .css({
+                            //             "left": frsWidth,
+                            //             "z-index": 3
+                            //         })
+                            //         .animate({
+                            //             "left": 0
+
+                            //         }, options.animationSpeed, resetAndUnlock);
+                            //     slides
+                            //         .eq(prevActiveSlide)
+                            //         .animate({
+                            //             "left": -frsWidth
+                            //         }, options.animationSpeed);
+                        }
+                    }
+                    else if(options.animation == "vertical-slide")
+                    {
+                        slideWrapper.css({
+                            'height': options.height * numberSlides + 'px'
+                        });
+
+                        var slide_action = frsHeight * activeSlide < numberSlides * frsHeight ? '-' + frsHeight * activeSlide : 0 ;
+
+                        /** Stabilize slide position */
+                        var properties = {};
+                        properties[ '-' + vendorPrefix + '-transform' ] = 'translate3d(0, '+ slide_action +'px, 0)';
+
+                        slides.parent().css(properties);
+                    }
+
+                    /**
+                     * Slide bullets
+                     */
+                    if(options.sbullets)
+                    {
+                        generate_slide_bullet();
+                        slide_bullet('first');
+                    }
+                }
+
+
+                /**
+                 * Resposive Class
+                 * - frs-responsive-mobile-small
+                 * - frs-responsive-mobile-medium
+                 * - frs-responsive-full
+                 */
+
+                 if(370 <= frsWidth && frsWidth <= 499) {
+                    doResponsiveClassStart('frs-responsive-mobile-medium')
+                 }
+                 else if(369 >= frsWidth ) {
+                    doResponsiveClassStart('frs-responsive-mobile-small')
+                 }
+                 else {
+                    // Desktop Mode
+                    doResponsiveClassStart('frs-responsive-full')
+                 }
+            });
+
+            jQuery(window).trigger('resize.frs-slideshow-container', true);
+
+            function doResponsiveClassStart(responsiveClass){
+                // if it is the first run dont do animation
+                if(first_run)
+                {
+                    first_run = false
+                    frsWrapper.attr('class','frs-wrapper ' + options.skinClass)
+                    frsWrapper.addClass(responsiveClass)
+                    return
+                }
+
+                if(old_responsive_class == responsiveClass) return
+
+                old_responsive_class = responsiveClass
+
+                // Do the loading animation
+                slideWrapper.hide()
+
+                // Restore & change responsive class
+                setTimeout(function() {
+                    frsWrapper.attr('class','frs-wrapper ' + options.skinClass)
+                    frsWrapper.addClass(responsiveClass)
+                    slideWrapper.css('display','block')
+                }, 1000);                
+            }
+
+        }); // Each call
+    } // Frs plugin call
 
 })(jQuery);

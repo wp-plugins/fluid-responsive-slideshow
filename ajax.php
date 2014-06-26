@@ -56,20 +56,40 @@ function frs_show_modal() {
 
     if($id=='false'){
         $content='';
+        $title = '';
     }
     else{
-        $post = get_posts($id);
+        $post = get_post($id);
         $content = $post->post_content;
+        $title = $post->post_title;
     }
     frs_modal($id);
     $modal = ob_get_clean();
 
     $modal = htmlspecialchars($modal);
 
+
+    /* right content */
+    $img_default =  plugin_dir_url( __FILE__ ).'/assets/slideshow_empty.png';
+    $post_thumbnail_id = 'false';
+    $scr = $img_default;
+
+    if($id!='false'&& has_post_thumbnail($id))
+    {
+        $post_thumbnail_id = get_post_thumbnail_id($id);
+        $scr = wp_get_attachment_image_src($post_thumbnail_id,'original');
+        $scr = $scr[0];
+    }
+
     $return = array(
     	'success'=>true,
     	'modal'=>$modal,
-    	'text'=>$content
+    	'content'=>$content,
+        'post_thumbnail_id'=>$post_thumbnail_id,
+        'scr' => $scr,
+        'id' => $id,
+        'img_default'=>$img_default,
+        'title' =>$title
     	);
 
     header('Content-Type: application/json');
