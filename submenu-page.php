@@ -17,6 +17,8 @@ function init_pjc_slideshow_options(){
 
 function pjc_slideshow_submenu_page(){
 
+	       wp_enqueue_media();
+
 	if ( isset ( $_GET['tab'] ) ) 
 		pjc_slideshow_tab($_GET['tab']); 
 	else 

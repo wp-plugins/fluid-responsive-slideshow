@@ -61,26 +61,26 @@ function after_setup_theme_pjc(){
 
 	 // Add new taxonomy, make it hierarchical (like categories)
  	  $labels = array(
- 		'name' => _x( 'Slide Type', 'taxonomy general name' ),
- 		'singular_name' => _x( 'Slide Type', 'taxonomy singular name' ),
- 		'search_items' =>  __( 'Search Slide Type' ),
- 		'all_items' => __( 'All Slide Type' ),
- 		'parent_item' => __( 'Parent Slide Type' ),
- 		'parent_item_colon' => __( 'Parent Slide Type:' ),
- 		'edit_item' => __( 'Edit Slide Type' ), 
- 		'update_item' => __( 'Update Slide Type' ),
- 		'add_new_item' => __( 'Add New Slide Type' ),
- 		'new_item_name' => __( 'New Slide Type Name' ),
- 		'menu_name' => __( 'Slide Type' ),
+ 		    'name' => _x( 'Slide Type', 'taxonomy general name' ),
+ 		    'singular_name' => _x( 'Slide Type', 'taxonomy singular name' ),
+ 		    'search_items' =>  __( 'Search Slide Type' ),
+ 		    'all_items' => __( 'All Slide Type' ),
+ 		    'parent_item' => __( 'Parent Slide Type' ),
+ 		    'parent_item_colon' => __( 'Parent Slide Type:' ),
+ 		    'edit_item' => __( 'Edit Slide Type' ), 
+ 		    'update_item' => __( 'Update Slide Type' ),
+ 		    'add_new_item' => __( 'Add New Slide Type' ),
+ 		    'new_item_name' => __( 'New Slide Type Name' ),
+ 		    'menu_name' => __( 'Slide Type' ),
  		); 	
 
  	  register_taxonomy('slide_type',array('pjc_slideshow'), array(
- 		'hierarchical' => true,
- 		'labels' => $labels,
- 		'show_ui' => true,
- 		'show_admin_column' => true,
- 		'query_var' => true,
- 		'rewrite' => array( 'slug' => 'slide-type' ),
+ 		    'hierarchical' => true,
+ 		    'labels' => $labels,
+ 		    'show_ui' => true,
+ 		    'show_admin_column' => true,
+ 		    'query_var' => true,
+ 		    'rewrite' => array( 'slug' => 'slide-type' ),
  		));
 
 
@@ -161,13 +161,7 @@ add_filter("manage_slide_type_custom_column", 'frs_manage_slide_type_column', 10
 add_action( 'admin_menu', 'pjc_slideshow_admin' );
 
 function pjc_slideshow_admin() {
-	
-    // add_meta_box( $id, 
-    // $title, 
-    // $callback, 
-    // $post_type, $context, $priority, $callback_args );
-	wp_enqueue_media();
-	
+
     /**
      * Register css and javascript for admin page
      */
@@ -186,6 +180,7 @@ function pjc_slideshow_admin() {
 	{
 		if(isset($_GET['page']) && $_GET['page'] == "frs-setting-page" && isset($_GET['tabtype']))
 		{
+
 			if($_GET['tabtype'] == "slide")
 			{
 		        wp_enqueue_style('select2-css',plugin_dir_url( __FILE__ )."css/select2.css",array(),FRS_VERSION);
@@ -199,6 +194,9 @@ function pjc_slideshow_admin() {
 		}
 		else if(isset($_GET['page']) && $_GET['page'] == "frs-setting-page" && ! isset($_GET['tabtype']))
 		{
+
+     
+
             /* configuration page */
             wp_enqueue_style('select2-css',plugin_dir_url( __FILE__ )."css/select2-pure.css",array(),FRS_VERSION);
 			wp_enqueue_script('ace-js',plugin_dir_url( __FILE__ )."js/ace-min-noconflict-css-monokai/ace.js",array(),FRS_VERSION);
