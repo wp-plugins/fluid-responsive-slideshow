@@ -254,7 +254,7 @@ function tonjoo_slideshow_meta( $post )
                 "id"=>"tonjoo-frs-show_text"
             );
             
-            tj_print_select_option($option_select);
+            frs_print_select_option($option_select);
         ?>
         <tr><td colspan=2><h3 class="meta-subtitle">Text Box Background</h3></td></tr>
 
@@ -283,7 +283,7 @@ function tonjoo_slideshow_meta( $post )
                                 "id"=>"tonjoo-frs-bg-textbox-type"
                             );
             
-            tj_print_select_option($option_select);
+            frs_print_select_option($option_select);
             
 
         ?>
@@ -321,7 +321,7 @@ function tonjoo_slideshow_meta( $post )
                                 "id"=>"tonjoo-frs-textbox-bg"
                             );
             
-            tj_print_select_option($option_select);
+            frs_print_select_option($option_select);
         ?>
 
         <tr valign="top" id='textbox_color'>
@@ -393,7 +393,7 @@ function tonjoo_slideshow_meta( $post )
                                 "id"=>"tonjoo-frs-text_position"
                             );
               
-            tj_print_select_option($option_select);
+            frs_print_select_option($option_select);
         ?>
 
         <?php 
@@ -459,7 +459,7 @@ function tonjoo_slideshow_meta( $post )
                             );
 
             
-            tj_print_select_option($option_select);
+            frs_print_select_option($option_select);
         ?>
 
         <?php 
@@ -489,7 +489,7 @@ function tonjoo_slideshow_meta( $post )
                             );
 
             
-            tj_print_select_option($option_select);
+            frs_print_select_option($option_select);
         ?>
 
         <tr><td colspan=2><h3 class="meta-subtitle">Text Color</h3></td></tr>
@@ -533,7 +533,7 @@ function tonjoo_slideshow_meta( $post )
                             );
 
             
-            tj_print_select_option($option_select);
+            frs_print_select_option($option_select);
       ?>
 
       <?php 
@@ -606,7 +606,7 @@ function tonjoo_slideshow_meta( $post )
                         );
 
             
-            tj_print_select_option($option_select);
+            frs_print_select_option($option_select);
         ?>
 
         <tr class="button_attr">
@@ -646,7 +646,7 @@ function tonjoo_slideshow_meta( $post )
                                     "id"=>"tonjoo-frs-padding_type"
                                 );
             
-            tj_print_select_option($option_select);
+            frs_print_select_option($option_select);
         ?>
 
         <tr id="textbox_padding" >

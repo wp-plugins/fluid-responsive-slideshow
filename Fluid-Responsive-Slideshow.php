@@ -3,7 +3,7 @@
  *Plugin Name: Fluid Responsive Slideshow
  *Plugin URI: http://www.tonjoo.com/wordpress-plugin-fluid-responsive-slideshow-plugin/
  *Description: Fluid and Responsive Slideshow for wordpress.
- *Version: 1.0.1
+ *Version: 1.0.2
  *Author: tonjoo
  *Author URI: http://www.tonjoo.com/
  *License: GPLv2
@@ -21,7 +21,6 @@ require_once( plugin_dir_path( __FILE__ ) . 'shortcode.php');
 require_once( plugin_dir_path( __FILE__ ) . 'post-list.php');
 require_once( plugin_dir_path( __FILE__ ) . 'custom-meta.php');
 require_once( plugin_dir_path( __FILE__ ) . 'submenu.php');
-require_once( plugin_dir_path( __FILE__ ) . 'tonjoo-library.php');
 require_once( plugin_dir_path( __FILE__ ) . 'ajax.php');
 require_once( plugin_dir_path( __FILE__ ) . 'modal.php');
 
@@ -29,7 +28,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'modal.php');
  *  Save plugin version on db on plugin installation
  */
 
-define('FRS_VERSION','1.0.1');
+define('FRS_VERSION','1.0.2');
 
 /*
  * Add featured image support for this plugin
@@ -61,26 +60,26 @@ function after_setup_theme_pjc(){
 
 	 // Add new taxonomy, make it hierarchical (like categories)
  	  $labels = array(
- 		    'name' => _x( 'Slide Type', 'taxonomy general name' ),
- 		    'singular_name' => _x( 'Slide Type', 'taxonomy singular name' ),
- 		    'search_items' =>  __( 'Search Slide Type' ),
- 		    'all_items' => __( 'All Slide Type' ),
- 		    'parent_item' => __( 'Parent Slide Type' ),
- 		    'parent_item_colon' => __( 'Parent Slide Type:' ),
- 		    'edit_item' => __( 'Edit Slide Type' ), 
- 		    'update_item' => __( 'Update Slide Type' ),
- 		    'add_new_item' => __( 'Add New Slide Type' ),
- 		    'new_item_name' => __( 'New Slide Type Name' ),
- 		    'menu_name' => __( 'Slide Type' ),
+ 		'name' => _x( 'Slide Type', 'taxonomy general name' ),
+ 		'singular_name' => _x( 'Slide Type', 'taxonomy singular name' ),
+ 		'search_items' =>  __( 'Search Slide Type' ),
+ 		'all_items' => __( 'All Slide Type' ),
+ 		'parent_item' => __( 'Parent Slide Type' ),
+ 		'parent_item_colon' => __( 'Parent Slide Type:' ),
+ 		'edit_item' => __( 'Edit Slide Type' ), 
+ 		'update_item' => __( 'Update Slide Type' ),
+ 		'add_new_item' => __( 'Add New Slide Type' ),
+ 		'new_item_name' => __( 'New Slide Type Name' ),
+ 		'menu_name' => __( 'Slide Type' ),
  		); 	
 
  	  register_taxonomy('slide_type',array('pjc_slideshow'), array(
- 		    'hierarchical' => true,
- 		    'labels' => $labels,
- 		    'show_ui' => true,
- 		    'show_admin_column' => true,
- 		    'query_var' => true,
- 		    'rewrite' => array( 'slug' => 'slide-type' ),
+ 		'hierarchical' => true,
+ 		'labels' => $labels,
+ 		'show_ui' => true,
+ 		'show_admin_column' => true,
+ 		'query_var' => true,
+ 		'rewrite' => array( 'slug' => 'slide-type' ),
  		));
 
 
@@ -160,8 +159,10 @@ add_filter("manage_slide_type_custom_column", 'frs_manage_slide_type_column', 10
 
 add_action( 'admin_menu', 'pjc_slideshow_admin' );
 
-function pjc_slideshow_admin() {
-
+function pjc_slideshow_admin() 
+{	
+	wp_enqueue_media();
+	
     /**
      * Register css and javascript for admin page
      */
@@ -180,7 +181,6 @@ function pjc_slideshow_admin() {
 	{
 		if(isset($_GET['page']) && $_GET['page'] == "frs-setting-page" && isset($_GET['tabtype']))
 		{
-
 			if($_GET['tabtype'] == "slide")
 			{
 		        wp_enqueue_style('select2-css',plugin_dir_url( __FILE__ )."css/select2.css",array(),FRS_VERSION);
@@ -194,9 +194,6 @@ function pjc_slideshow_admin() {
 		}
 		else if(isset($_GET['page']) && $_GET['page'] == "frs-setting-page" && ! isset($_GET['tabtype']))
 		{
-
-     
-
             /* configuration page */
             wp_enqueue_style('select2-css',plugin_dir_url( __FILE__ )."css/select2-pure.css",array(),FRS_VERSION);
 			wp_enqueue_script('ace-js',plugin_dir_url( __FILE__ )."js/ace-min-noconflict-css-monokai/ace.js",array(),FRS_VERSION);
@@ -209,8 +206,6 @@ function pjc_slideshow_admin() {
 
 	wp_enqueue_script('jquery');  
 	wp_enqueue_script('frs-admin-js',plugin_dir_url( __FILE__ )."js/tonjoo_frs_admin.js",array(),FRS_VERSION);  
-
-
 
 	wp_enqueue_script( 'jquery-ui-sortable' );
 }
@@ -405,7 +400,7 @@ function wpse_128636_redirect_post() {
 }
 
 
-/*
+/**
  * Dummy Class 
  */
 
@@ -434,4 +429,36 @@ class FRSPost{
     public $post_mime_type;
     public $comment_count;
     public $filter;
+}
+
+
+/**
+ * Library class
+ */
+
+function frs_print_select_option($options)
+{
+    $r = "";
+
+    foreach ( $options['select_array'] as $select ) {
+        $label = $select['label'];
+
+        if ( $options['value'] == $select['value'] ) // Make default first in list
+            $r .= "<option selected='selected' value='" . esc_attr( $select['value'] ) . "'>$label</option>";
+        else
+            $r .= "<option value='" . esc_attr( $select['value'] ) . "'>$label</option>";
+    }
+
+    $print_select= "<tr valign='top' id='{$options['id']}'>
+                        <th scope='row'>{$options['label']}</th>
+                        <td>
+                            <select name='{$options['name']}'>
+                            {$r}
+                            </select>
+                            <label class='description' >{$options['description']}</label>
+                        </td>
+                    </tr>
+                    ";
+
+    echo $print_select;
 }

@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * Register custom options for the plugin
  */
 
@@ -10,14 +10,12 @@ function init_pjc_slideshow_options(){
 		register_setting( 'pjc_options', 'pjc_slideshow_options');
 }
 
-/*
+/**
  * Option page definiton
  */
 
 
 function pjc_slideshow_submenu_page(){
-
-	       wp_enqueue_media();
 
 	if ( isset ( $_GET['tab'] ) ) 
 		pjc_slideshow_tab($_GET['tab']); 
@@ -26,13 +24,12 @@ function pjc_slideshow_submenu_page(){
 	
 }
 
-/*
+/**
  * Tab definiton
  */
 
-
-function pjc_slideshow_tab($current = 'plugin'){
-
+function pjc_slideshow_tab($current = 'plugin')
+{
 	/* get slug */
 	if($current != 'plugin')
 	{

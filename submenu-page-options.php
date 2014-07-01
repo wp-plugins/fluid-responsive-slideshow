@@ -211,8 +211,8 @@ jQuery(document).ready(function($){
 				);
 
 	
-	 tj_print_select_option($option_select);
-	?>
+	frs_print_select_option($option_select);
+?>
 
 	<tr valign="top">
 		<th scope="row">Animation</th>
@@ -237,17 +237,16 @@ jQuery(document).ready(function($){
 					
 				
 					$selected = $options[$current]["animation"];
-					$p = '';
 					$r = '';
 
 					foreach ( $navigation as $option ) {
 						$label = $option['label'];
-						if ( $selected == $option['value'] ) // Make default first in list
-							$p = "<option selected='selected' value='" . esc_attr( $option['value'] ) . "'>$label</option>";
+						if ( $selected == $option['value'] )
+							$r .= "<option selected='selected' value='" . esc_attr( $option['value'] ) . "'>$label</option>";
 						else
 							$r .= "<option value='" . esc_attr( $option['value'] ) . "'>$label</option>";
 					}
-					echo $p . $r;
+					echo $r;
 				?>
 			</select>
 			<label class="description" >The animation type in slide transition</label>
@@ -298,7 +297,7 @@ jQuery(document).ready(function($){
 				);
 
 	
-	 tj_print_select_option($option_select);
+	 frs_print_select_option($option_select);
 	?>
 	
 	<tr valign="top">
@@ -353,18 +352,17 @@ jQuery(document).ready(function($){
 					);
 					
 				
-					$selected = $options[$current]["pause"];
-					$p = '';
+					$selected = $options[$current]["animation"];
 					$r = '';
 
 					foreach ( $navigation as $option ) {
 						$label = $option['label'];
-						if ( $selected == $option['value'] ) // Make default first in list
-							$p = "<option selected='selected' value='" . esc_attr( $option['value'] ) . "'>$label</option>";
+						if ( $selected == $option['value'] )
+							$r .= "<option selected='selected' value='" . esc_attr( $option['value'] ) . "'>$label</option>";
 						else
 							$r .= "<option value='" . esc_attr( $option['value'] ) . "'>$label</option>";
 					}
-					echo $p . $r;
+					echo $r;
 				?>
 			</select>
 			<label class="description" >Select yes to pause animation on mouse hover</label>
@@ -388,18 +386,17 @@ jQuery(document).ready(function($){
 					);
 					
 				
-					$selected = $options[$current]["start_mouseout"];
-					$p = '';
+					$selected = $options[$current]["animation"];
 					$r = '';
 
 					foreach ( $navigation as $option ) {
 						$label = $option['label'];
-						if ( $selected == $option['value'] ) // Make default first in list
-							$p = "<option selected='selected' value='" . esc_attr( $option['value'] ) . "'>$label</option>";
+						if ( $selected == $option['value'] )
+							$r .= "<option selected='selected' value='" . esc_attr( $option['value'] ) . "'>$label</option>";
 						else
 							$r .= "<option value='" . esc_attr( $option['value'] ) . "'>$label</option>";
 					}
-					echo $p . $r;
+					echo $r;
 				?>
 			</select>
 			<label class="description" >Select yes to continue animation ater the mouseout event. In effect when 'Pause on hover' is set yes</label>
@@ -433,18 +430,17 @@ jQuery(document).ready(function($){
 					);
 					
 				
-					$selected = $options[$current]["show_timer"];
-					$p = '';
+					$selected = $options[$current]["animation"];
 					$r = '';
 
 					foreach ( $navigation as $option ) {
 						$label = $option['label'];
-						if ( $selected == $option['value'] ) // Make default first in list
-							$p = "<option selected='selected' value='" . esc_attr( $option['value'] ) . "'>$label</option>";
+						if ( $selected == $option['value'] )
+							$r .= "<option selected='selected' value='" . esc_attr( $option['value'] ) . "'>$label</option>";
 						else
 							$r .= "<option value='" . esc_attr( $option['value'] ) . "'>$label</option>";
 					}
-					echo $p . $r;
+					echo $r;
 				?>
 			</select>
 			<label class="description" >Display a small timer on the slideshow</label>
@@ -471,18 +467,17 @@ jQuery(document).ready(function($){
 					);
 					
 				
-					$selected = $options[$current]["navigation"];
-					$p = '';
+					$selected = $options[$current]["animation"];
 					$r = '';
 
 					foreach ( $navigation as $option ) {
 						$label = $option['label'];
-						if ( $selected == $option['value'] ) // Make default first in list
-							$p = "<option selected='selected' value='" . esc_attr( $option['value'] ) . "'>$label</option>";
+						if ( $selected == $option['value'] )
+							$r .= "<option selected='selected' value='" . esc_attr( $option['value'] ) . "'>$label</option>";
 						else
 							$r .= "<option value='" . esc_attr( $option['value'] ) . "'>$label</option>";
 					}
-					echo $p . $r;
+					echo $r;
 				?>
 			</select>
 			<label class="description" >If "no" is selected the navigation arrow will not visible</label>

@@ -244,14 +244,12 @@
             milliseconds = date.getTime();
             start_seconds = milliseconds / 1000;
 
-
             function log_time() {
                 date = new Date();
                 milliseconds = date.getTime();
                 seconds = milliseconds / 1000;
                 seconds = seconds - start_seconds;         
             }
-
 
             //Timer Execution
             function startCfrs_slider_lock() {
@@ -457,8 +455,9 @@
             var bulletsNextChild = 0;
             var bulletsOffsetWidth = 0;
             var bulletsPosition = 0;                        
-            var bulletsOffsetIsTooLarge = false;
+            var bulletsOffsetEnable = false;
             var bulletsWidth = 0;
+            var bulletsMovedWidth = 0;
 
             var each_width = options.sbulletsItemWidth;
             var total_width = each_width * numberSlides;
@@ -477,7 +476,7 @@
                 bulletsNextChild = 0;
                 bulletsOffsetWidth = 0;
                 bulletsPosition = 0;                        
-                bulletsOffsetIsTooLarge = false;              
+                bulletsOffsetEnable = false;              
                 bulletsWidth = sbullets.parent().outerWidth(true);
 
                 if(bulletsWidth > total_width)
@@ -506,9 +505,9 @@
                         bulletsOffsetWidth = bulletsWalkingWidth - bulletsWidth;
 
                         /* detect if bullets offset is too large */
-                        if(bulletsOffsetWidth > (each_width / 2))
+                        if(bulletsOffsetWidth < each_width)
                         {
-                            bulletsOffsetIsTooLarge = true;
+                            bulletsOffsetEnable = true;
                         }
 
                         return false;
@@ -535,10 +534,7 @@
                         bulletsNavPixelWidth = (each_width * bulletsPosition) + bulletsOffsetWidth;
                     }
 
-                    if(bulletsOffsetIsTooLarge == true)
-                    {
-                        // sbullets.children('li').eq(bulletsBackChild + 1).addClass('frs-bullet-sliding-back');
-                    }                    
+                    slide_bullet_add_class('sliding_one','frs-bullet-sliding-one-back',bulletsBackChild + 1)            
                 }
                 else if(navigate == 'back')
                 {
@@ -550,10 +546,7 @@
 
                     bulletsNavPixelWidth = each_width * bulletsPosition;
 
-                    if(bulletsOffsetIsTooLarge == true)
-                    {
-                        // sbullets.children('li').eq(bulletsNextChild - 1).addClass('frs-bullet-sliding-next');
-                    }
+                    slide_bullet_add_class('sliding_one','frs-bullet-sliding-one-next',bulletsNextChild - 1)
                 }
                 else if(navigate == 'first')
                 {
@@ -565,10 +558,7 @@
 
                     bulletsNavPixelWidth = each_width * bulletsPosition;
 
-                    if(bulletsOffsetIsTooLarge == true)
-                    {
-                        // sbullets.children('li').eq(bulletsNextChild - 1).addClass('frs-bullet-sliding-next');
-                    }
+                    slide_bullet_add_class('sliding_one','frs-bullet-sliding-one-next',bulletsNextChild - 1)
                 }
                 else if(navigate == 'last')
                 {
@@ -582,11 +572,13 @@
 
                     bulletsNavPixelWidth = (each_width * bulletsPosition) + bulletsOffsetWidth;
 
-                    if(bulletsOffsetIsTooLarge == true)
-                    {
-                        // sbullets.children('li').eq(bulletsBackChild + 1).addClass('frs-bullet-sliding-back');
-                    }
+                    slide_bullet_add_class('sliding_one','frs-bullet-sliding-one-back',bulletsBackChild + 1)
                 }
+
+                /**
+                 * Track moved width
+                 */
+                bulletsMovedWidth = bulletsNavPixelWidth;
                 
                 if(css3support())
                 {
@@ -605,8 +597,85 @@
                 }
                 
                 // Apply class to bullet
-                sbullets.children('li').eq(bulletsBackChild).addClass('frs-bullet-sliding-back');
-                sbullets.children('li').eq(bulletsNextChild).addClass('frs-bullet-sliding-next');
+                slide_bullet_add_class('sliding', 'frs-bullet-sliding-back', bulletsBackChild)
+                slide_bullet_add_class('sliding', 'frs-bullet-sliding-next', bulletsNextChild)
+            }
+
+            function slide_bullet_add_class(li_type, li_class, li_index)
+            {
+                if(li_type == 'sliding_one')
+                {
+                    if(bulletsOffsetEnable == true)
+                    {
+                        sbullets.children('li').removeClass('frs-bullet-sliding-one-back').removeClass('frs-bullet-sliding-one-next');
+                        
+                        var addClassTo = sbullets.children('li').eq(li_index)
+
+                        if(addClassTo.attr('class') == "frs-slideshow-nav-bullets")
+                        {
+                            addClassTo.addClass(li_class);
+                        }                        
+                    }
+                }  
+                else if(li_type == 'sliding')
+                {
+                    if(sbullets.children('li').eq(li_index).attr('class') == 'frs-slideshow-nav-bullets frs-bullets-active' && li_index > 0 )
+                    {
+                        if(li_class == 'frs-bullet-sliding-back')
+                        {
+                            li_index--
+                        }
+                        else if(li_class == 'frs-bullet-sliding-next')
+                        {
+                            li_index++
+                        }
+                    }
+
+                    sbullets.children('li').eq(li_index).removeClass('frs-bullet-sliding-one-back')
+                    sbullets.children('li').eq(li_index).removeClass('frs-bullet-sliding-one-next')
+                    sbullets.children('li').eq(li_index).addClass(li_class)
+                }              
+            }
+
+            function slide_bullet_one(type)
+            {
+                var oneMove = 0;
+
+                sbullets.children('li').removeClass('frs-bullet-sliding-one-back').removeClass('frs-bullet-sliding-one-next');
+
+                if(type == 'back')
+                {
+                    sbullets.children('li').eq(bulletsNextChild - 1).addClass('frs-bullet-sliding-one-next');
+
+                    oneMove = bulletsMovedWidth - bulletsOffsetWidth;
+                }
+                else
+                {
+                    sbullets.children('li').eq(bulletsBackChild + 1).addClass('frs-bullet-sliding-one-back');
+
+                    oneMove = bulletsMovedWidth + bulletsOffsetWidth;
+                }
+
+                /**
+                 * Track moved width
+                 */
+                bulletsMovedWidth = oneMove;
+
+                if(css3support())
+                {
+                    var properties = {};
+                    properties[ '-' + vendorPrefix + '-transition-duration' ] = options.animationSpeed + 'ms';
+                    properties[ '-' + vendorPrefix + '-transform' ] = 'translate3d(-' + oneMove + 'px, 0, 0)';
+
+                    sbullets.css(properties);
+                }
+                else
+                {
+                    sbullets
+                        .animate({
+                            "left": '-' + oneMove + 'px'
+                        }, options.animationSpeed);
+                }
             }
 
 
@@ -626,7 +695,14 @@
                     {
                         if(bullets.children('li.frs-bullets-active').hasClass('frs-bullet-sliding-next'))
                         {
-                            slide_bullet('next');
+                            if(bullets.children('li.frs-bullets-active').index() == (numberSlides-1))
+                            {
+                                slide_bullet('last');
+                            }
+                            else
+                            {
+                                slide_bullet('next');
+                            }
                         }
                         else if(bullets.children('li.frs-bullets-active').hasClass('frs-bullet-sliding-back'))
                         {
@@ -637,7 +713,15 @@
                             else
                             {
                                 slide_bullet('first');
-                            }  
+                            }
+                        }
+                        else if(bullets.children('li.frs-bullets-active').hasClass('frs-bullet-sliding-one-next'))
+                        {
+                            slide_bullet_one('next')
+                        }
+                        else if(bullets.children('li.frs-bullets-active').hasClass('frs-bullet-sliding-one-back'))
+                        {
+                            slide_bullet_one('back')
                         }
                         else
                         {
@@ -681,7 +765,7 @@
 
 
             // ====================
-            // ! SHIFT ANIMATIONS   
+            // ! SHIFT ANIMATIONS  
             // ====================
             function shift(direction) 
             {
@@ -745,7 +829,6 @@
                                 "z-index": 2
                             });
                     }
-
                     
                     calculateHeightWidth()
 
@@ -1051,23 +1134,8 @@
                                 .animate({
                                     "left": slide_action + 'px'
                                 });
-
-                            //     slides
-                            //         .eq(activeSlide)
-                            //         .css({
-                            //             "left": frsWidth,
-                            //             "z-index": 3
-                            //         })
-                            //         .animate({
-                            //             "left": 0
-
-                            //         }, options.animationSpeed, resetAndUnlock);
-                            //     slides
-                            //         .eq(prevActiveSlide)
-                            //         .animate({
-                            //             "left": -frsWidth
-                            //         }, options.animationSpeed);
                         }
+
                     }
                     else if(options.animation == "vertical-slide")
                     {
@@ -1091,6 +1159,7 @@
                     {
                         generate_slide_bullet();
                         slide_bullet('first');
+                        shift(0);
                     }
                 }
 

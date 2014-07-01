@@ -13,6 +13,8 @@ function frs_modal($post_id)
 	/**
 	 * callback response for left content
 	 */
+
+
 	tonjoo_slideshow_meta($post);
 
 

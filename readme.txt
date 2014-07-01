@@ -57,6 +57,10 @@ All of the slide must have a slide order and slide type.
 
 == Changelog ==
 
+= 1.0.2 =
+* Redesign button skins
+* Fix known bugs
+
 = 1.0.1 =
 * Update jQuery animation to non CSS 3 browser (< IE 10) with rollingback animation and more lighter
 * Added new text box position to 11 position
@@ -67,7 +71,7 @@ All of the slide must have a slide order and slide type.
 
 = 1.0.0 =
 * Updated jQuery animation to CSS 3 animation, more lighter, more beautiful
-* Update admin UI, more easy and intuitive
+* Updated admin UI, more easy and intuitive
 * Automaticaly use jQuery animation in non-supported CSS 3 browser (< IE 10)
 * Added new options in options page
 * Added new options in slide option page

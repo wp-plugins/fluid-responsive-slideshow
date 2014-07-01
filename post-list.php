@@ -87,6 +87,8 @@ function pjc_slideshow_custom_column($column_name) {
 	if ($column_name == 'pjc_slideshow_title') {
 		$thumb_img = get_the_post_thumbnail($post -> ID, array(60,60));		
 
+		$thumb_img = str_replace('<img', '<img style="width:60px"', $thumb_img);
+
 		if(! empty($thumb_img))
 		{
 			echo "<a href='" . get_edit_post_link($post -> ID) . "'>" . $thumb_img . "</a>";
