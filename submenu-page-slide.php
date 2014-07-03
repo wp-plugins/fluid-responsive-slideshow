@@ -112,4 +112,5 @@ $zeroHide = '';
 <?php
 
 /* Restore original Post Data */
+wp_enqueue_media();
 wp_reset_postdata();

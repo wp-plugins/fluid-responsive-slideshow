@@ -3,7 +3,7 @@
  *Plugin Name: Fluid Responsive Slideshow
  *Plugin URI: http://www.tonjoo.com/wordpress-plugin-fluid-responsive-slideshow-plugin/
  *Description: Fluid and Responsive Slideshow for wordpress.
- *Version: 1.0.2
+ *Version: 1.0.3
  *Author: tonjoo
  *Author URI: http://www.tonjoo.com/
  *License: GPLv2
@@ -28,7 +28,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'modal.php');
  *  Save plugin version on db on plugin installation
  */
 
-define('FRS_VERSION','1.0.2');
+define('FRS_VERSION','1.0.3');
 
 /*
  * Add featured image support for this plugin
@@ -161,8 +161,7 @@ add_action( 'admin_menu', 'pjc_slideshow_admin' );
 
 function pjc_slideshow_admin() 
 {	
-	wp_enqueue_media();
-	
+
     /**
      * Register css and javascript for admin page
      */

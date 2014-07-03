@@ -57,6 +57,9 @@ All of the slide must have a slide order and slide type.
 
 == Changelog ==
 
+= 1.0.3 =
+* Fix featured image bug
+
 = 1.0.2 =
 * Redesign button skins
 * Fix known bugs
