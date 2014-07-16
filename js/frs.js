@@ -1166,8 +1166,8 @@
 
                 /**
                  * Resposive Class
-                 * - frs-responsive-mobile-small
-                 * - frs-responsive-mobile-medium
+                 * - frs-responsive-mobile-small (width <= 369)
+                 * - frs-responsive-mobile-medium (width <= 499 && width <= frsWidth)
                  * - frs-responsive-full
                  */
 

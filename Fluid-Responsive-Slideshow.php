@@ -3,19 +3,16 @@
  *Plugin Name: Fluid Responsive Slideshow
  *Plugin URI: http://www.tonjoo.com/wordpress-plugin-fluid-responsive-slideshow-plugin/
  *Description: Fluid and Responsive Slideshow for wordpress.
- *Version: 1.0.3
+ *Version: 1.0.4
  *Author: tonjoo
  *Author URI: http://www.tonjoo.com/
  *License: GPLv2
  *Contributor: Saga Iqranegara, Haris Ainur Rozak
  * 
  */																																										
-																																																																																						
-/*
- * Call other file for this plugin
- */
 
 define('FRS_DIR_NAME', str_replace("/Fluid-Responsive-Slideshow.php", "", plugin_basename(__FILE__)));
+define('FRS_VERSION','1.0.4');
 
 require_once( plugin_dir_path( __FILE__ ) . 'shortcode.php');
 require_once( plugin_dir_path( __FILE__ ) . 'post-list.php');
@@ -24,20 +21,14 @@ require_once( plugin_dir_path( __FILE__ ) . 'submenu.php');
 require_once( plugin_dir_path( __FILE__ ) . 'ajax.php');
 require_once( plugin_dir_path( __FILE__ ) . 'modal.php');
 
-/*
- *  Save plugin version on db on plugin installation
- */
 
-define('FRS_VERSION','1.0.3');
-
-/*
+/**
  * Add featured image support for this plugin
  */ 
-
 add_action('after_setup_theme','after_setup_theme_pjc',5);
 
-function after_setup_theme_pjc(){	
-
+function after_setup_theme_pjc()
+{
 	//check if post-thumbnails support defined
 	if(isset($_wp_theme_features['post-thumbnails'])){
 		//check if post-thumbails is set to true ( means all post have featured image), skip if true
@@ -50,16 +41,14 @@ function after_setup_theme_pjc(){
 		add_theme_support( 'post-thumbnails', array('pjc_slideshow') );
 }
 
- /*
- *  Init pjc_slideshow post-type
- */
-
+ /**
+  * Init pjc_slideshow post-type
+  */
  add_action( 'init', 'create_frs_slideshow' );
 
- function create_frs_slideshow() {
-
-	 // Add new taxonomy, make it hierarchical (like categories)
- 	  $labels = array(
+ function create_frs_slideshow()
+ {
+ 	$labels = array(
  		'name' => _x( 'Slide Type', 'taxonomy general name' ),
  		'singular_name' => _x( 'Slide Type', 'taxonomy singular name' ),
  		'search_items' =>  __( 'Search Slide Type' ),
@@ -82,11 +71,7 @@ function after_setup_theme_pjc(){
  		'rewrite' => array( 'slug' => 'slide-type' ),
  		));
 
-
-
-
-
- 	  register_post_type( 'pjc_slideshow',
+ 	register_post_type( 'pjc_slideshow',
  		array(
  			'labels' => array(
  				'name' => 'Fluid Responsive Slideshow',
@@ -115,8 +100,13 @@ function after_setup_theme_pjc(){
  		);	
  }
 
-function frs_slide_type_columns($theme_columns) {
+/**
+ * Add edit column on slidetype
+ */
+add_filter("manage_edit-slide_type_columns", 'frs_slide_type_columns'); 
 
+function frs_slide_type_columns($theme_columns)
+{
     $theme_columns = array(
         'cb' => '<input type="checkbox" />',
         'name' => __('Name'),
@@ -126,9 +116,11 @@ function frs_slide_type_columns($theme_columns) {
     return $theme_columns;
 }
 
-add_filter("manage_edit-slide_type_columns", 'frs_slide_type_columns'); 
+/**
+ * Add edit button on edit column on slidetype
+ */
+add_filter("manage_slide_type_custom_column", 'frs_manage_slide_type_column', 10, 3);
 
- 
 function frs_manage_slide_type_column($out, $column_name, $slide_type_id) {
     $term = get_term($slide_type_id, 'slide_type');
 
@@ -151,84 +143,68 @@ function frs_manage_slide_type_column($out, $column_name, $slide_type_id) {
     return $out;    
 }
 
-add_filter("manage_slide_type_custom_column", 'frs_manage_slide_type_column', 10, 3);
-
 /**
- * Register Info Box (Meta Box) and option sub-menu
+ * admin_enqueue_scripts
  */
+add_action('admin_enqueue_scripts', 'frs_admin_enqueue_scripts', 100);
 
-add_action( 'admin_menu', 'pjc_slideshow_admin' );
-
-function pjc_slideshow_admin() 
-{	
-
-    /**
-     * Register css and javascript for admin page
-     */
-	wp_enqueue_style('frs-admin-css',plugin_dir_url( __FILE__ )."css/frs-admin.css",array(),FRS_VERSION);
-	wp_enqueue_style('colorpicker-css',plugin_dir_url( __FILE__ )."css/jquery.miniColors.css",array(),FRS_VERSION);   
-	wp_enqueue_script('colorpicker-js',plugin_dir_url( __FILE__ )."js/jquery.miniColors.js",array(),FRS_VERSION);  	
-	wp_enqueue_script('select2-js',plugin_dir_url( __FILE__ )."js/select2.js",array(),FRS_VERSION);  
-
+function frs_admin_enqueue_scripts()
+{
+    wp_enqueue_style('frs-admin-css',plugin_dir_url( __FILE__ )."css/frs-admin.css",array(),FRS_VERSION);
+    wp_enqueue_style('colorpicker-css',plugin_dir_url( __FILE__ )."css/jquery.miniColors.css",array(),FRS_VERSION);   
     wp_enqueue_style('frs-css',plugin_dir_url( __FILE__ )."css/frs.css",array(),FRS_VERSION);      
     wp_enqueue_style('frs-position',plugin_dir_url( __FILE__ )."css/frs-position.css",array(),FRS_VERSION);      
-	
-	$is_post_page = get_query_var( 'post' ) ? get_query_var( 'post' ) : false;
+    
+    /**
+     * filter by admin page
+     */
+    $is_post_page = get_query_var( 'post' ) ? get_query_var( 'post' ) : false;
 
-
-	if(isset($_GET['tab']) && $_GET['tab'] != "")
-	{
-		if(isset($_GET['page']) && $_GET['page'] == "frs-setting-page" && isset($_GET['tabtype']))
-		{
-			if($_GET['tabtype'] == "slide")
-			{
-		        wp_enqueue_style('select2-css',plugin_dir_url( __FILE__ )."css/select2.css",array(),FRS_VERSION);
-		    }
-		   	else
-		   	{
+    if(isset($_GET['tab']) && $_GET['tab'] != "")
+    {
+        if(isset($_GET['page']) && $_GET['page'] == "frs-setting-page" && isset($_GET['tabtype']))
+        {
+            if($_GET['tabtype'] == "slide")
+            {
+                wp_enqueue_style('select2-css',plugin_dir_url( __FILE__ )."css/select2.css",array(),FRS_VERSION);
+            }
+            else
+            {
                 /* configuration page */
-		   		wp_enqueue_style('select2-css',plugin_dir_url( __FILE__ )."css/select2-pure.css",array(),FRS_VERSION);
+                wp_enqueue_style('select2-css',plugin_dir_url( __FILE__ )."css/select2-pure.css",array(),FRS_VERSION);
                 wp_enqueue_script('ace-js',plugin_dir_url( __FILE__ )."js/ace-min-noconflict-css-monokai/ace.js",array(),FRS_VERSION);
             }
-		}
-		else if(isset($_GET['page']) && $_GET['page'] == "frs-setting-page" && ! isset($_GET['tabtype']))
-		{
+        }
+        else if(isset($_GET['page']) && $_GET['page'] == "frs-setting-page" && ! isset($_GET['tabtype']))
+        {
             /* configuration page */
             wp_enqueue_style('select2-css',plugin_dir_url( __FILE__ )."css/select2-pure.css",array(),FRS_VERSION);
-			wp_enqueue_script('ace-js',plugin_dir_url( __FILE__ )."js/ace-min-noconflict-css-monokai/ace.js",array(),FRS_VERSION);
-		}
-	}
-	else
-	{
-		wp_enqueue_style('select2-css',plugin_dir_url( __FILE__ )."css/select2.css",array(),FRS_VERSION);
-	}
+            wp_enqueue_script('ace-js',plugin_dir_url( __FILE__ )."js/ace-min-noconflict-css-monokai/ace.js",array(),FRS_VERSION);
+        }
+    }
+    else
+    {
+        wp_enqueue_style('select2-css',plugin_dir_url( __FILE__ )."css/select2.css",array(),FRS_VERSION);
+    }
 
-	wp_enqueue_script('jquery');  
-	wp_enqueue_script('frs-admin-js',plugin_dir_url( __FILE__ )."js/tonjoo_frs_admin.js",array(),FRS_VERSION);  
-
-	wp_enqueue_script( 'jquery-ui-sortable' );
-}
-
-/*
- * Enque FRS Skins on WordPress all page
- */
-
-add_action('wp_head','frs_add_main_css');
-
-function frs_add_main_css(){
-    wp_enqueue_style('frs-css',plugin_dir_url( __FILE__ )."css/frs.css",array(),FRS_VERSION);  
-    wp_enqueue_style('frs-position',plugin_dir_url( __FILE__ )."css/frs-position.css",array(),FRS_VERSION);          
-}
-
-/*
- * jQuery Validate
- */
-
-add_action('admin_enqueue_scripts', 'frs_validation_js');   
-
-function frs_validation_js(){    
+    wp_enqueue_script('jquery');  
+    wp_enqueue_script('jquery-ui-sortable');
+    wp_enqueue_script('frs-admin-js',plugin_dir_url( __FILE__ )."js/tonjoo_frs_admin.js",array(),FRS_VERSION);      
     wp_enqueue_script('jquery_validate_js', plugin_dir_url( __FILE__ )."js/jquery.validate.js", array('jquery'),FRS_VERSION);
     wp_enqueue_script('validate_action_js', plugin_dir_url( __FILE__ )."js/validate_action.js",array(),FRS_VERSION);
+    wp_enqueue_script('colorpicker-js',plugin_dir_url( __FILE__ )."js/jquery.miniColors.js",array(),FRS_VERSION);   
+    wp_enqueue_script('select2-js',plugin_dir_url( __FILE__ )."js/select2.js",array(),FRS_VERSION);  
+}
+
+/**
+ * wp_enqueue_scripts
+ */
+add_action('wp_enqueue_scripts', 'frs_wp_enqueue_scripts', 100);
+
+function frs_wp_enqueue_scripts()
+{
+    wp_enqueue_style('frs-css',plugin_dir_url( __FILE__ )."css/frs.css",array(),FRS_VERSION);  
+    wp_enqueue_style('frs-position',plugin_dir_url( __FILE__ )."css/frs-position.css",array(),FRS_VERSION);          
 }
 
 
@@ -240,16 +216,15 @@ $is_updated_admin = ( version_compare( $wp_version, '3.8', '>=' ) ) ? true : fal
 /**
  * Adds a media button (for inserting a slideshow) to the Post Editor
  */
-
 add_action( 'media_buttons', 'frs_media_button', 11 );
 
-function frs_media_button( $editor_id ) {
-
+function frs_media_button( $editor_id ) 
+{
 	global $is_updated_admin;
     
     /** Show appropriate button and styling */
-    if ( $is_updated_admin ) {
-
+    if ( $is_updated_admin ) 
+    {
         /** WordPress v3.8+ button */
         ?>
         <style type="text/css">
@@ -263,10 +238,9 @@ function frs_media_button( $editor_id ) {
         </style>
         <a href="#TB_inline?&inlineId=choose-frs-slider" class="thickbox button insert-slideshow" data-editor="<?php echo esc_attr( $editor_id ); ?>" title="<?php _e( 'Select a FR Slideshow type to insert into post', 'frs' ); ?>"><?php echo '<span class="wp-media-buttons-icon insert-slideshow-icon"></span>' . __( ' Add FR Slideshow', 'frs' ); ?></a>
         <?php
-
     }
-    else {
-
+    else 
+    {
         /** Backwards compatibility button */
         ?>
         <style type="text/css">
@@ -283,17 +257,16 @@ function frs_media_button( $editor_id ) {
         </style>
         <a href="#TB_inline?&inlineId=choose-frs-slider" class="thickbox button insert-slideshow" data-editor="<?php echo esc_attr( $editor_id ); ?>" title="<?php _e( 'Select a FR Slideshow type to insert into post', 'frs' ); ?>"><?php echo '<span class="insert-slideshow-icon"></span>' . __( 'Add Slideshow', 'frs' ); ?></a>
         <?php
-
     }
 }
 
 /**
  * Append the 'Choose Meta Slider' thickbox content to the bottom of selected admin pages
  */
-
 add_action('admin_footer', 'frs_admin_footer');
 
-function frs_admin_footer() {
+function frs_admin_footer() 
+{
 	global $pagenow;
 
 	// Only run in post/page creation and edit screens
@@ -358,11 +331,10 @@ function frs_check_taxonomy( $taxonomy )
 /**
  * Password on post type
  */
-
 add_action( 'save_post', 'frs_check_type_values', 10, 2 );
 
-function frs_check_type_values( $post_id, $post ) {
-
+function frs_check_type_values( $post_id, $post ) 
+{
     if( $post->post_type )
         switch( $post->post_type ) {
             case 'pjc_slideshow':
@@ -376,8 +348,8 @@ function frs_check_type_values( $post_id, $post ) {
 
 add_filter( 'default_content', 'frs_set_default_values', 10, 2 );
 
-function frs_set_default_values( $post_content, $post ) {
-
+function frs_set_default_values( $post_content, $post ) 
+{
     if( $post->post_type )
         switch( $post->post_type ) {
             case 'pjc_slideshow':
@@ -390,7 +362,8 @@ function frs_set_default_values( $post_content, $post ) {
 
 add_action( 'template_redirect', 'wpse_128636_redirect_post' );
 
-function wpse_128636_redirect_post() {
+function wpse_128636_redirect_post() 
+{
     $queried_post_type = get_query_var('post_type');
     if ( is_single() && 'pjc_slideshow' ==  $queried_post_type ) {
     wp_redirect( home_url(), 301 );
@@ -402,7 +375,6 @@ function wpse_128636_redirect_post() {
 /**
  * Dummy Class 
  */
-
 class FRSPost{
     public $ID;
     public $post_author;
@@ -432,9 +404,8 @@ class FRSPost{
 
 
 /**
- * Library class
+ * Library function
  */
-
 function frs_print_select_option($options)
 {
     $r = "";

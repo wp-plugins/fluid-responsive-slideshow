@@ -119,7 +119,7 @@ function pjc_slideshow_tab($current = 'plugin')
 		<!-- Add Buton -->
 		<?php if( (isset($_GET['tabtype'])&&$_GET['tabtype']=='slide') || (!isset($_GET['tab'])) ): ?>
 		<br>
-		<a frs-add-slide  class='button button-primary'>Add New Slide</a><span class="spinner frs-button-spinner " ></span>
+		<a frs-add-slide class='button button-primary'>Add New Slide</a><span class="spinner frs-button-spinner " ></span>
 		<br>
 		<br>
 		<?php endif; ?>

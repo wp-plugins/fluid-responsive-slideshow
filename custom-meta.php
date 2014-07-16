@@ -199,7 +199,7 @@ function tonjoo_slideshow_meta( $post )
 
                 if(name_select_array[1] == 'true')
                 {
-                    var button = "<?php echo plugins_url( FRS_PREMIUM_DIR_NAME.'/buttons/' , dirname(__FILE__) ) ?>" + name_select_array[0];
+                    var button = "<?php if(function_exists('is_frs_premium_exist')) echo plugins_url( FRS_PREMIUM_DIR_NAME.'/buttons/' , dirname(__FILE__) ) ?>" + name_select_array[0];
                 }
                 else
                 {

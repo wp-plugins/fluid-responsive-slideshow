@@ -1,50 +1,32 @@
-<?php switch ( $current ) {
-		
-case 'plugin':
-	echo   '<div class="postbox-container" style="width:100%;">
-			<div class="metabox-holder">
-			<div class="meta-box-sortables ui-sortable">
-			<div id="adminform" class="postbox">
-			<h3 class="hndle"><span>Fluid Responsive Slideshow</span></h3>
-			<div class="inside">';
-
-	require( plugin_dir_path( __FILE__ ) . 'manual.php');
-
-	echo   '</div>			
-			</div>			
-			</div>			
-			</div>			
-			</div>';
+<?php 
+/**
+ * save options
+ */
+if($_POST)
+{
+	update_option('pjc_slideshow_options', $_POST['pjc_slideshow_options']);
+	
+	$location = admin_url("edit.php?post_type=pjc_slideshow&page=frs-setting-page&tab=$current&settings-updated=true");
+	echo "<meta http-equiv='refresh' content='0;url=$location' />";
+	echo "<h2>Loading...</h2>";
+	exit();
+}
 ?>
 
-
-
-<?php
-break;
-case $current:
-?>
 <?php if ( false !== $_REQUEST['settings-updated'] ) : ?>
 	<br><div class="updated fade"><p><strong><?php _e('Options saved', 'pjc_slideshow_options'); ?></strong></p></div>
 <?php endif; ?> 
-<form method="post" action="options.php" id="frs-option-form">
+<form method="post" action="" id="frs-option-form">
 <?php settings_fields('pjc_options'); ?>
 
-
 <?php
-
-  foreach ( $terms as $term ){
-
- 
-	  
-	if(isset($options[$term->slug]) && $term->slug!=$current){
-		foreach ($options[$term->slug] as $key => $value) {
-			echo "<input type='hidden' value='$value' name='pjc_slideshow_options[$term->slug][$key]'>";
+  	foreach ( $terms as $term ) {
+		if(isset($options[$term->slug]) && $term->slug!=$current) {
+			foreach ($options[$term->slug] as $key => $value) {
+				echo "<input type='hidden' value='$value' name='pjc_slideshow_options[$term->slug][$key]'>";
+			}
 		}
-	}
-
-  }
-
-
+  	}
 ?>
 
 <div class="metabox-holder columns-2" style="margin-right: 300px;">
@@ -197,10 +179,6 @@ jQuery(document).ready(function($){
 		}
 	}
 
-
-
-
-
 	$option_select = array(
 					"name"=>"pjc_slideshow_options[{$current}][skin]",
 					"description" => "&nbsp; Select skin",
@@ -266,7 +244,7 @@ jQuery(document).ready(function($){
 	<tr valign="top">
 		<th scope="row">Height</th>
 		<td>
-			<input class="regular-text" type="text" name="pjc_slideshow_options<?php echo "[$current][height]"?>" value="<?php esc_attr_e($options[$current]["height"]); ?>" />
+			<input class="regular-text" type="number" name="pjc_slideshow_options<?php echo "[$current][height]"?>" value="<?php esc_attr_e($options[$current]["height"]); ?>" />
 			<label class="description" >Slider height</label>
 		</td>
 	</tr>
@@ -352,7 +330,7 @@ jQuery(document).ready(function($){
 					);
 					
 				
-					$selected = $options[$current]["animation"];
+					$selected = $options[$current]["pause"];
 					$r = '';
 
 					foreach ( $navigation as $option ) {
@@ -386,7 +364,7 @@ jQuery(document).ready(function($){
 					);
 					
 				
-					$selected = $options[$current]["animation"];
+					$selected = $options[$current]["start_mouseout"];
 					$r = '';
 
 					foreach ( $navigation as $option ) {
@@ -430,7 +408,7 @@ jQuery(document).ready(function($){
 					);
 					
 				
-					$selected = $options[$current]["animation"];
+					$selected = $options[$current]["show_timer"];
 					$r = '';
 
 					foreach ( $navigation as $option ) {
@@ -467,7 +445,7 @@ jQuery(document).ready(function($){
 					);
 					
 				
-					$selected = $options[$current]["animation"];
+					$selected = $options[$current]["navigation"];
 					$r = '';
 
 					foreach ( $navigation as $option ) {
@@ -505,17 +483,16 @@ jQuery(document).ready(function($){
 					
 				
 					$selected = $options[$current]["bullet"];
-					$p = '';
 					$r = '';
 
 					foreach ( $navigation as $option ) {
 						$label = $option['label'];
 						if ( $selected == $option['value'] ) // Make default first in list
-							$p = "<option selected='selected' value='" . esc_attr( $option['value'] ) . "'>$label</option>";
+							$r .= "<option selected='selected' value='" . esc_attr( $option['value'] ) . "'>$label</option>";
 						else
 							$r .= "<option value='" . esc_attr( $option['value'] ) . "'>$label</option>";
 					}
-					echo $p . $r;
+					echo $r;
 				?>
 			</select>
 			<label class="description" >*Some skins pagination can't be disabled</label>
@@ -641,8 +618,3 @@ jQuery(document).ready(function($){
 </div>
 
 </form>	
-
-<?php
-	break;
-	} 
-?>

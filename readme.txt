@@ -1,4 +1,4 @@
-=== Plugin Name ===
+=== Fluid Responsive Slideshow ===
 Tags: slideshow, gallery, image, responsive, fluid, images,slider
 Donate link: http://tonjoo.com/donate/
 Requires at least: 3.0.1
@@ -56,6 +56,10 @@ All of the slide must have a slide order and slide type.
 3. Easy slideshow management, with drag and drop slide ordering.
 
 == Changelog ==
+
+= 1.0.4 = 
+* Decrease file size
+* Fix known bugs
 
 = 1.0.3 =
 * Fix featured image bug
