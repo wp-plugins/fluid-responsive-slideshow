@@ -1,4 +1,5 @@
 === Fluid Responsive Slideshow ===
+Contributors: Todi.Adiatmo, haristonjoo
 Tags: slideshow, gallery, image, responsive, fluid, images,slider
 Donate link: http://tonjoo.com/donate/
 Requires at least: 3.0.1
