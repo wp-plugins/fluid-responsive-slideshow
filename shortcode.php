@@ -1,11 +1,8 @@
 <?php
-
 /**
  * Enqueue script
  */
-
 add_action('wp_enqueue_scripts', 'pjc_jq_scripts', 10000);
-
 function pjc_jq_scripts() 
 {
 	wp_enqueue_script('jquery');
@@ -35,13 +32,10 @@ function pjc_jq_scripts()
 	}
 }
 
-
 /**
  * For admin slide preview
  */
-
 add_action('init', 'pjc_jq_scripts_admin', 10000);
-
 function pjc_jq_scripts_admin() 
 {
 	wp_enqueue_script('jquery');
@@ -71,11 +65,10 @@ function pjc_jq_scripts_admin()
 function get_array_skins()
 {
 	$skins = scandir(dirname(__FILE__)."/skins");
-
 	$slideshow_skin =  array();
 
-	foreach ($skins as $key => $value) {
-
+	foreach ($skins as $key => $value) 
+	{
 		$extension = pathinfo($value, PATHINFO_EXTENSION); 
 		$filename = pathinfo($value, PATHINFO_FILENAME); 
 		$extension = strtolower($extension);
@@ -91,8 +84,8 @@ function get_array_skins()
 	{
 		$skins = scandir(ABSPATH . 'wp-content/plugins/'.FRS_PREMIUM_DIR_NAME.'/skins');
 
-		foreach ($skins as $key => $value) {
-
+		foreach ($skins as $key => $value) 
+		{
 			$extension = pathinfo($value, PATHINFO_EXTENSION); 
 			$filename = pathinfo($value, PATHINFO_FILENAME); 
 			$extension = strtolower($extension);
@@ -114,8 +107,8 @@ function get_array_buttonskins()
 
     $button_skin =  array();
 
-    foreach ($skins as $key => $value) {
-
+    foreach ($skins as $key => $value) 
+    {
         $extension = pathinfo($value, PATHINFO_EXTENSION); 
         $filename = pathinfo($value, PATHINFO_FILENAME); 
         $extension = strtolower($extension);
@@ -131,8 +124,8 @@ function get_array_buttonskins()
     {
         $skins = scandir(ABSPATH . 'wp-content/plugins/'.FRS_PREMIUM_DIR_NAME.'/buttons');
 
-        foreach ($skins as $key => $value) {
-
+        foreach ($skins as $key => $value) 
+        {
             $extension = pathinfo($value, PATHINFO_EXTENSION); 
             $filename = pathinfo($value, PATHINFO_FILENAME); 
             $extension = strtolower($extension);
@@ -152,9 +145,7 @@ function get_array_buttonskins()
 /**
  * Generate shortcode
  */
-
 add_shortcode('pjc_slideshow', 'pjc_gallery_print');
-
 function pjc_gallery_print($attr) 
 {
 	/**
@@ -193,9 +184,9 @@ function pjc_gallery_print($attr)
 	/**
 	 * Get skin
 	 */
-	if(isset($_GET['skin'])) {
-
-		//Safe yourselef from hacker
+	if(isset($_GET['skin'])) 
+	{
+		//Safe yourself from hacker
 		if(!preg_match('/[0-9a-zA-Z- _]/',$_GET['skin']))
     		die();
 
@@ -228,17 +219,13 @@ function pjc_gallery_print($attr)
 	 */
 	wp_enqueue_style("{$options[$current]['skin']}",$skin,array(),FRS_VERSION);
 
-
-
 	if (!$attr) {
 		extract(shortcode_atts(array('slide_type' => 'empty', ), $attr));
 	}
 
-
 	/**
 	 * Check if taxonomy exist
 	 */
-
 	if ($attr['slide_type'] == "empty" || !term_exists($attr['slide_type']))
 	{
 		return "<span style='padding:5px;margin:10px;background-color:#FF5959;color:white'>You must provide the correct slide type on the [pjc_slideshow slide_type='your_slide_type'] shortcode</span>";
@@ -259,7 +246,6 @@ function pjc_gallery_print($attr)
 
 		$textbox_style = "";
 
-
 		/**
 		 * Slider bullets
 		 */
@@ -267,7 +253,7 @@ function pjc_gallery_print($attr)
 		$sbullets = "false";
 
 		$skin_cutted = $options[$current]['skin'];
-		$skin_cutted = explode('-', $skin_cutted);
+		$skin_cutted = explode('-', $skin_cutted);		
 		$skin_cutted = $skin_cutted[2];
 
 		if(in_array($skin_cutted,$slider_bullets_skin))
@@ -275,11 +261,9 @@ function pjc_gallery_print($attr)
 			$sbullets = "true";
 		}
 		
-		$javascript = "
-		<!-- Slideshow generated using Fluid-Responsive-Slideshow, http://www.tonjoo.com/wordpress-plugin-fluid-responsive-slideshow-plugin/ -->
-		<script>
+		$javascript = "<!-- Slideshow generated using Fluid-Responsive-Slideshow, http://www.tonjoo.com/addons/fluid-responsive-slideshow/ -->
+		<script type='text/javascript'>
 			jQuery(document).ready(function($) {
-
 				jQuery('#{$attr['slide_type_id']}').frs({
 					animation : '{$options[$current]['animation']}', // horizontal-slide, vertical-slide, fade
 					animationSpeed :  {$options[$current]['animation_time']}, // how fast animtions are
@@ -304,8 +288,7 @@ function pjc_gallery_print($attr)
 					sbulletsItemWidth: 200,
 					continousSliding: false,
 					jsOnly: false
-				});
-				
+				});				
 				/**
 				 * touchSwipe
 				 */
@@ -323,21 +306,18 @@ function pjc_gallery_print($attr)
 			        },
 			        triggerOnTouchLeave:true
 			    });
-			})
-		
+			})		
 		</script>
 		<!--[if lt IE 9]>
 			<style type='text/css'>
-			#$attr[slide_type_id]-slideshow  .frs-timer { display: none !important; }
-			#$attr[slide_type_id]-slideshow  div.caption { background:transparent; filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000,endColorstr=#99000000);zoom: 1; }
+			#$attr[slide_type_id]-slideshow .frs-timer { display: none !important; }
+			#$attr[slide_type_id]-slideshow div.caption { background:transparent; filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000,endColorstr=#99000000);zoom: 1; }
 			</style>
-		<![endif]-->
-		";
-
+		<![endif]-->";
 
 		if($options[$current]['show_timer']=="false")
 		{
-			$timer ="#$attr[slide_type_id]-slideshow  .frs-timer { display: none !important; }";
+			$timer ="#$attr[slide_type_id]-slideshow .frs-timer { display: none !important; }";
 		}
 		else
 		{
@@ -378,26 +358,19 @@ function pjc_gallery_print($attr)
  		 */
 		$killswitchBullet =""; 		
 	
- 		if($options[$current]['bullet']=='false'){
-
+ 		if($options[$current]['bullet']=='false')
+ 		{
  			$skin_than_can_hide_bullet = array('candy','default','elegant','minimalist','modern','autum','cherryl','galactic','kafh','postcard','sephia','shade');
 
-
  			//check each skins 
- 			foreach ($skin_than_can_hide_bullet as $value) {
- 		
- 				//!==false means the current skins match $skin_than	_can_hide_bullet
- 		
- 				if(strpos($options[$current]['skin'],$value)!==false){
- 			
- 					 $killswitchBullet = "
-		 				#$attr[slide_type_id] .frs-wrapper .frs-bullets-wrapper{
-		 					display:none !important;
-		 					height:0px !important;
-		 				}";
+ 			foreach ($skin_than_can_hide_bullet as $value) 
+ 			{ 		
+ 				//!==false means the current skins match $skin_than	_can_hide_bullet 		
+ 				if(strpos($options[$current]['skin'],$value)!==false)
+ 				{ 			
+ 					$killswitchBullet = "#$attr[slide_type_id] .frs-wrapper .frs-bullets-wrapper{ display:none !important; height:0px !important; }";
 
-		 				break;
-
+		 			break;
  				}
 
  			}
@@ -409,41 +382,33 @@ function pjc_gallery_print($attr)
  		/**
  		 * Print style
  		 */
-        $style="		
-		<style>
-		$timer
-		$li		
-		$textbox_style
-		$addon_style	
-		$directionalNav	
-
-		#$attr[slide_type_id] .frs-wrapper .frs-caption {
-			display:none;
-		}
-
-		#$attr[slide_type_id]-slideshow .frs-caption h4, #$attr[slide_type_id]-slideshow .frs-caption-inner h4{
-			font-size:{$options[$current]['textbox_h4_size']}px;
-		    margin:0px;		
-		}
-
-		#$attr[slide_type_id]-slideshow .frs-caption p, #$attr[slide_type_id]-slideshow .frs-caption-inner p{
-		    margin:0px;		
-		    font-size:{$options[$current]['textbox_p_size']}px;
-		}
-
-		.frs-slideshow-container span.frs-caption {
-			height: 0px !important;
-			position: absolute;
-		}
-
-		.frs-caption-content div h1, .frs-caption-content div h2, .frs-caption-content div h3, .frs-caption-content div h4, .frs-caption-content div p {
-			color: inherit !important;
-			text-align: inherit !important;
-			line-height: 1.5;
-		}
-
-		$killswitchBullet
-
+        $style = "<style type='text/css'>
+			$timer
+			$li		
+			$textbox_style
+			$addon_style	
+			$directionalNav	
+			#$attr[slide_type_id] .frs-wrapper .frs-caption {
+				display:none;
+			}
+			#$attr[slide_type_id]-slideshow .frs-caption h4, #$attr[slide_type_id]-slideshow .frs-caption-inner h4{
+				font-size:{$options[$current]['textbox_h4_size']}px;
+			    margin:0px;		
+			}
+			#$attr[slide_type_id]-slideshow .frs-caption p, #$attr[slide_type_id]-slideshow .frs-caption-inner p{
+			    margin:0px;		
+			    font-size:{$options[$current]['textbox_p_size']}px;
+			}
+			.frs-slideshow-container span.frs-caption {
+				height: 0px !important;
+				position: absolute;
+			}
+			.frs-caption-content div h1, .frs-caption-content div h2, .frs-caption-content div h3, .frs-caption-content div h4, .frs-caption-content div p {
+				color: inherit !important;
+				text-align: inherit !important;
+				line-height: 1.5;
+			}
+			$killswitchBullet
 		</style>";
       
 
@@ -703,26 +668,22 @@ function pjc_gallery_print($attr)
 
         } //end get slide
 
-
         /**
          * custom css
          */
         $style .= "<style>{$options[$current]["custom_css"]}</style>";
-
 		
 		/**
-		 * frs-slideshow-container, css width and height must be declared!
+		 * print html
 		 */
-		$html ="
-		<div class='frs-slideshow-container' id='{$attr['slide_type_id']}'> 
-			<div class='frs-slide-img-wrapper' style='display:none;'>
-				$slide
-			</div>
-		</div>";
+		$html  = "<div class='frs-slideshow-container' id='{$attr['slide_type_id']}'>";
+		$html .= "<div class='frs-slide-img-wrapper' style='display:none;'>";
+		$html .= $slide;
+		$html .= "</div>";
+		$html .= "</div>";
 		
 		wp_reset_query(); // restore main query 
 		
-
 		/**
 		 * Return shortcode
 		 */

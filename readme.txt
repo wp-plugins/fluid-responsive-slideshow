@@ -58,6 +58,9 @@ All of the slide must have a slide order and slide type.
 
 == Changelog ==
 
+= 1.0.5 = 
+* Fix javascript new line problem (thanks to snarvaez)
+
 = 1.0.4 = 
 * Decrease file size
 * Fix known bugs
