@@ -326,7 +326,7 @@ function pjc_gallery_print($attr)
 
  		if($options[$current]['navigation'] == 'false')
  		{
- 			$directionalNav = "#$attr[slide_type_id]-slideshow .frs-slider-nav { display:none; }";
+ 			$directionalNav = "#$attr[slide_type_id]-slideshow .frs-slider-nav { display:none !important; }";
  		}
  		else
  		{
