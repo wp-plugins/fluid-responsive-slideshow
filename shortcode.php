@@ -293,17 +293,15 @@ function pjc_gallery_print($attr)
 				 * touchSwipe
 				 */
 				jQuery('#$attr[slide_type_id]-slideshow .frs-slide-img').swipe( 
-				{			    
-			        swipe:function(event, direction, distance, duration, fingerCount) {
-			          	if(direction == 'right')
-			          	{
-			          		$('#$attr[slide_type_id]-slideshow .frs-slider-nav .frs-arrow-left').click();
-			          	}
-			          	else if(direction == 'left')
-			          	{
-			          		$('#$attr[slide_type_id]-slideshow .frs-slider-nav .frs-arrow-right').click();
-			          	}
-			        },
+				{
+			        swipeLeft:function(event, direction, distance, duration, fingerCount) {
+						$('#$attr[slide_type_id]-slideshow .frs-slider-nav .frs-arrow-right').click();						
+					},
+
+					swipeRight:function(event, direction, distance, duration, fingerCount) {
+						$('#$attr[slide_type_id]-slideshow .frs-slider-nav .frs-arrow-left').click();
+					},
+
 			        triggerOnTouchLeave:true
 			    });
 			})		

@@ -3,7 +3,7 @@
  *Plugin Name: Fluid Responsive Slideshow
  *Plugin URI: http://www.tonjoo.com/wordpress-plugin-fluid-responsive-slideshow-plugin/
  *Description: Fluid and Responsive Slideshow for wordpress.
- *Version: 1.0.6
+ *Version: 1.0.7
  *Author: tonjoo
  *Author URI: http://www.tonjoo.com/
  *License: GPLv2
@@ -12,7 +12,7 @@
  */																																										
 
 define('FRS_DIR_NAME', str_replace("/Fluid-Responsive-Slideshow.php", "", plugin_basename(__FILE__)));
-define('FRS_VERSION','1.0.6');
+define('FRS_VERSION','1.0.7');
 
 require_once( plugin_dir_path( __FILE__ ) . 'shortcode.php');
 require_once( plugin_dir_path( __FILE__ ) . 'post-list.php');
@@ -41,13 +41,13 @@ function after_setup_theme_pjc()
 		add_theme_support( 'post-thumbnails', array('pjc_slideshow') );
 }
 
- /**
-  * Init pjc_slideshow post-type
-  */
- add_action( 'init', 'create_frs_slideshow' );
+/**
+ * Init pjc_slideshow post-type
+ */
+add_action( 'init', 'create_frs_slideshow' );
 
- function create_frs_slideshow()
- {
+function create_frs_slideshow()
+{
  	$labels = array(
  		'name' => _x( 'Slide Type', 'taxonomy general name' ),
  		'singular_name' => _x( 'Slide Type', 'taxonomy singular name' ),
@@ -62,7 +62,7 @@ function after_setup_theme_pjc()
  		'menu_name' => __( 'Slide Type' ),
  		); 	
 
- 	  register_taxonomy('slide_type',array('pjc_slideshow'), array(
+ 	register_taxonomy('slide_type',array('pjc_slideshow'), array(
  		'hierarchical' => true,
  		'labels' => $labels,
  		'show_ui' => true,
@@ -98,7 +98,7 @@ function after_setup_theme_pjc()
  			'has_archive' => true
  			)
  		);	
- }
+}
 
 /**
  * Add edit column on slidetype
