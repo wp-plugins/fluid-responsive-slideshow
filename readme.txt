@@ -29,6 +29,12 @@ Fluid Responsive Slideshow is an easy to use slideshow. It's responsive, dummypr
 
 If you are migrating from previous version, please clear your browser cache after installing new version of FRS.
 
+**Plugin Demo**
+You can try the plugin on this url: http://coba.tonjoo.com/ecae/
+
+* username: ecae
+* password: 123456
+
 **Manual :**
 
 You can read the manual here [manual](https://tonjoo.com/addons/fluid-responsive-slideshow/#manual "manual")
@@ -54,8 +60,8 @@ All of the slide must have a slide order and slide type.
 
 == Screenshots ==
 
-1. Great slideshow with complete settings.
-2. Easy slideshow management.
+1. Easy slideshow management.
+2. Great slideshow with complete settings.
 
 == Changelog ==
 
