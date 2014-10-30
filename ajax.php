@@ -99,6 +99,91 @@ function frs_show_modal() {
     die();
 }
 
+
+/**
+ * Ajax Show Category Modal
+ */
+add_action('wp_ajax_frs_add_slidetype', 'frs_add_slidetype' ); /* for logged in user */
+
+function frs_add_slidetype() {
+
+    $catarr = array('cat_name' => $_POST['name'],'taxonomy' => 'slide_type' );
+
+    $new_cat_id = wp_insert_category( $catarr );
+    $new_cat = get_term_by('id', $new_cat_id, 'slide_type');
+
+    $return = array(
+        'success'=>true,
+        'slug'=>$new_cat->slug
+        );
+
+    header('Content-Type: application/json');
+
+    echo json_encode($return);
+
+    die();
+}
+
+/**
+ * Ajax Delete Category Modal
+ */
+add_action('wp_ajax_frs_delete_slidetype', 'frs_delete_slidetype' ); /* for logged in user */
+
+function frs_delete_slidetype() {
+
+    if(! isset($_POST['id']) || $_POST['id'] <= 0)
+    {
+        $return = array(
+            'success'=>false
+            );
+
+        header('Content-Type: application/json');
+
+        echo json_encode($return);
+
+        die();
+    }
+
+    $taxonomy_id = $_POST['id'];
+
+    // delete posts
+    $args = array(
+            'post_type' => 'pjc_slideshow',
+            'posts_per_page' => -1,
+            'tax_query' => array(
+                array(
+                    'taxonomy' => 'slide_type',
+                    'field'    => 'id',
+                    'terms'    => $taxonomy_id,
+                ),
+            ));
+
+    $the_query = new WP_Query( $args );
+
+    if($the_query->have_posts()): while($the_query->have_posts()): $the_query->the_post();
+        wp_delete_post( get_the_ID(), true );
+
+    endwhile; 
+    endif;
+
+    wp_reset_postdata();
+
+    // delete taxonomy
+    wp_delete_term($taxonomy_id, 'slide_type');
+
+    $return = array(
+        'success'=>true
+        );
+    
+
+    header('Content-Type: application/json');
+
+    echo json_encode($return);
+
+    die();
+}
+
+
 /**
  * Ajax Save, Edit / Create new is the same, depend on the post id (null/not null)
  */

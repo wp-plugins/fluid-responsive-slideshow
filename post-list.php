@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Taxonomy filter on post list
  */
@@ -52,12 +51,10 @@ function restrict_pjc_slideshow_by_slide_type() {
 }
 
 
-
-
-
- /*
+/**
  * Modify which columns display in the admin views 
  */
+add_filter('manage_pjc_slideshow_posts_columns', 'pjc_slideshow_posts_columns');
 function pjc_slideshow_posts_columns($posts_columns) {
 	$tmp = array();
 
@@ -76,11 +73,11 @@ function pjc_slideshow_posts_columns($posts_columns) {
 	return $tmp;
 }
 
-add_filter('manage_pjc_slideshow_posts_columns', 'pjc_slideshow_posts_columns');
 
-/*
+/**
  * Custom column output when admin is viewing the pjc_slideshow post type.
  */
+add_action('manage_posts_custom_column', 'pjc_slideshow_custom_column');
 function pjc_slideshow_custom_column($column_name) {
 	global $post;
 
@@ -129,24 +126,17 @@ function pjc_slideshow_custom_column($column_name) {
 		else{
 			print "<b style='color:red'>no slide type,slide will not be shown</b>";
 		}
-		
-
 	}
-
 }
 
-add_action('manage_posts_custom_column', 'pjc_slideshow_custom_column');
 
-/*
+/**
  * Make the "Featured Image" metabox front and center when editing a pjc_slideshow post.
  */
+add_action('add_meta_boxes_pjc_slideshow', 'pjc_slideshow_metaboxes');
 function pjc_slideshow_metaboxes($post) {
-	
-
 	global $wp_meta_boxes;
 
 	remove_meta_box('postimagediv', 'pjc_slideshow', 'normal');
 	add_meta_box('postimagediv', __('Featured Image'), 'post_thumbnail_meta_box', 'pjc_slideshow', 'side', 'low');
 }
-
-add_action('add_meta_boxes_pjc_slideshow', 'pjc_slideshow_metaboxes');

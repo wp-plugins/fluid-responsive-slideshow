@@ -1,4 +1,6 @@
 jQuery(document).ready(function($){
+	$('.widget-liquid-right').accordion();
+
 	$(".postbox-container  ").on('change','#tonjoo-frs-show_button select',function(){
 		value = $(this).attr('value')
 
@@ -64,6 +66,139 @@ jQuery(document).ready(function($){
 		}
 	})
 
+	// Preview Padding
+	$(".postbox-container ").on('change','#tonjoo-frs-padding_type select',function(){
+		preview_padding();
+	});
+
+	$(".postbox-container ").on('keyup','#frs_textbox_padding',function(){
+		preview_padding();
+	});
+
+	function preview_padding()
+	{
+		var type = $('#tonjoo-frs-padding_type select').val();
+
+		if(type == 'auto')
+		{
+			$('#frs-position-preview-padding-left').html('A');
+			$('#frs-position-preview-padding-top').html('Automatic padding type');
+			$('#frs-position-preview-padding-right').html('A');
+			$('#frs-position-preview-padding-bottom').html('A');
+		}
+		else
+		{
+			var padding = $('#textbox_padding input').val();
+			var arr_pad = padding.split('px ');
+
+			// get rid last 'px'
+			arr_pad[3] = arr_pad[3].slice(0,-2);
+
+			$('#frs-position-preview-padding-left').html(arr_pad[0]);
+			$('#frs-position-preview-padding-top').html(arr_pad[1]);
+			$('#frs-position-preview-padding-right').html(arr_pad[2]);
+			$('#frs-position-preview-padding-bottom').html(arr_pad[3]);
+		}
+	}
+
+
+	// Preview Position	
+	$(".postbox-container ").on('change','#tonjoo-frs-text_position select',function(){
+		preview_position();
+	});
+
+	$(".postbox-container ").on('change','#tonjoo-frs-textbox_width select',function(){
+		preview_position();
+	});
+
+	function preview_position(){
+		var position = $('#tonjoo-frs-text_position select').val();
+		var width = $('#tonjoo-frs-textbox_width select').val();
+
+		position = position.substring(21);
+		obj = $('#frs-position-preview-obj');
+
+		obj.removeAttr('style');
+
+		// width
+		obj.css({
+			"width": (470 * width / 12) + 'px'
+		})
+
+		// position
+		switch (position)
+		{
+			case 'left': 
+				obj.css({
+					"margin-top": '65px'
+				}).html('Text Box<br/><span>( Left )</span>')
+			    break;
+			case 'top-left': 
+				obj.css({
+					"margin-right": 'auto'
+				}).html('Text Box<br/><span>( Top Left )</span>')
+			    break;
+			case 'top': 
+				obj.css({
+					"margin-left": 'auto',
+					"margin-right": 'auto'
+				}).html('Text Box<br/><span>( Top )</span>')
+			    break;
+			case 'top-right': 
+				obj.css({
+					"margin-left": 'auto'
+				}).html('Text Box<br/><span>( Top Right )</span>')
+			    break;
+			case 'right': 
+				obj.css({
+					"margin-left": 'auto',
+					"margin-top": '65px'
+				}).html('Text Box<br/><span>( Right )</span>')
+			    break;
+			case 'bottom-right': 
+				obj.css({
+					"margin-left": 'auto',
+					"margin-top": '135px'
+				}).html('Text Box<br/><span>( Bottom Right )</span>')
+			    break;
+			case 'bottom': 
+				obj.css({
+					"margin-left": 'auto',
+					"margin-right": 'auto',
+					"margin-top": '135px'
+				}).html('Text Box<br/><span>( Bottom )</span>')
+			    break;
+			case 'bottom-left': 
+				obj.css({
+					"margin-right": 'auto',
+					"margin-top": '135px'
+				}).html('Text Box<br/><span>( Bottom Left )</span>')
+			    break;
+			case 'center': 
+				obj.css({
+					"margin-left": 'auto',
+					"margin-right": 'auto',
+					"margin-top": '65px'
+				}).html('Text Box<br/><span>( Center )</span>')
+			    break;
+			case 'sticky-top': 
+				obj.css({
+					"margin-left": '-41px',
+					"margin-top": '-41px',
+					"width": '510px'
+				}).html('Text Box<br/><span>( Sticky Top )</span>')
+			    break;
+			case 'sticky-bottom': 
+				obj.css({
+					"margin-left": '-41px',
+					"margin-top": '175px',
+					"width": '510px'
+				}).html('Text Box<br/><span>( Sticky Bottom )</span>')
+			    break;
+			default:  
+				// no action
+		}		
+	}
 	
 	/**
 	 * Slideshow submenu
@@ -71,7 +206,7 @@ jQuery(document).ready(function($){
 	jQuery(document).ready( function($) {
 		var category = $('table#table-slide tbody').attr('category');
 
-	    frs_resort_data_table()
+		if($('table#table-slide tbody').length > 0) frs_resort_data_table();	    
 
 	   	$('table#table-slide tbody , .frs-modal-container  ').on('click','[frs-delete-slide]',function(){
 	   		
@@ -111,9 +246,100 @@ jQuery(document).ready(function($){
 	   		}	  
 	   	})
 
-	   	$('[frs-add-slide]').click(function(){
+		// add slide category
+		$('[frs-add-slide-type]').click(function(){
+			var string = prompt("Enter the category name", "");
+			
+			if (string != null) 
+			{
+				data = {
+		   			action:'frs_add_slidetype',
+		   			name: string
+		   		}
 
-			button = jQuery(this)	
+	   			jQuery.post(ajaxurl, data,function(response){	   				
+	   				if(response.success) {	   	
+	   					window.location.href = admin_url + '&tab=' + response.slug + '&tabtype=slide';
+	   				}
+	   			});
+			}
+   		});
+
+   		// select all input text on click
+		$('[frs-input-shortcode]').click(function(){
+			$(this).select();
+   		});
+
+   		// create first slideshow
+		$('[frs-first-add-slideshow]').click(function(){
+			var string = $('#frs-first-slideshow-input').val();
+
+			if (string != null && string != '')
+			{
+				data = {
+		   			action:'frs_add_slidetype',
+		   			name: string
+		   		}
+
+	   			jQuery.post(ajaxurl, data,function(response){	   				
+	   				if(response.success) {	   	
+	   					window.location.href = admin_url + '&tab=' + response.slug + '&tabtype=slide';
+	   				}
+	   			});
+			}
+   		});
+
+   		// delete slide category
+		$('[frs-delete-slide-type]').click(function(){
+			var x = confirm("Are you sure want to delete this slideshow?");
+			
+			if (x == true) 
+			{
+				data = {
+		   			action:'frs_delete_slidetype',
+		   			id: $(this).attr('id')
+		   		}
+
+	   			jQuery.post(ajaxurl, data,function(response){	   				
+	   				if(response.success) {	   	
+	   					window.location.href = admin_url + '&settings-updated=true';
+	   				}
+	   			});
+			}
+   		});
+
+   		jQuery('.frs-modal-container').on('click','[frs-modal-close-modal]',function(){
+			jQuery('.frs-modal-backdrop').removeClass('active');
+			jQuery('.frs-modal-cat-container').hide();	
+			jQuery('.spinner').removeClass('active')
+
+		})
+
+   		// add slide
+	   	$('[frs-add-slide]').click(function(){
+			add_slide();
+	   	});
+
+	   	if(get_other == 'add-new-intro')
+	   	{
+	   		add_slide();
+
+	   		// alert('xxx');
+
+	   		// introJs().goToStep(8).start();
+
+	   		window.setTimeout(function(){
+	   			introJs()
+		   		.setOption('tooltipPosition', 'auto')
+		   		.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top'])
+		   		.goToStep(8)
+		   		.start();
+	   		},1000);	   		
+	   	}
+
+	   	function add_slide()
+	   	{
+	   		button = $('[frs-add-slide]');
 
 			ajax_button_spin(button)
 
@@ -158,12 +384,16 @@ jQuery(document).ready(function($){
    		 			jQuery('.frs-modal-backdrop').addClass('active')
    		 			jQuery('.frs-modal-container').show().addClass('active')
 
+   		 			preview_position();
+   		 			preview_padding();
+
    		 			ajax_button_spin_stop(button)
    				}
-   			})	   		
-	   	})
+   			})	   
+	   	}
 
 
+		// edit slide
 	    $('table#table-slide tbody ').on('click','[frs-edit-slide]',function(){
 
 			button = jQuery(this)	
@@ -214,7 +444,9 @@ jQuery(document).ready(function($){
 			   	 		tinyMCE.get('frs-modal-content').setContent(response.content)
 				    else
 				    	jQuery('#frs-modal-content').val(response.content);
-				    
+
+					preview_position();		
+					preview_padding();		    
 
    		 			frs_check_table_size()
    				}
@@ -232,12 +464,14 @@ jQuery(document).ready(function($){
 	})
 	
 	jQuery('.frs-modal-container').on('click','[frs-modal-close-modal]',function(){
-		jQuery('.frs-modal-backdrop').removeClass('active');
+		jQuery('.frs-modal-backdrop').removeClass('active');		
 		jQuery('.frs-modal-container .frs-table-left').html('');
-		jQuery('.frs-modal-container').hide();	
+		jQuery('.frs-modal-container').hide();
 		jQuery('.spinner').removeClass('active')
 
 	})
+
+	
 
 	/**
 	 * Save 
@@ -372,6 +606,20 @@ jQuery(document).ready(function($){
 		jQuery('[media-upload-image]').attr('src',jQuery(this).data('image-default'));
 	})	
 })
+
+function startTour() {
+	var tour = introJs();
+
+	tour.setOption('tooltipPosition', 'auto');
+	tour.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+
+	// go to the next page
+	// tour.setOption('doneLabel', 'Next page').oncomplete(function() {
+ 	// 		window.location.href = '?page=frs-setting-page&tab=a-first-one&tabtype=slide&other=add-new-intro';
+ 	// });
+
+	tour.start();
+}
 
 function frs_check_table_size(){
 	if(jQuery("table#table-slide tr").size()==0){

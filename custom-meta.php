@@ -157,12 +157,17 @@ function tonjoo_slideshow_meta( $post )
         ?>
 
         #picture_prev{
-            width: 80px;
-            height: 27px;
+            width: 60px;
+            height: 25px;
             background-image: url("<?php echo plugins_url( FRS_DIR_NAME.'/backgrounds/'.$postmeta['textbox_bg'].'.png' , dirname(__FILE__) ) ?>");
             float: left;
-            margin-left: 5px;
+            margin-left: 15px;
             border: solid 1px #CCC;
+            margin-top: 1px;
+        }
+
+        #tonjoo-frs-textbox-bg select {
+            float: left;
         }
 
         .tonjoo_slideshow tr th {
@@ -220,443 +225,523 @@ function tonjoo_slideshow_meta( $post )
     <!-- Always default value, ordering from slideshow-->
     <input type="hidden" name="tonjoo_frs_order_number" value="<?php esc_attr_e($order_number); ?>" />
 
-    <table class="form-table tonjoo_slideshow">
-        <tr><td colspan=2><h3 class="meta-subtitle" style="margin-top:-23px !important;">Background Color</h3></td></tr>
-        <th scope="row">Background Color</th>
-            <td>
-                <input class="regular-text minicolors" style="width:150px;height:30px;float:left;margin-right:17px;" name="tonjoo_frs_meta[slider_bg]" value="<?php esc_attr_e($postmeta['slider_bg']); ?>" />
-            </td>
-        </tr>
-        <tr>
-            <td class='description' colspan="2">Background color will be shown if no image are selected</td>
-        </tr>
-        <tr>
-            <td colspan=2><h3 class="meta-subtitle">Text Box</h3></td>
-        </tr>
-        <?php
-            $show_text = array(
-                            '0' => array(
-                                    'value' =>  'true',
-                                    'label' =>  'Yes'
-                                ),
-                            '1' => array(
-                                'value' =>  'false',
-                                'label' =>  'No' 
-                            )
-                        );
+   
+    <div style="clear:both;"></div>
 
-            $option_select = array(
-                "name"=>"tonjoo_frs_meta[show_text]",
-                "description" => "Select no to hide textbox",
-                "label" => "Show Text Box",
-                "value" => $postmeta['show_text'],
-                "select_array" => $show_text,
-                "id"=>"tonjoo-frs-show_text"
-            );
-            
-            frs_print_select_option($option_select);
-        ?>
-        <tr><td colspan=2><h3 class="meta-subtitle">Text Box Background</h3></td></tr>
+    <div class="settings-container">      
 
-        <?php 
-            $bg_textbox_type = array(
-                                '0' => array(
-                                        'value' =>  'picture',
-                                        'label' =>  'Transparent'
-                                    ),
-                                '1' => array(
-                                        'value' =>  'color',
-                                        'label' =>  'Solid Color' 
-                                    ),
-                                '2' => array(
-                                        'value' =>  'none',
-                                        'label' =>  'None' 
-                                    )
+        <!-- Text Box Position -->
+        <div class="widgets-holder-wrap exclude">
+            <div class="sidebar-name">
+                <div class="sidebar-name-arrow"></div>
+                <h3>Text Box Position</h3>
+            </div>
+            <div class="sidebar-content widgets-sortables clearfix">
+                <table class="table-content">
+                <tr valign="top">
+                    <td colspan="2" id="frs-text-position-preview">
+                        <div id="frs-position-preview-outer">
+                            <div id="frs-position-preview-padding-left">25</div>
+                            <div id="frs-position-preview-padding-top">25</div>
+                            <div id="frs-position-preview-padding-right">25</div>
+                            <div id="frs-position-preview-padding-bottom">25</div>
+                            <div id="frs-position-preview-inner">
+                                <div id="frs-position-preview-obj">Text Box</div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <?php 
+                    $text_position = array(
+                                        '0' => array(
+                                            'value' =>  'frs-caption-position-left',
+                                            'label' =>  'Left'
+                                        ),
+                                        '1' => array(
+                                            'value' =>  'frs-caption-position-top-left',
+                                            'label' =>  'Top Left'
+                                        ),
+                                        '2' => array(
+                                            'value' =>  'frs-caption-position-top',
+                                            'label' =>  'Top'
+                                        ),
+                                        '3' => array(
+                                            'value' =>  'frs-caption-position-top-right',
+                                            'label' =>  'Top Right'
+                                        ),
+                                        '4' => array(
+                                            'value' =>  'frs-caption-position-right',
+                                            'label' =>  'Right' 
+                                        ),
+                                        '5' => array(
+                                            'value' =>  'frs-caption-position-bottom-right',
+                                            'label' =>  'Bottom Right' 
+                                        ),
+                                        '6' => array(
+                                            'value' =>  'frs-caption-position-bottom',
+                                            'label' =>  'Bottom' 
+                                        ),
+                                        '7' => array(
+                                            'value' =>  'frs-caption-position-bottom-left',
+                                            'label' =>  'Bottom Left' 
+                                        ),
+                                        '8' => array(
+                                            'value' =>  'frs-caption-position-center',
+                                            'label' =>  'Center' 
+                                        ),
+                                        '9' => array(
+                                            'value' =>  'frs-caption-position-sticky-top',
+                                            'label' =>  'Sticky Top' 
+                                        ),
+                                        '10' => array(
+                                            'value' =>  'frs-caption-position-sticky-bottom',
+                                            'label' =>  'Sticky Bottom' 
+                                        )
+                                    );
+
+
+                    $option_select = array(
+                                        "name"=>"tonjoo_frs_meta[text_position]",
+                                        "description" => "",
+                                        "label" => "Text Box Position",
+                                        "value" => $postmeta['text_position'],
+                                        "select_array" => $text_position,
+                                        "id"=>"tonjoo-frs-text_position"
+                                    );
+                      
+                    frs_print_select_option($option_select);
+                ?>
+
+                <?php 
+                    $textbox_width = array(
+                                        '0' => array(
+                                            'value' =>  1,
+                                            'label' =>  '1 / 12'
+                                        ),
+                                        '1' => array(
+                                            'value' =>  2,
+                                            'label' =>  '2 / 12' 
+                                        ),
+                                        '2' => array(
+                                            'value' =>  3,
+                                            'label' =>  '3 / 12' 
+                                        ),
+                                        '3' => array(
+                                            'value' =>  4,
+                                            'label' =>  '4 / 12' 
+                                        ),
+                                        '4' => array(
+                                            'value' =>  5,
+                                            'label' =>  '5 / 12' 
+                                        ),
+                                        '5' => array(
+                                            'value' =>  6,
+                                            'label' =>  '6 / 12' 
+                                        ),
+                                        '6' => array(
+                                            'value' =>  7,
+                                            'label' =>  '7 / 12' 
+                                        ),
+                                        '7' => array(
+                                            'value' =>  8,
+                                            'label' =>  '8 / 12' 
+                                        ),
+                                        '8' => array(
+                                            'value' =>  9,
+                                            'label' =>  '9 / 12' 
+                                        ),
+                                        '9' => array(
+                                            'value' =>  10,
+                                            'label' =>  '10 / 12' 
+                                        ),
+                                        '10' => array(
+                                            'value' =>  11,
+                                            'label' =>  '11 / 12' 
+                                        ),
+                                        '11' => array(
+                                            'value' =>  12,
+                                            'label' =>  '12 / 12' 
+                                        )
+                                    );
+
+
+                    $option_select = array(
+                                        "name"=>"tonjoo_frs_meta[textbox_width]",
+                                        "description" => "",
+                                        "label" => "Text Box Width",
+                                        "value" => $postmeta['textbox_width'],
+                                        "select_array" => $textbox_width,
+                                        "id"=>"tonjoo-frs-textbox_width"
+                                    );
+
+                    
+                    frs_print_select_option($option_select);
+                ?>
+
+                <?php
+                    $padding_type = array(
+                                        '0' => array(
+                                            'value' =>  'auto',
+                                            'label' =>  'Automatic'
+                                        ),
+                                        '1' => array(
+                                            'value' =>  'manual',
+                                            'label' =>  'Manual'
+                                        )
+                                    );
+
+
+                    $option_select = array(
+                                            "name"=>"tonjoo_frs_meta[padding_type]",
+                                            "description" => "",
+                                            "label" => "Padding Type",
+                                            "value" => $postmeta['padding_type'],
+                                            "select_array" => $padding_type,
+                                            "id"=>"tonjoo-frs-padding_type"
+                                        );
+                    
+                    frs_print_select_option($option_select);
+                ?>
+
+                <tr id="textbox_padding" >
+                    <th scope="row">Padding</th>
+                    <td>
+                        <input class="regular-text" name="tonjoo_frs_meta[textbox_padding]" id="frs_textbox_padding" value="<?php esc_attr_e($postmeta['textbox_padding']); ?>" />
+                        <label class="description">[top]px [right]px [bottom]px [left]px</label>
+                    </td>
+                </tr>
+                </table>
+
+                <!-- REAL USAGE
+                <div class="field">
+                    <label for="height">
+                        <span>Height:</span>
+                        <input type="number" name="dimensions[height]" id="height" value="400">
+                    </label>
+                </div> 
+                -->
+            </div>
+        </div>
+
+        <!-- Text Box Button -->
+        <div class="widgets-holder-wrap closed">
+            <div class="sidebar-name">
+                <div class="sidebar-name-arrow"></div>
+                <h3>Text Box Button</h3>
+            </div>
+            <div class="sidebar-content widgets-sortables clearfix">
+                <table class="table-content">
+                    <?php 
+                        $dir =  dirname(__FILE__)."/buttons";
+
+                        $skins = scandir($dir);
+
+                        $button_skin =  array();
+
+                        foreach ($skins as $key => $value) {
+
+                            $extension = pathinfo($value, PATHINFO_EXTENSION); 
+                            $filename = pathinfo($value, PATHINFO_FILENAME); 
+                            $extension = strtolower($extension);
+                            $the_value = strtolower($filename);
+                            $filename_ucwords = str_replace('-', ' ', ucwords($filename));
+                            $filename_ucwords = ucwords($filename_ucwords);
+                            $filename_ucwords = str_replace('Frs Buttonskin ', '', ucwords($filename_ucwords));
+
+                            if($extension=='css'){
+                                $data = array(
+                                        "label"=>"$filename_ucwords",
+                                        "value"=>"$the_value"                               
+
+                                    );
+
+                                array_push($button_skin,$data);
+
+                            }
+                        }
+
+                        if(function_exists('is_frs_premium_exist')) 
+                        {                
+                            $dir =  ABSPATH . 'wp-content/plugins/'.FRS_PREMIUM_DIR_NAME.'/buttons';
+
+                            $skins = scandir($dir);
+
+                            foreach ($skins as $key => $value) {
+
+                                $extension = pathinfo($value, PATHINFO_EXTENSION); 
+                                $filename = pathinfo($value, PATHINFO_FILENAME); 
+                                $extension = strtolower($extension);
+                                $the_value = strtolower($filename);
+                                $filename_ucwords = str_replace('-', ' ', $filename);
+                                $filename_ucwords = ucwords($filename_ucwords);
+                                $filename_ucwords = str_replace('Frs Buttonskin ', '', ucwords($filename_ucwords));
+
+
+                                if($extension=='css'){
+                                    $data = array(
+                                            "label"=>"$filename_ucwords (Premium)",
+                                            "value"=>"$the_value-PREMIUMtrue"
+
+                                        );
+
+                                    array_push($button_skin,$data);
+
+                                }
+                            }
+                        }
+
+
+                        $option_select = array(
+                                        "name"=>"tonjoo_frs_meta[button_skin]",
+                                        "description" => "",
+                                        "label" => "Button Skin",
+                                        "value" => $postmeta['button_skin'],
+                                        "select_array" => $button_skin,
+                                        "id"=>"tonjoo-frs-button_skin"
+                                    );
+
+                        
+                        frs_print_select_option($option_select);
+                    ?>
+
+                    <tr class="button_attr">
+                        <th scope="row">Button Caption</th>
+                        <td>
+                            <input class="regular-text" name="tonjoo_frs_meta[button_caption]" value="<?php esc_attr_e($postmeta['button_caption']); ?>" />
+                        </td>
+                    </tr>
+                    <tr class="button_attr">
+                        <th scope="row">Button Link</th>
+                        <td>
+                            <input class="regular-text"  name="tonjoo_frs_meta[button_href]" value="<?php esc_attr_e($postmeta['button_href']); ?>" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Text Box Background -->
+        <div class="widgets-holder-wrap closed">
+            <div class="sidebar-name">
+                <div class="sidebar-name-arrow"></div>
+                <h3>Text Box Background</h3>
+            </div>
+            <div class="sidebar-content widgets-sortables clearfix">
+                <table class="table-content">
+                    <?php 
+                        $bg_textbox_type = array(
+                                            '0' => array(
+                                                    'value' =>  'picture',
+                                                    'label' =>  'Transparent'
+                                                ),
+                                            '1' => array(
+                                                    'value' =>  'color',
+                                                    'label' =>  'Solid Color' 
+                                                ),
+                                            '2' => array(
+                                                    'value' =>  'none',
+                                                    'label' =>  'None' 
+                                                )
+                                            );
+
+                        $option_select = array(
+                                            "name"=>"tonjoo_frs_meta[bg_textbox_type]",
+                                            "description" => "Transparent / Solid Color",
+                                            "label" => "Background Type",
+                                            "value" => $postmeta['bg_textbox_type'],
+                                            "select_array" => $bg_textbox_type,
+                                            "id"=>"tonjoo-frs-bg-textbox-type"
+                                        );
+                        
+                        frs_print_select_option($option_select);
+                        
+
+                    ?>
+
+                    <?php
+                        $dir =  dirname(__FILE__)."/backgrounds";
+
+                        $backgrounds = scandir($dir);
+
+                        $textbox_bg =  array();
+
+                        foreach ($backgrounds as $key => $value) 
+                        {
+                            $extension = pathinfo($value, PATHINFO_EXTENSION); 
+                            $filename = ucwords(pathinfo($value, PATHINFO_FILENAME)); 
+                            $extension = strtolower($extension);
+                            $the_value = strtolower($filename);
+
+                            if($extension=='png'){
+                                $data = array(
+                                    "label"=>"$filename",
+                                    "value"=>"$the_value" 
                                 );
 
-            $option_select = array(
-                                "name"=>"tonjoo_frs_meta[bg_textbox_type]",
-                                "description" => "Transparent / Solid Color",
-                                "label" => "Background Type",
-                                "value" => $postmeta['bg_textbox_type'],
-                                "select_array" => $bg_textbox_type,
-                                "id"=>"tonjoo-frs-bg-textbox-type"
-                            );
-            
-            frs_print_select_option($option_select);
-            
+                                array_push($textbox_bg,$data);
+                            }
+                        }
 
-        ?>
+                        $option_select = array(
+                                            "name"=>"tonjoo_frs_meta[textbox_bg]",
+                                            "description" => "<div id='picture_prev'></div>",
+                                            "label" => "Transparent",
+                                            "value" => $postmeta['textbox_bg'],
+                                            "select_array" => $textbox_bg,
+                                            "id"=>"tonjoo-frs-textbox-bg"
+                                        );
+                        
+                        frs_print_select_option($option_select);
+                    ?>
 
-        <?php
-            $dir =  dirname(__FILE__)."/backgrounds";
+                    <tr valign="top" id='textbox_color'>
+                        <th scope="row">Solid Color</th>
+                        <td>
+                            <input  class="regular-text minicolors" style="width:150px;height:30px;float:left;margin-right:17px;" type="text" name="tonjoo_frs_meta[textbox_color]" value="<?php esc_attr_e($postmeta["textbox_color"]); ?>" />
+                            <label class="description" ></label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
 
-            $backgrounds = scandir($dir);
-
-            $textbox_bg =  array();
-
-            foreach ($backgrounds as $key => $value) 
-            {
-                $extension = pathinfo($value, PATHINFO_EXTENSION); 
-                $filename = ucwords(pathinfo($value, PATHINFO_FILENAME)); 
-                $extension = strtolower($extension);
-                $the_value = strtolower($filename);
-
-                if($extension=='png'){
-                    $data = array(
-                        "label"=>"$filename",
-                        "value"=>"$the_value" 
-                    );
-
-                    array_push($textbox_bg,$data);
-                }
-            }
-
-            $option_select = array(
-                                "name"=>"tonjoo_frs_meta[textbox_bg]",
-                                "description" => "<div id='picture_prev'></div>",
-                                "label" => "Transparent",
-                                "value" => $postmeta['textbox_bg'],
-                                "select_array" => $textbox_bg,
-                                "id"=>"tonjoo-frs-textbox-bg"
-                            );
-            
-            frs_print_select_option($option_select);
-        ?>
-
-        <tr valign="top" id='textbox_color'>
-            <th scope="row">Solid Color</th>
-            <td>
-                <input  class="regular-text minicolors" style="width:150px;height:30px;float:left;margin-right:17px;" type="text" name="tonjoo_frs_meta[textbox_color]" value="<?php esc_attr_e($postmeta["textbox_color"]); ?>" />
-                <label class="description" ></label>
-            </td>
-        </tr>
-        <tr>
-            <td colspan=2><h3 class="meta-subtitle">Text Box Position</h3></td>
-        </tr>
-
-        <?php 
-            $text_position = array(
-                                '0' => array(
-                                    'value' =>  'frs-caption-position-left',
-                                    'label' =>  'Left'
-                                ),
-                                '1' => array(
-                                    'value' =>  'frs-caption-position-top-left',
-                                    'label' =>  'Top Left'
-                                ),
-                                '2' => array(
-                                    'value' =>  'frs-caption-position-top',
-                                    'label' =>  'Top'
-                                ),
-                                '3' => array(
-                                    'value' =>  'frs-caption-position-top-right',
-                                    'label' =>  'Top Right'
-                                ),
-                                '4' => array(
-                                    'value' =>  'frs-caption-position-right',
-                                    'label' =>  'Right' 
-                                ),
-                                '5' => array(
-                                    'value' =>  'frs-caption-position-bottom-right',
-                                    'label' =>  'Bottom Right' 
-                                ),
-                                '6' => array(
-                                    'value' =>  'frs-caption-position-bottom',
-                                    'label' =>  'Bottom' 
-                                ),
-                                '7' => array(
-                                    'value' =>  'frs-caption-position-bottom-left',
-                                    'label' =>  'Bottom Left' 
-                                ),
-                                '8' => array(
-                                    'value' =>  'frs-caption-position-center',
-                                    'label' =>  'Center' 
-                                ),
-                                '9' => array(
-                                    'value' =>  'frs-caption-position-sticky-top',
-                                    'label' =>  'Sticky Top' 
-                                ),
-                                '10' => array(
-                                    'value' =>  'frs-caption-position-sticky-bottom',
-                                    'label' =>  'Sticky Bottom' 
-                                )
-                            );
+        <!-- Text Box Content -->
+        <div class="widgets-holder-wrap closed">
+            <div class="sidebar-name">
+                <div class="sidebar-name-arrow"></div>
+                <h3>Text Box Content</h3>
+            </div>
+            <div class="sidebar-content widgets-sortables clearfix">
+                <table class="table-content">
+                    <?php 
+                        $text_align = array(
+                                        '0' => array(
+                                            'value' =>  'left',
+                                            'label' =>  'Left'
+                                        ),
+                                        '1' => array(
+                                            'value' =>  'center',
+                                            'label' =>  'Center' 
+                                        ),
+                                        '2' => array(
+                                            'value' =>  'right',
+                                            'label' =>  'Right' 
+                                        )
+                                );
 
 
-            $option_select = array(
-                                "name"=>"tonjoo_frs_meta[text_position]",
-                                "description" => "",
-                                "label" => "Text Box Position",
-                                "value" => $postmeta['text_position'],
-                                "select_array" => $text_position,
-                                "id"=>"tonjoo-frs-text_position"
-                            );
-              
-            frs_print_select_option($option_select);
-        ?>
+                        $option_select = array(
+                                            "name"=>"tonjoo_frs_meta[text_align]",
+                                            "description" => "",
+                                            "label" => "Text Align",
+                                            "value" => $postmeta['text_align'],
+                                            "select_array" => $text_align,
+                                            "id"=>"tonjoo-frs-text_align"
+                                        );
 
-        <?php 
-            $textbox_width = array(
-                                '0' => array(
-                                    'value' =>  1,
-                                    'label' =>  '1 / 12'
-                                ),
-                                '1' => array(
-                                    'value' =>  2,
-                                    'label' =>  '2 / 12' 
-                                ),
-                                '2' => array(
-                                    'value' =>  3,
-                                    'label' =>  '3 / 12' 
-                                ),
-                                '3' => array(
-                                    'value' =>  4,
-                                    'label' =>  '4 / 12' 
-                                ),
-                                '4' => array(
-                                    'value' =>  5,
-                                    'label' =>  '5 / 12' 
-                                ),
-                                '5' => array(
-                                    'value' =>  6,
-                                    'label' =>  '6 / 12' 
-                                ),
-                                '6' => array(
-                                    'value' =>  7,
-                                    'label' =>  '7 / 12' 
-                                ),
-                                '7' => array(
-                                    'value' =>  8,
-                                    'label' =>  '8 / 12' 
-                                ),
-                                '8' => array(
-                                    'value' =>  9,
-                                    'label' =>  '9 / 12' 
-                                ),
-                                '9' => array(
-                                    'value' =>  10,
-                                    'label' =>  '10 / 12' 
-                                ),
-                                '10' => array(
-                                    'value' =>  11,
-                                    'label' =>  '11 / 12' 
-                                ),
-                                '11' => array(
-                                    'value' =>  12,
-                                    'label' =>  '12 / 12' 
-                                )
-                            );
+                        
+                        frs_print_select_option($option_select);
+                    ?>
+                    <th scope="row">Title Color</th>
+                        <td>
+                            <input class="regular-text minicolors" style="width:150px;height:30px;float:left;margin-right:17px;" name="tonjoo_frs_meta[title_color]" value="<?php esc_attr_e($postmeta['title_color']); ?>" />
+                            <label class="description" ></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Description Color</th>
+                        <td>
+                            <input class="regular-text minicolors" style="width:150px;height:30px;float:left;margin-right:17px;" name="tonjoo_frs_meta[text_color]" value="<?php esc_attr_e($postmeta['text_color']); ?>" />
+                            <label class="description" ></label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
 
+        <!-- Slide Background -->
+        <div class="widgets-holder-wrap closed">
+            <div class="sidebar-name">
+                <div class="sidebar-name-arrow"></div>
+                <h3>Slide Background Color</h3>
+            </div>
+            <div class="sidebar-content widgets-sortables clearfix">
+                <table class="table-content">
+                    <th scope="row">Background Color</th>
+                        <td>
+                            <input class="regular-text minicolors" style="width:150px;height:30px;float:left;margin-right:17px;" name="tonjoo_frs_meta[slider_bg]" value="<?php esc_attr_e($postmeta['slider_bg']); ?>" />
+                        </td>
+                    </tr>
+                    <th>
+                        <td colspan="2">Background color will be shown if no image are selected</td>
+                    </th>
+                </table>
+            </div>
+        </div>
 
-            $option_select = array(
-                                "name"=>"tonjoo_frs_meta[textbox_width]",
-                                "description" => "",
-                                "label" => "Text Box Width",
-                                "value" => $postmeta['textbox_width'],
-                                "select_array" => $textbox_width,
-                                "id"=>"tonjoo-frs-textbox_width"
-                            );
+        <!-- Display Settings -->
+        <div class="widgets-holder-wrap closed">
+            <div class="sidebar-name">
+                <div class="sidebar-name-arrow"></div>
+                <h3>Display Settings</h3>
+            </div>
+            <div class="sidebar-content widgets-sortables clearfix">
+                <table class="table-content">
+                    <?php
+                        $show_text = array(
+                                        '0' => array(
+                                                'value' =>  'true',
+                                                'label' =>  'Yes'
+                                            ),
+                                        '1' => array(
+                                            'value' =>  'false',
+                                            'label' =>  'No' 
+                                        )
+                                    );
 
-            
-            frs_print_select_option($option_select);
-        ?>
-
-        <?php 
-            $text_align = array(
-                            '0' => array(
-                                'value' =>  'left',
-                                'label' =>  'Left'
-                            ),
-                            '1' => array(
-                                'value' =>  'center',
-                                'label' =>  'Center' 
-                            ),
-                            '2' => array(
-                                'value' =>  'right',
-                                'label' =>  'Right' 
-                            )
-                    );
-
-
-            $option_select = array(
-                                "name"=>"tonjoo_frs_meta[text_align]",
-                                "description" => "",
-                                "label" => "Text Align",
-                                "value" => $postmeta['text_align'],
-                                "select_array" => $text_align,
-                                "id"=>"tonjoo-frs-text_align"
-                            );
-
-            
-            frs_print_select_option($option_select);
-        ?>
-
-        <tr><td colspan=2><h3 class="meta-subtitle">Text Color</h3></td></tr>
-
-        <th scope="row">Title</th>
-            <td>
-                <input class="regular-text minicolors" style="width:150px;height:30px;float:left;margin-right:17px;" name="tonjoo_frs_meta[title_color]" value="<?php esc_attr_e($postmeta['title_color']); ?>" />
-                <label class="description" ></label>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">Description</th>
-            <td>
-                <input class="regular-text minicolors" style="width:150px;height:30px;float:left;margin-right:17px;" name="tonjoo_frs_meta[text_color]" value="<?php esc_attr_e($postmeta['text_color']); ?>" />
-                <label class="description" ></label>
-            </td>
-        </tr>
-
-        <tr><td colspan=2><h3 class="meta-subtitle">Text Box Button</h3></td></tr>
-
-        <?php 
-            $show_button = array(
-                            '0' => array(
-                                'value' =>  'true',
-                                'label' =>  'Yes'
-                            ),
-                            '1' => array(
-                                'value' =>  'false',
-                                'label' =>  'No' 
-                            )
-                        );
-
-
-            $option_select = array(
-                                "name"=>"tonjoo_frs_meta[show_button]",
-                                "description" => "",
-                                "label" => "Show Button",
-                                "value" => $postmeta['show_button'],
-                                "select_array" => $show_button,
-                                "id"=>"tonjoo-frs-show_button"
-                            );
-
-            
-            frs_print_select_option($option_select);
-      ?>
-
-      <?php 
-            $dir =  dirname(__FILE__)."/buttons";
-
-            $skins = scandir($dir);
-
-            $button_skin =  array();
-
-            foreach ($skins as $key => $value) {
-
-                $extension = pathinfo($value, PATHINFO_EXTENSION); 
-                $filename = pathinfo($value, PATHINFO_FILENAME); 
-                $extension = strtolower($extension);
-                $the_value = strtolower($filename);
-                $filename_ucwords = str_replace('-', ' ', ucwords($filename));
-                $filename_ucwords = ucwords($filename_ucwords);
-                $filename_ucwords = str_replace('Frs Buttonskin ', '', ucwords($filename_ucwords));
-
-                if($extension=='css'){
-                    $data = array(
-                            "label"=>"$filename_ucwords",
-                            "value"=>"$the_value"                               
-
-                        );
-
-                    array_push($button_skin,$data);
-
-                }
-            }
-
-            if(function_exists('is_frs_premium_exist')) 
-            {                
-                $dir =  ABSPATH . 'wp-content/plugins/'.FRS_PREMIUM_DIR_NAME.'/buttons';
-
-                $skins = scandir($dir);
-
-                foreach ($skins as $key => $value) {
-
-                    $extension = pathinfo($value, PATHINFO_EXTENSION); 
-                    $filename = pathinfo($value, PATHINFO_FILENAME); 
-                    $extension = strtolower($extension);
-                    $the_value = strtolower($filename);
-                    $filename_ucwords = str_replace('-', ' ', $filename);
-                    $filename_ucwords = ucwords($filename_ucwords);
-                    $filename_ucwords = str_replace('Frs Buttonskin ', '', ucwords($filename_ucwords));
-
-
-                    if($extension=='css'){
-                        $data = array(
-                                "label"=>"$filename_ucwords (Premium)",
-                                "value"=>"$the_value-PREMIUMtrue"
-
-                            );
-
-                        array_push($button_skin,$data);
-
-                    }
-                }
-            }
-
-
-            $option_select = array(
-                            "name"=>"tonjoo_frs_meta[button_skin]",
+                        $option_select = array(
+                            "name"=>"tonjoo_frs_meta[show_text]",
                             "description" => "",
-                            "label" => "Button Skin",
-                            "value" => $postmeta['button_skin'],
-                            "select_array" => $button_skin,
-                            "id"=>"tonjoo-frs-button_skin"
+                            "label" => "Show Text Box",
+                            "value" => $postmeta['show_text'],
+                            "select_array" => $show_text,
+                            "id"=>"tonjoo-frs-show_text"
                         );
+                        
+                        frs_print_select_option($option_select);
+                    ?>
 
-            
-            frs_print_select_option($option_select);
-        ?>
-
-        <tr class="button_attr">
-            <th scope="row">Button Caption</th>
-            <td>
-                <input class="regular-text" name="tonjoo_frs_meta[button_caption]" value="<?php esc_attr_e($postmeta['button_caption']); ?>" />
-            </td>
-        </tr>
-        <tr class="button_attr">
-            <th scope="row">Button Link</th>
-            <td>
-                <input class="regular-text"  name="tonjoo_frs_meta[button_href]" value="<?php esc_attr_e($postmeta['button_href']); ?>" />
-            </td>
-        </tr>
-
-        <tr><td colspan=2><h3 class="meta-subtitle">Text Box Padding</h3></td></tr> 
-
-        <?php
-            $padding_type = array(
-                                '0' => array(
-                                    'value' =>  'auto',
-                                    'label' =>  'Auto'
-                                ),
-                                '1' => array(
-                                    'value' =>  'manual',
-                                    'label' =>  'Manual'
-                                )
-                            );
+                    <?php 
+                        $show_button = array(
+                                        '0' => array(
+                                            'value' =>  'true',
+                                            'label' =>  'Yes'
+                                        ),
+                                        '1' => array(
+                                            'value' =>  'false',
+                                            'label' =>  'No' 
+                                        )
+                                    );
 
 
-            $option_select = array(
-                                    "name"=>"tonjoo_frs_meta[padding_type]",
-                                    "description" => "Select textbox padding type",
-                                    "label" => "Type",
-                                    "value" => $postmeta['padding_type'],
-                                    "select_array" => $padding_type,
-                                    "id"=>"tonjoo-frs-padding_type"
-                                );
-            
-            frs_print_select_option($option_select);
-        ?>
+                        $option_select = array(
+                                            "name"=>"tonjoo_frs_meta[show_button]",
+                                            "description" => "",
+                                            "label" => "Show Button",
+                                            "value" => $postmeta['show_button'],
+                                            "select_array" => $show_button,
+                                            "id"=>"tonjoo-frs-show_button"
+                                        );
 
-        <tr id="textbox_padding" >
-            <th scope="row">Padding</th>
-            <td>
-                <input class="regular-text" name="tonjoo_frs_meta[textbox_padding]" value="<?php esc_attr_e($postmeta['textbox_padding']); ?>" />
-                <label class="description">[top]px [right]px [bottom]px [left]px</label>
-            </td>
-        </tr>
-    </table>
+                        
+                        frs_print_select_option($option_select);
+                    ?>
+                </table>
+            </div>
+        </div>
+
+    </div>
 
 <?php 
 

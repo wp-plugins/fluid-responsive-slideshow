@@ -14,8 +14,14 @@
 	width:60px;
 }
 
+.frs_slide_thumbnail img{
+	width: 100px;
+	height: 100px
+}
+
+
 .frs_slide_thumbnail{
-	width:300px;
+
 }
 
 #table-slide h3{
@@ -288,8 +294,8 @@ input[name='title']{
  #table-slide td{
 	 
 	 background-color:#ffffff;
-	 border-bottom: 2px dashed rgb(179, 179, 179);
-	 margin-bottom:5px;
+	 border-bottom: 1px solid #E5E5E5;
+	 margin-bottom: 5px;
  }
  
 #table-slide tr:hover > td{
@@ -324,21 +330,19 @@ input[name='title']{
 
 div.frs_slide_thumbnail{  
     float:left;
-    width:300px;
+    padding: 5px 2px 1px 3px;
 }
 
 div.frs_slide_edit{  
-    float:left;
+    float: right;
     margin-left:30px;
 	padding-top:10px;
 	padding-left:15px;
-	height:140px;
-	border-left:1px solid #ccc;
 }
 
 div.frs_slide_info{
 	float:left;
-	margin-left:20px;
+	margin-left: 10px;
 	width:300px;
 }
 

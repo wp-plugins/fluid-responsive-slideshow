@@ -13,9 +13,6 @@ if($_POST)
 }
 ?>
 
-<?php if ( false !== $_REQUEST['settings-updated'] ) : ?>
-	<br><div class="updated fade"><p><strong><?php _e('Options saved', 'pjc_slideshow_options'); ?></strong></p></div>
-<?php endif; ?> 
 <form method="post" action="" id="frs-option-form">
 <?php settings_fields('pjc_options'); ?>
 
@@ -33,7 +30,7 @@ if($_POST)
 <div class="postbox-container" style="width: 100%;min-width: 463px;float: left; ">
 <div class="meta-box-sortables ui-sortable">
 <div id="adminform" class="postbox">
-<h3 class="hndle"><span><?php echo "Slide '$current_name' Options"?></span></h3>
+<h3 class="hndle" data-step="6" data-intro="Configure and setting up your slideshow options"><span><?php echo "$current_name - Slideshow Options"?></span></h3>
 <div class="inside" style="z-index:1;">
 <!-- Extra style for options -->
 <style>
@@ -557,7 +554,7 @@ jQuery(document).ready(function($){
 
 <br>
 <br>
-<input type="submit" class="button-primary" value="<?php _e('Save Options', 'pjc_slideshow_options'); ?>" />			
+<input type="submit" class="button button-primary button-frs" value="<?php _e('Save Options', 'pjc_slideshow_options'); ?>" />			
 </div>			
 </div>			
 </div>			
@@ -573,25 +570,103 @@ jQuery(document).ready(function($){
 			Save your changes to apply the options
 			<br>
 			<br>
-			<input type="submit" class="button-primary" value="<?php _e('Save Options', 'pjc_slideshow_options'); ?>" />			
+			<input type="submit" class="button button-primary button-frs" value="<?php _e('Save Options', 'pjc_slideshow_options'); ?>" data-step="7" data-intro="Save your changes to apply the options" />
 			
 		</div>
 	</div>
 
-	<div class="postbox">
+	<!-- ADS -->
+		<div class="postbox">			
 		<script type="text/javascript">
-			jQuery(function(){
-				var url = 'http://tonjoo.com/about/?frs-jsonp=promo';
+			/**
+			 * Setiap dicopy-paste, yang find dan dirubah adalah
+			 * - var pluginName
+			 * - premium_exist
+			 */
+
+			jQuery(function(){					
+				var pluginName = "frs";
+				var url = 'http://tonjoo.com/about/?promo=get&plugin=' + pluginName;
+				var promoFirst = new Array();
+				var promoSecond = new Array();
+
+				<?php if(function_exists('is_frs_premium_exist')): ?>
+				var url = 'http://tonjoo.com/about/?promo=get&plugin=' + pluginName + '&premium=true';
+				<?php endif ?>
+
+				// strpos function
+				function strpos(haystack, needle, offset) {
+					var i = (haystack + '')
+						.indexOf(needle, (offset || 0));
+					return i === -1 ? false : i;
+				}
 
 				jQuery.ajax({url: url, dataType:'jsonp'}).done(function(data){
-					//promo_1
-					if(typeof data =='object'){
-						jQuery("#promo_1 a").attr("href",data.permalink_promo_1);
-						jQuery("#promo_1 img").attr("src",data.img_promo_1);
+					
+					if(typeof data =='object')
+					{
+						var fristImg, fristUrl;
+
+					    // looping jsonp object
+						jQuery.each(data, function(index, value){
+
+							<?php if(! function_exists('is_frs_premium_exist')): ?>
+
+							fristImg = pluginName + '-premium-img';
+							fristUrl = pluginName + '-premium-url';
+
+							// promoFirst
+							if(index == fristImg)
+						    {
+						    	promoFirst['img'] = value;
+						    }
+
+						    if(index == fristUrl)
+						    {
+						    	promoFirst['url'] = value;
+						    }
+
+						    <?php else: ?>
+
+						    if(! fristImg)
+						    {
+						    	// promoFirst
+								if(strpos(index, "-img"))
+							    {
+							    	promoFirst['img'] = value;
+
+							    	fristImg = index;
+							    }
+
+							    if(strpos(index, "-url"))
+							    {
+							    	promoFirst['url'] = value;
+
+							    	fristUrl = index;
+							    }
+						    }
+
+						    <?php endif; ?>
+
+							// promoSecond
+							if(strpos(index, "-img") && index != fristImg)
+						    {
+						    	promoSecond['img'] = value;
+						    }
+
+						    if(strpos(index, "-url") && index != fristUrl)
+						    {
+						    	promoSecond['url'] = value;
+						    }
+						});
+
+						//promo_1
+						jQuery("#promo_1 img").attr("src",promoFirst['img']);
+						jQuery("#promo_1 a").attr("href",promoFirst['url']);
 
 						//promo_2
-						jQuery("#promo_2 a").attr("href",data.permalink_promo_2);
-						jQuery("#promo_2 img").attr("src",data.img_promo_2);
+						jQuery("#promo_2 img").attr("src",promoSecond['img']);
+						jQuery("#promo_2 a").attr("href",promoSecond['url']);
 					}
 				});
 			});
@@ -601,12 +676,12 @@ jQuery(document).ready(function($){
 		<div class="inside" style="margin: 23px 10px 6px 10px;">
 			<div id="promo_1" style="text-align: center;padding-bottom:17px;">
 				<a href="http://tonjoo.com" target="_blank">
-					<img src="<?php echo plugins_url(FRS_DIR_NAME."/assets/loading-big.gif") ?>" width="100%" alt="WordPress Security - A Pocket Guide">
+					<img src="<?php echo plugins_url(FRS_DIR_NAME."/assets/loading-big.gif") ?>" width="100%" <?php if(! function_exists('is_frs_premium_exist')): ?> data-step="8" data-intro="If you like this slider, please consider the premium version to support us and get all the skins.<b>Fluid Responsive Slideshow</b> !" <?php endif ?>>
 				</a>
 			</div>
 			<div id="promo_2" style="text-align: center;">
 				<a href="http://tonjoo.com" target="_blank">
-					<img src="<?php echo plugins_url(FRS_DIR_NAME."/assets/loading-big.gif") ?>" width="100%" alt="WordPress Security - A Pocket Guide">
+					<img src="<?php echo plugins_url(FRS_DIR_NAME."/assets/loading-big.gif") ?>" width="100%">
 				</a>
 			</div>
 		</div>

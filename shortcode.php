@@ -422,7 +422,7 @@ function pjc_gallery_print($attr)
 			$arr_loaded_button_skin = array();
 
 			while($query->have_posts())
-		    { 
+		    {
 		    	$query->the_post();
 
 		    	$post = get_post(get_the_ID());
@@ -468,7 +468,7 @@ function pjc_gallery_print($attr)
 		/**
 		 * Loop  the slide
 		 */
-        $query = new WP_Query( $condition);
+        $query = new WP_Query($condition);
 	    $slide = "";
 	    
     	while ( $query->have_posts() )
@@ -692,7 +692,7 @@ function pjc_gallery_print($attr)
 		else
 		{
 			$shortcode  = "<center style='margin:100px 0px;font-weight:bold;'>No slide available, click <a href='".get_admin_url();
-			$shortcode .= "edit.php?post_type=pjc_slideshow&page=frs-setting-page&tabtype=slide&tab={$_GET['tab']}'>here to add a new one</a></center>";
+			$shortcode .= "admin.php?page=frs-setting-page&tabtype=slide&tab={$_GET['tab']}'>here to add a new one</a></center>";
 		}	
 		
 		return $shortcode;

@@ -8,16 +8,18 @@ Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Easy to use responsive image slider with 50+ beautifull skin.
+Fluid Responsive Slideshow is an easy to use slideshow. It's responsive, dummyproof and powered with 50+ beautiful skins.
+
 == Description ==
 
-Easy to use responsive image slider with 50+ beautifull skin.
+Fluid Responsive Slideshow is an easy to use slideshow. It's responsive, dummyproof and powered with 50+ beautiful skins.
 
 **Features :**
 
 * Drag and drop 
 * Multiple slideshow on single page/post.
 * Responsive slider image.
+* Dummyproof UI
 * Custom text and font size.
 * And many custumizable parameter.
 * 50+ Skins
@@ -52,11 +54,15 @@ All of the slide must have a slide order and slide type.
 
 == Screenshots ==
 
-1. 50++ beautiful skins to choose for your slideshow.
-2. Easy, multiple customization with slideshow preview.
-3. Easy slideshow management, with drag and drop slide ordering.
+1. Great slideshow with complete settings.
+2. Easy slideshow management.
 
 == Changelog ==
+
+= 2.0 = 
+* Improved UI, dummyproof slideshow plugin for everyone!
+* Help button is available now
+* Fix known bugs
 
 = 1.0.7 = 
 * Tested up to WordPress 4.0
