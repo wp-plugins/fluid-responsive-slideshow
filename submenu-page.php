@@ -208,7 +208,7 @@ function pjc_slideshow_tab($current = 'plugin')
 			</span><!-- /add-new-menu-action -->
 			<span class="show-shortcode">
 				Shortcode: <span frs-input-shortcode class='the-shortcode' data-step="5" data-intro="Put this shortcode to your post to add the current slideshow into your post. <br><br>You can also add shorcode by select the <b>Add FR Slideshow</b> button in your post editor.">
-				[frs type="<?php echo $term_slug ?>"]
+				[pjc_slideshow slide_type="<?php echo $term_slug ?>"]
 				</span>
 			</span>
 

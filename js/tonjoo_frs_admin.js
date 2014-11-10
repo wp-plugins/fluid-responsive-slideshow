@@ -1,5 +1,5 @@
 jQuery(document).ready(function($){
-	$('.widget-liquid-right').accordion();
+	if($('.widget-liquid-right').length > 0) $('.widget-liquid-right').accordion();
 
 	$(".postbox-container  ").on('change','#tonjoo-frs-show_button select',function(){
 		value = $(this).attr('value')

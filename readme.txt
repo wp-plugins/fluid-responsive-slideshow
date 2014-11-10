@@ -65,6 +65,9 @@ All of the slide must have a slide order and slide type.
 
 == Changelog ==
 
+= 2.0.1 = 
+* Fix known bugs
+
 = 2.0 = 
 * Improved UI, dummyproof slideshow plugin for everyone!
 * Help button is available now
