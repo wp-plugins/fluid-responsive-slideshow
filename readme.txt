@@ -3,7 +3,7 @@ Contributors: Todi.Adiatmo, haristonjoo
 Tags: slideshow, gallery, image, responsive, fluid, images,slider
 Donate link: http://tonjoo.com/donate/
 Requires at least: 3.0.1
-Tested up to: 3.5
+Tested up to: 4.0
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -64,6 +64,10 @@ All of the slide must have a slide order and slide type.
 2. Great slideshow with complete settings.
 
 == Changelog ==
+
+= 2.0.2 =
+* Tested up to WordPress 4.0
+* Fix known bugs
 
 = 2.0.1 = 
 * Fix known bugs

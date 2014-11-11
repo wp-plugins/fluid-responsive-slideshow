@@ -34,57 +34,6 @@ function pjc_slideshow_tab($current = 'plugin')
 		
 	// BEGIN SPAGETHY HTML-PHP-CSS-JS CODE HERE :D
 	?>
-	
-	<style>
-		label {
-			vertical-align: top
-		}
-
-		.add-new-action {
-			float: left;
-			margin: 7px 0 0 10px;
-			line-height: 15px;
-		}
-
-		.delete-action {
-			float: right;
-			margin: 7px 0 0 10px;
-			line-height: 15px;
-		}
-
-		.show-shortcode {
-			margin-left: 15px;
-			padding-left: 12px;
-			float: left;
-			border-left: 2px solid #D5D5D5;
-			margin-top: 5px;
-		}
-
-		.the-shortcode{
-			background-color: #D5D5D5;
-			font-size: 12px;
-			line-height: 12px;
-			display: inline-block;
-			padding: 4px;
-		}
-
-		.delete-action a {
-			color: red;
-		}
-
-		.manage-menus {
-			margin-top: 10px;
-			margin-bottom: 10px;
-		}
-
-		#frs-first-slideshow-input {
-			width: 400px;
-			text-align: center;
-			display: inline;
-			margin-bottom: 20px;
-			margin-top: 10px;
-		}
-	</style>
 
 	<script type="text/javascript">
 		jQuery(document).ready(function() {
@@ -156,7 +105,7 @@ function pjc_slideshow_tab($current = 'plugin')
 		<!-- <p>You can add, edit, delete and re order your slide on this page. Drag the images to change slide ordering</p> -->
 		<p>
 			The configuration page. You can add, edit, delete or re-order your slideshow. &nbsp;&nbsp;
-			<a href="javascript:;" class="button" onclick="javascript:startTour();">How to use ?</a>
+			<a href="javascript:;" class="button button-orange button-frs" onclick="javascript:startTour();">How to use ?</a>
 			<a href="http://wordpress.org/support/view/plugin-reviews/fluid-responsive-slideshow?rate=5#postform" target="_blank" style="margin-left:10px;">Enjoy the plugin?, rate us!</a>
 		</p>
 
@@ -207,9 +156,7 @@ function pjc_slideshow_tab($current = 'plugin')
 				or <a frs-add-slide-type href="javascript:;" data-step="4" data-intro="Or create a new fresh slideshow.">create a new slideshow</a>				
 			</span><!-- /add-new-menu-action -->
 			<span class="show-shortcode">
-				Shortcode: <span frs-input-shortcode class='the-shortcode' data-step="5" data-intro="Put this shortcode to your post to add the current slideshow into your post. <br><br>You can also add shorcode by select the <b>Add FR Slideshow</b> button in your post editor.">
-				[pjc_slideshow slide_type="<?php echo $term_slug ?>"]
-				</span>
+				Shortcode: <input frs-input-shortcode value='[pjc_slideshow slide_type="<?php echo $term_slug ?>"]' readonly data-step="5" data-intro="Put this shortcode to your post to add the current slideshow into your post. <br><br>You can also add shorcode by select the <b>Add FR Slideshow</b> button in your post editor." />
 			</span>
 
 

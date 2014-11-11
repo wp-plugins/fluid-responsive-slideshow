@@ -1,18 +1,18 @@
 <?php
 /*
- *Plugin Name: Fluid Responsive Slideshow
- *Plugin URI: http://www.tonjoo.com/wordpress-plugin-fluid-responsive-slideshow-plugin/
- *Description: Fluid and Responsive Slideshow for wordpress.
- *Version: 2.0.1
- *Author: tonjoo
- *Author URI: http://www.tonjoo.com/
- *License: GPLv2
- *Contributor: Saga Iqranegara, Haris Ainur Rozak
+ * Plugin Name: Fluid Responsive Slideshow
+ * Plugin URI: http://www.tonjoo.com/wordpress-plugin-fluid-responsive-slideshow-plugin/
+ * Description: Fluid and Responsive Slideshow for wordpress.
+ * Version: 2.0.2
+ * Author: tonjoo
+ * Author URI: http://www.tonjoo.com/
+ * License: GPLv2
+ * Contributor: Todi Adiyatmo Wijoyo, Haris Ainur Rozak
  * 
  */																																										
 
 define('FRS_DIR_NAME', str_replace("/Fluid-Responsive-Slideshow.php", "", plugin_basename(__FILE__)));
-define('FRS_VERSION','2.0.1');
+define('FRS_VERSION','2.0.2');
 
 require_once( plugin_dir_path( __FILE__ ) . 'shortcode.php');
 require_once( plugin_dir_path( __FILE__ ) . 'post-list.php');
