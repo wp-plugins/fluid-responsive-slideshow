@@ -267,7 +267,7 @@ function pjc_gallery_print($attr)
 				jQuery('#{$attr['slide_type_id']}').frs({
 					animation : '{$options[$current]['animation']}', // horizontal-slide, vertical-slide, fade
 					animationSpeed :  {$options[$current]['animation_time']}, // how fast animtions are
-					timer :  true, // true or false to have the timer
+					timer :  {$options[$current]['timer']}, // true or false to have the timer
 					advanceSpeed :   {$options[$current]['fade_time']}, // if timer is enabled, time between transitions
 					pauseOnHover : {$options[$current]['pause']}, // if you hover pauses the slider
 					startClockOnMouseOut :  {$options[$current]['start_mouseout']}, // if clock should start on MouseOut

@@ -95,6 +95,7 @@
                     jQuery(this).css({"display": "block"});
 
                     //unlock event in last displayed element
+                    // if(options.timer) frs_slider_unlock();
                     frs_slider_unlock();
                 })
             })
@@ -253,6 +254,7 @@
 
             //Timer Execution
             function startCfrs_slider_lock() {
+
                 if (!options.timer || options.timer == 'false') {
                     return false;
                                 

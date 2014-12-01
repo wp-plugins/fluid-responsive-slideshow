@@ -65,6 +65,9 @@ All of the slide must have a slide order and slide type.
 
 == Changelog ==
 
+= 2.0.3 =
+* Fix manual / autostart slide
+
 = 2.0.2 =
 * Tested up to WordPress 4.0
 * Fix known bugs
