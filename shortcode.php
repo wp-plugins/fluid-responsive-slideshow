@@ -17,7 +17,7 @@ function pjc_jq_scripts()
 	
 	$touchSwipe_js = $plugin_url . "js/jquery.touchSwipe.min.js";	
 	
-	wp_enqueue_style('Open Sans',"http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700",array(),FRS_VERSION);
+	wp_enqueue_style('OpenSans',"http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700",array(),FRS_VERSION);
 
 	wp_enqueue_script('fluid-responsive-slideshow', $frs_js,array(),FRS_VERSION);
 

@@ -271,11 +271,17 @@ jQuery(document).ready(function($){
    		});
 
    		// create first slideshow
-		$('[frs-first-add-slideshow]').click(function(){
+		$('#frs-first-add-slideshow').click(function(){
 			var string = $('#frs-first-slideshow-input').val();
 
 			if (string != null && string != '')
 			{
+				// do loading
+				$(this)
+					.html('Loading...')
+					.attr('id','its-loaded');
+
+				// ajax
 				data = {
 		   			action:'frs_add_slidetype',
 		   			name: string
@@ -286,6 +292,10 @@ jQuery(document).ready(function($){
 	   					window.location.href = admin_url + '&tab=' + response.slug + '&tabtype=slide';
 	   				}
 	   			});
+			}
+			else
+			{
+				alert("Please enter your new slideshow name");
 			}
    		});
 

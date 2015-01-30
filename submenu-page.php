@@ -3,9 +3,7 @@
 /**
  * Register custom options for the plugin
  */
-
 add_action("admin_init","init_pjc_slideshow_options");
-
 function init_pjc_slideshow_options(){
 		register_setting( 'pjc_options', 'pjc_slideshow_options');
 }
@@ -13,10 +11,7 @@ function init_pjc_slideshow_options(){
 /**
  * Option page definiton
  */
-
-
 function pjc_slideshow_submenu_page(){
-
 	if ( isset ( $_GET['tab'] ) ) 
 		pjc_slideshow_tab($_GET['tab']); 
 	else 
@@ -27,7 +22,6 @@ function pjc_slideshow_submenu_page(){
 /**
  * Tab definiton
  */
-
 function pjc_slideshow_tab($current = 'plugin')
 {	
 	if(! isset( $_REQUEST['settings-updated'])) $_REQUEST['settings-updated'] = false;
@@ -93,8 +87,8 @@ function pjc_slideshow_tab($current = 'plugin')
 				<div class='no-slide'>
 					<h2>There is no slideshow created, create a new one ? </h2><br />
 					<input type='text' name='title' id='frs-first-slideshow-input' placeholder='Your New Slideshow Name' value=''><br />
-					<a frs-first-add-slideshow href='javascript:;' class='button button-primary'>Create A Slideshow</a>
-				</div>";
+					<a id="frs-first-add-slideshow" href='javascript:;' class='button button-primary'>Create A Slideshow</a>
+				</div>
 
 				<?php
 				die();
@@ -113,17 +107,28 @@ function pjc_slideshow_tab($current = 'plugin')
 		<h2 class="nav-tab-wrapper">
 		<?php if(isset($_GET['tab']) && $_GET['tab'] != ""): ?>
 			<a class="nav-tab <?php if(isset($_GET['tabtype']) && $_GET['tabtype'] == "slide") echo "nav-tab-active" ?>" href='<?php echo get_admin_url()."admin.php?page=frs-setting-page&tab=".$_GET['tab']."&tabtype=slide" ?>' data-step="1" data-intro="<b>Slideshow</b> tab contains many slides.<br><br>You can add new, sort, edit, and delete each slide here">Slideshow</a>
-			<a class="nav-tab <?php if(! isset($_GET['tabtype']) || $_GET['tabtype'] != "slide") echo "nav-tab-active" ?>" href='<?php echo get_admin_url()."admin.php?page=frs-setting-page&tab=".$_GET['tab']."&tabtype=option" ?>' data-step="2" data-intro="<b>Slideshow Options</b> tab contains options of a slideshow">Slideshow Options</a>
+			<a class="nav-tab <?php if(! isset($_GET['tabtype']) || $_GET['tabtype'] == "option") echo "nav-tab-active" ?>" href='<?php echo get_admin_url()."admin.php?page=frs-setting-page&tab=".$_GET['tab']."&tabtype=option" ?>' data-step="2" data-intro="<b>Slideshow Options</b> tab contains options of a slideshow">Slideshow Options</a>
 		<?php 
 			else: 
 		?>
 			<a class="nav-tab nav-tab-active" href='<?php echo get_admin_url()."admin.php?page=frs-setting-page&tab=".$term_slug."&tabtype=slide" ?>' data-step="1" data-intro="<b>Slides</b> tab contains many slides<br><br>You can add new, sort, edit, and delete each slide here">Slideshow</a>
-			<a class="nav-tab" href='<?php echo get_admin_url()."admin.php?page=frs-setting-page&tab=".$term_slug."&tabtype=option" ?>' data-step="2" data-intro="<b>Slideshow Options</b> tab contains options of a slideshow">Configuration</a>
+			<a class="nav-tab" href='<?php echo get_admin_url()."admin.php?page=frs-setting-page&tab=".$term_slug."&tabtype=option" ?>' data-step="2" data-intro="<b>Slideshow Options</b> tab contains options of a slideshow">Slideshow Options</a>
+		<?php 
+			endif;
+
+			if(function_exists('is_frs_premium_exist')):
+		?>
+		
+			<a class="nav-tab <?php if(isset($_GET['tabtype']) && $_GET['tabtype'] == "license") echo "nav-tab-active" ?>" href='<?php echo get_admin_url()."admin.php?page=frs-setting-page&tab=".$term_slug."&tabtype=license" ?>' >License</a>
+		
 		<?php endif ?>
+
 		</h2>
 		
+		
+		
 		<!-- SELECT SLIDESHOW -->
-		<div class="manage-menus">
+		<div class="manage-menus" id="frs-select-slideshow-menu">
 			<label for="menu" class="selected-menu">Select Slideshow:</label>
 			<select id="select-slide-type" data-step="3" data-intro="You can select and switch between your slideshow here.">
 			<?php
@@ -133,11 +138,10 @@ function pjc_slideshow_tab($current = 'plugin')
 				
 				$terms = get_terms("slide_type",array("hide_empty"=>0));
 			 
-				foreach ( $terms as $term ){
-
+				foreach ( $terms as $term )
+				{
 					//$tabs[$term->name]=$term->name;
 					$tabs[$term->slug]=$term->name;
-
 				}
 				
 				foreach( $tabs as $tab => $name )
@@ -155,10 +159,10 @@ function pjc_slideshow_tab($current = 'plugin')
 			<span class="add-new-action">
 				or <a frs-add-slide-type href="javascript:;" data-step="4" data-intro="Or create a new fresh slideshow.">create a new slideshow</a>				
 			</span><!-- /add-new-menu-action -->
+
 			<span class="show-shortcode">
 				Shortcode: <input frs-input-shortcode value='[pjc_slideshow slide_type="<?php echo $term_slug ?>"]' readonly data-step="5" data-intro="Put this shortcode to your post to add the current slideshow into your post. <br><br>You can also add shorcode by select the <b>Add FR Slideshow</b> button in your post editor." />
 			</span>
-
 
 			<span class="delete-action">
 				<a frs-delete-slide-type id='<?php echo $term_id ?>' href="javascript:;">Delete Slideshow</a>
@@ -177,19 +181,26 @@ function pjc_slideshow_tab($current = 'plugin')
 
 		<?php
 
-		if(isset($_GET['tabtype']) && $_GET['tabtype'] == "slide")
+		if(! isset($_GET['tab']))
+		{
+			/**
+			 * load slide page if not defined current slideshow
+			 */
+			require_once( plugin_dir_path( __FILE__ ) . 'submenu-page-slide.php');
+		}
+		elseif(isset($_GET['tabtype']) && $_GET['tabtype'] == "slide")
 		{
 			/**
 			 * load slide page
 			 */
 			require_once( plugin_dir_path( __FILE__ ) . 'submenu-page-slide.php');
 		}
-		elseif(! isset($_GET['tab']))
+		elseif(isset($_GET['tabtype']) && $_GET['tabtype'] == "license")
 		{
 			/**
-			 * load slide page if not defined current slideshow
+			 * load slide page
 			 */
-			require_once( plugin_dir_path( __FILE__ ) . 'submenu-page-slide.php');
+			require_once( plugin_dir_path( __FILE__ ) . 'submenu-page-license.php');
 		}
 		else
 		{

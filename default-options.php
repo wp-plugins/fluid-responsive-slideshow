@@ -58,4 +58,11 @@ if (!isset($options[$current]["start_mouseout_after"] ))
 
 if (!isset($options[$current]["custom_css"] ))
 	$options[$current]["custom_css"] = "";
+
+/**
+ * License Code
+ */	
+if(!isset($options['license_key'])){
+	$options['license_key']="";
+}
 ?>
