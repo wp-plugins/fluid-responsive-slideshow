@@ -97,7 +97,7 @@ $zeroHide = '';
 			<br>
 			<br>
 			<a frs-add-slide class='button button-frs button-primary' data-step="6" data-intro="A slideshow can be contains two or more slide, create your slide here.">Add New Slide</a>
-			
+			<span class="spinner frs-button-spinner" ></span>
 		</div>
 	</div>
 
@@ -223,7 +223,7 @@ $zeroHide = '';
 <!-- Modal add and edit -->
 <div class="frs-modal-backdrop"></div>
 <div class='frs-modal-container postbox-container' style="display:none;">
-	<div class="media-modal wp-core-ui hide" id="frs-tonjoo-modal">
+	<div class="media-modal wp-core-ui" id="frs-tonjoo-modal">
 		<div class="frs-modal-content">
 			<div class="frs-modal-post">
 				<form id="frs-modal-form">
@@ -269,7 +269,7 @@ $zeroHide = '';
 <!-- Modal add and edit -->
 <div class="frs-modal-backdrop"></div>
 <div class='frs-modal-container postbox-container' style="display:none;">
-	<div class="media-modal wp-core-ui hide" id="frs-tonjoo-modal">
+	<div class="media-modal wp-core-ui" id="frs-tonjoo-modal">
 		<div class="frs-modal-content">
 			<div class="frs-modal-post">
 				<form id="frs-modal-form">

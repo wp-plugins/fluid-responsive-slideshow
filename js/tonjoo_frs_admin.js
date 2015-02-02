@@ -583,7 +583,7 @@ jQuery(document).ready(function($){
             custom_uploader.open();
             return;
         }
- 
+
         //Extend the wp.media object
         custom_uploader = wp.media.frames.file_frame = wp.media({
             title: 'Choose Image',

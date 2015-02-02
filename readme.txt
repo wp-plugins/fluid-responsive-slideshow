@@ -65,6 +65,9 @@ All of the slide must have a slide order and slide type.
 
 == Changelog ==
 
+= 2.0.5 =
+* Fixed add slide function
+
 = 2.0.4 =
 * Fix known bugs
 
