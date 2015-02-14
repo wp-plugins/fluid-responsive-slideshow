@@ -25,6 +25,8 @@ Fluid Responsive Slideshow is an easy to use slideshow. It's responsive, dummypr
 * 50+ Skins
 * 20+ Button
 
+Get the premium version on [premium version](http://tonjoostudio.com/addons/fluid-responsive-slideshow-premium "premium version")
+
 **Important :**
 
 If you are migrating from previous version, please clear your browser cache after installing new version of FRS.
@@ -37,11 +39,11 @@ You can try the plugin on this url: http://coba.tonjoo.com/ecae/
 
 **Manual :**
 
-You can read the manual here [manual](https://tonjoo.com/addons/fluid-responsive-slideshow/#manual "manual")
+You can read the manual here [manual](https://tonjoostudio.com/addons/fluid-responsive-slideshow/#manual "manual")
 
-*if you have any questions,comment,customization request please use [tonjoo forum](https://forum.tonjoo.com/thread-category/fluid-responsive-slideshow/ "tonjoo forum")*
+*if you have any questions,comment,customization request please use [tonjoo forum](https://forum.tonjoostudio.com/thread-category/fluid-responsive-slideshow/ "tonjoo forum")*
 
-*You can view available skins on [skins demo](https://tonjoo.com/fluid-responsive-slideshow-skins/ "skins demo")*
+*You can view available skins on [skins demo](https://tonjoostudio.com/fluid-responsive-slideshow-skins/ "skins demo")*
 
 == Installation ==
 
@@ -125,7 +127,7 @@ All of the slide must have a slide order and slide type.
 * Redesign stock skins
 * 50+ slideshow skins in premium edition
 * 25+ button skins in premium edition
-* And much more, for more info visit: https://tonjoo.com/addons/fluid-responsive-slideshow/
+* And much more, for more info visit: https://tonjoostudio.com/addons/fluid-responsive-slideshow/
 
 = 0.9.8 =
 * Minor code refactoring

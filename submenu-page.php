@@ -115,13 +115,7 @@ function pjc_slideshow_tab($current = 'plugin')
 			<a class="nav-tab" href='<?php echo get_admin_url()."admin.php?page=frs-setting-page&tab=".$term_slug."&tabtype=option" ?>' data-step="2" data-intro="<b>Slideshow Options</b> tab contains options of a slideshow">Slideshow Options</a>
 		<?php 
 			endif;
-
-			if(function_exists('is_frs_premium_exist')):
 		?>
-		
-			<a class="nav-tab <?php if(isset($_GET['tabtype']) && $_GET['tabtype'] == "license") echo "nav-tab-active" ?>" href='<?php echo get_admin_url()."admin.php?page=frs-setting-page&tab=".$term_slug."&tabtype=license" ?>' >License</a>
-		
-		<?php endif ?>
 
 		</h2>
 		
@@ -194,13 +188,6 @@ function pjc_slideshow_tab($current = 'plugin')
 			 * load slide page
 			 */
 			require_once( plugin_dir_path( __FILE__ ) . 'submenu-page-slide.php');
-		}
-		elseif(isset($_GET['tabtype']) && $_GET['tabtype'] == "license")
-		{
-			/**
-			 * load slide page
-			 */
-			require_once( plugin_dir_path( __FILE__ ) . 'submenu-page-license.php');
 		}
 		else
 		{
