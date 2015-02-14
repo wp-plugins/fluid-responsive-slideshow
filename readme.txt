@@ -43,8 +43,6 @@ You can read the manual here [manual](https://tonjoostudio.com/addons/fluid-resp
 
 *if you have any questions,comment,customization request please use [tonjoo forum](https://forum.tonjoostudio.com/thread-category/fluid-responsive-slideshow/ "tonjoo forum")*
 
-*You can view available skins on [skins demo](https://tonjoostudio.com/fluid-responsive-slideshow-skins/ "skins demo")*
-
 == Installation ==
 
 1. Grap the plugin from from wordpress plugin directory or Upload the fluid-responsive-slideshow folder to the /wp-content/plugins/ directory
