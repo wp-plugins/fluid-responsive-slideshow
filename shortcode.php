@@ -261,7 +261,7 @@ function pjc_gallery_print($attr)
 			$sbullets = "true";
 		}
 		
-		$javascript = "<!-- Slideshow generated using Fluid-Responsive-Slideshow, http://www.tonjoo.com/addons/fluid-responsive-slideshow/ -->
+		$javascript = "<!-- Slideshow generated using Fluid-Responsive-Slideshow, https://www.tonjoostudio.com/addons/fluid-responsive-slideshow/ -->
 		<script type='text/javascript'>
 			jQuery(document).ready(function($) {
 				jQuery('#{$attr['slide_type_id']}').frs({

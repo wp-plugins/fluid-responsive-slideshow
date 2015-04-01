@@ -40,6 +40,7 @@ if($_POST)
 
 	.form-table th {
 		width: 150px
+		font-weight: 400;
 	}
 
 	.form-table input,.form-table select {
@@ -576,7 +577,7 @@ jQuery(document).ready(function($){
 	</div>
 
 	<!-- ADS -->
-		<div class="postbox" style="display:none;">			
+		<div class="postbox">			
 		<script type="text/javascript">
 			/**
 			 * Setiap dicopy-paste, yang find dan dirubah adalah
@@ -586,12 +587,12 @@ jQuery(document).ready(function($){
 
 			jQuery(function(){					
 				var pluginName = "frs";
-				var url = 'http://tonjoo.com/about/?promo=get&plugin=' + pluginName;
+				var url = 'https://tonjoostudio.com/jsonp/?promo=get&plugin=' + pluginName;
 				var promoFirst = new Array();
 				var promoSecond = new Array();
 
 				<?php if(function_exists('is_frs_premium_exist')): ?>
-				var url = 'http://tonjoo.com/about/?promo=get&plugin=' + pluginName + '&premium=true';
+				var url = 'https://tonjoostudio.com/jsonp/?promo=get&plugin=' + pluginName + '&premium=true';
 				<?php endif ?>
 
 				// strpos function
@@ -675,12 +676,12 @@ jQuery(document).ready(function($){
 		<!-- <h3 class="hndle"><span>This may interest you</span></h3> -->
 		<div class="inside" style="margin: 23px 10px 6px 10px;">
 			<div id="promo_1" style="text-align: center;padding-bottom:17px;">
-				<a href="http://tonjoo.com" target="_blank">
+				<a href="https://tonjoostudio.com" target="_blank">
 					<img src="<?php echo plugins_url(FRS_DIR_NAME."/assets/loading-big.gif") ?>" width="100%" <?php if(! function_exists('is_frs_premium_exist')): ?> data-step="8" data-intro="If you like this slider, please consider the premium version to support us and get all the skins.<b>Fluid Responsive Slideshow</b> !" <?php endif ?>>
 				</a>
 			</div>
 			<div id="promo_2" style="text-align: center;">
-				<a href="http://tonjoo.com" target="_blank">
+				<a href="https://tonjoostudio.com" target="_blank">
 					<img src="<?php echo plugins_url(FRS_DIR_NAME."/assets/loading-big.gif") ?>" width="100%">
 				</a>
 			</div>

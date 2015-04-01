@@ -1,7 +1,7 @@
 === Fluid Responsive Slideshow ===
 Contributors: Todi.Adiatmo, haristonjoo
 Tags: slideshow, gallery, image, responsive, fluid, images,slider
-Donate link: http://tonjoo.com/donate/
+Donate link: https://tonjoostudio.com/donate/
 Requires at least: 3.0.1
 Tested up to: 4.1
 Stable tag: trunk
@@ -25,14 +25,12 @@ Fluid Responsive Slideshow is an easy to use slideshow. It's responsive, dummypr
 * 50+ Skins
 * 20+ Button
 
-Get the premium version on [premium version](http://tonjoostudio.com/addons/fluid-responsive-slideshow-premium "premium version")
-
 **Important :**
 
 If you are migrating from previous version, please clear your browser cache after installing new version of FRS.
 
 **Plugin Demo**
-You can try the plugin on this url: http://coba.tonjoo.com/ecae/
+You can try the plugin on this url: http://coba.tonjoostudio.com
 
 * username: ecae
 * password: 123456
@@ -42,6 +40,8 @@ You can try the plugin on this url: http://coba.tonjoo.com/ecae/
 You can read the manual here [manual](https://tonjoostudio.com/addons/fluid-responsive-slideshow/#manual "manual")
 
 *if you have any questions,comment,customization request please use [tonjoo forum](https://forum.tonjoostudio.com/thread-category/fluid-responsive-slideshow/ "tonjoo forum")*
+
+*You can view available skins on [skins demo](https://tonjoostudio.com/fluid-responsive-slideshow-skins/ "skins demo")*
 
 == Installation ==
 
@@ -64,6 +64,10 @@ All of the slide must have a slide order and slide type.
 2. Great slideshow with complete settings.
 
 == Changelog ==
+
+= 2.1.0 =
+* Add plugin updater
+* Fix known bugs
 
 = 2.0.5 =
 * Fixed add slide function

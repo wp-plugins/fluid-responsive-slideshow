@@ -489,7 +489,6 @@ jQuery(document).ready(function($){
 
 	jQuery('.frs-modal-container').on('click','[frs-save-slider]',function(){
 
-
 	 	if(jQuery('#frs-modal-form #frs-title').val() == "")
 	 	{
 	 		
@@ -541,7 +540,7 @@ jQuery(document).ready(function($){
 									jQuery('#table-slide tbody').html(decoded)
 
 								//re sort jquery table
-								frs_resort_data_table()
+								save_sort_table();
 							}
 							frs_check_table_size()
 							jQuery('.frs-modal-backdrop').removeClass('active');
@@ -563,18 +562,15 @@ jQuery(document).ready(function($){
 	})
 
 
-	/*
+	/**
 	 * Media Uploader
 	 */
-
 	var custom_uploader
     var media_button
     
     $('.postbox-container').on('click','[mediauploadbutton]',function(e) {
 
-        media_button = $(this)
-
-
+        media_button = $(this);
  
         e.preventDefault();
  
@@ -640,8 +636,16 @@ function frs_check_table_size(){
 	}
 }
 
-function frs_resort_data_table(){
+function save_sort_table()
+{
+	var ordr = jQuery('table#table-slide tbody').sortable('serialize') + '&action=frs_list_update_order';
 
+    jQuery.post(ajaxurl, ordr, function(response){
+       	frs_notice_updated() 
+    });
+}
+
+function frs_resort_data_table(){
  	jQuery('table#table-slide tbody').sortable({
 	    items: '.list_item',
 	    opacity: 0.5,
@@ -651,7 +655,7 @@ function frs_resort_data_table(){
 	        var ordr = jQuery(this).sortable('serialize') + '&action=frs_list_update_order';
 
 	        jQuery.post(ajaxurl, ordr, function(response){
-	           frs_notice_updated() 
+	           	frs_notice_updated() 
 	        });
 	    },
 	    helper: function(e, tr){
@@ -660,8 +664,8 @@ function frs_resort_data_table(){
 		    var helper = tr.clone();
 		    helper.children().each(function(index)
 		    {
-		      // Set helper cell sizes to match the original sizes
-		      jQuery(this).width(originals.eq(index).width());
+		      	// Set helper cell sizes to match the original sizes
+		      	jQuery(this).width(originals.eq(index).width());
 		
 		    });
 		    

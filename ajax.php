@@ -10,7 +10,9 @@ function frs_list_update_order() {
 
     unset($_POST['action']);
 
-    foreach ($_POST['list_item'] as $key => $value) 
+    $list_item = $_POST['list_item'];
+
+    foreach ($list_item as $key => $value) 
     {
     	update_post_meta($value, 'tonjoo_frs_order_number', $key);
     }
@@ -29,7 +31,7 @@ function frs_delete() {
 
     unset($_POST['action']);
 
-    $id = $_POST['post_id'];
+    $id = htmlspecialchars($_POST['post_id']);
 
     wp_delete_post($id);
 
@@ -49,7 +51,7 @@ function frs_show_modal() {
 
     unset($_POST['action']);
 
-    $id = $_POST['post_id'];
+    $id = htmlspecialchars($_POST['post_id']);
 
 
     ob_start();
@@ -107,7 +109,9 @@ add_action('wp_ajax_frs_add_slidetype', 'frs_add_slidetype' ); /* for logged in 
 
 function frs_add_slidetype() {
 
-    $catarr = array('cat_name' => $_POST['name'],'taxonomy' => 'slide_type' );
+    $cat_name = htmlspecialchars($_POST['name']);
+
+    $catarr = array('cat_name' => $cat_name, 'taxonomy' => 'slide_type' );
 
     $new_cat_id = wp_insert_category( $catarr );
     $new_cat = get_term_by('id', $new_cat_id, 'slide_type');
@@ -144,7 +148,7 @@ function frs_delete_slidetype() {
         die();
     }
 
-    $taxonomy_id = $_POST['id'];
+    $taxonomy_id = htmlspecialchars($_POST['id']);
 
     // delete posts
     $args = array(
@@ -194,16 +198,16 @@ function frs_save() {
 
     unset($_POST['action']);
 
-    $id = $_POST['post_id'];
+    $id = htmlspecialchars($_POST['post_id']);
 
     //new Data
     if($id=='false'){
 
-	    $slide_type = $_POST['slide_type'];
+	    $slide_type = htmlspecialchars($_POST['slide_type']);
 
-	    $title = $_POST['title'];
+	    $title = htmlspecialchars($_POST['title']);
 	    
-	    $content = $_POST['content'];
+	    $content = htmlspecialchars($_POST['content']);
 
 	    // Create post object
 		$my_post = array(
@@ -221,7 +225,7 @@ function frs_save() {
 
 		wp_set_object_terms($save_id,array((int)$slide_type),'slide_type');
 
-        $thumbnailId  = (int) $_POST['featured_image'];
+        $thumbnailId  = (int) htmlspecialchars($_POST['featured_image']);
 
         //set featured image
         if($thumbnailId) {
@@ -244,11 +248,11 @@ function frs_save() {
 	}
 
 	//edit post
-    $slide_type = $_POST['slide_type'];
+    $slide_type = htmlspecialchars($_POST['slide_type']);
 
-    $title = $_POST['title'];
+    $title = htmlspecialchars($_POST['title']);
     
-    $content = $_POST['content'];
+    $content = htmlspecialchars($_POST['content']);
 
     // Create post object
 	$my_post = array(
@@ -261,7 +265,7 @@ function frs_save() {
 	// Insert the post into the database
 	wp_update_post( $my_post );
 
-    $thumbnailId  = (int) $_POST['featured_image'];
+    $thumbnailId  = (int) htmlspecialchars($_POST['featured_image']);;
 
     //set featured image
     if($thumbnailId) {
@@ -298,7 +302,7 @@ function frs_render_row(){
 
 	unset($_POST['action']);
 
-    $id = $_POST['post_id'];
+    $id = htmlspecialchars($_POST['post_id']);
 
     global $post;
 
