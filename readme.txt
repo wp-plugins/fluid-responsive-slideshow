@@ -32,7 +32,7 @@ If you are migrating from previous version, please clear your browser cache afte
 **Plugin Demo**
 You can try the plugin on this url: http://coba.tonjoostudio.com
 
-* username: ecae
+* username: coba
 * password: 123456
 
 **Manual :**
