@@ -65,6 +65,10 @@ All of the slide must have a slide order and slide type.
 
 == Changelog ==
 
+= 2.1.1 =
+* Fixed striped html on content
+* Fixed plugin updater
+
 = 2.1.0 =
 * Add plugin updater
 * Fix known bugs

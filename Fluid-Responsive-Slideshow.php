@@ -3,7 +3,7 @@
  * Plugin Name: Fluid Responsive Slideshow
  * Plugin URI: https://www.tonjoostudio.com/wordpress-plugin-fluid-responsive-slideshow-plugin/
  * Description: Fluid and Responsive Slideshow for wordpress.
- * Version: 2.1.0
+ * Version: 2.1.1
  * Author: tonjoo
  * Author URI: https://www.tonjoostudio.com/
  * License: GPLv2
@@ -12,7 +12,7 @@
  */																																										
 
 define('FRS_DIR_NAME', str_replace("/Fluid-Responsive-Slideshow.php", "", plugin_basename(__FILE__)));
-define('FRS_VERSION','2.1.0');
+define('FRS_VERSION','2.1.1');
 
 require_once( plugin_dir_path( __FILE__ ) . 'shortcode.php');
 require_once( plugin_dir_path( __FILE__ ) . 'post-list.php');

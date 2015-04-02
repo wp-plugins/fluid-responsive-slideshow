@@ -13,7 +13,7 @@ if($_POST)
 	/**
 	 * Tonjoo License
 	 */
-	if(function_exists('is_frs_premium_exist'))
+	if(class_exists('TonjooPluginLicenseFRS'))
 	{
 		$PluginLicense = new TonjooPluginLicenseFRS($_POST['pjc_slideshow_license']['license_key']);
 		$_POST = $PluginLicense->license_on_save($_POST);

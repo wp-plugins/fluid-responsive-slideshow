@@ -207,7 +207,7 @@ function frs_save() {
 
 	    $title = htmlspecialchars($_POST['title']);
 	    
-	    $content = htmlspecialchars($_POST['content']);
+	    $content = $_POST['content'];
 
 	    // Create post object
 		$my_post = array(
@@ -252,7 +252,7 @@ function frs_save() {
 
     $title = htmlspecialchars($_POST['title']);
     
-    $content = htmlspecialchars($_POST['content']);
+    $content = $_POST['content'];
 
     // Create post object
 	$my_post = array(
