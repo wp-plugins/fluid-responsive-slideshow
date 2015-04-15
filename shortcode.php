@@ -155,7 +155,8 @@ function pjc_gallery_print($attr)
 					'order' => 'ASC',
 					'meta_key' => 'tonjoo_frs_order_number',
 					'slide_type' => $attr['slide_type'],
-					'posts_per_page'=>-1);
+					'posts_per_page'=>-1,
+					'suppress_filters'=>true);
 
 	/**
 	 * Initialize slug shortcode

@@ -8,7 +8,7 @@
 /**
  * save options
  */
-if($_POST)
+if($_POST && isset($_POST['pjc_slideshow_license']))
 {
 	/**
 	 * Tonjoo License

@@ -2,7 +2,7 @@
 /**
  * save options
  */
-if($_POST)
+if($_POST && isset($_POST['pjc_slideshow_options']))
 {
 	update_option('pjc_slideshow_options', $_POST['pjc_slideshow_options']);
 	
