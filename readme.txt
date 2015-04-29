@@ -29,7 +29,7 @@ Fluid Responsive Slideshow is an easy to use slideshow. It's responsive, dummypr
 
 If you are migrating from previous version, please clear your browser cache after installing new version of FRS.
 
-Get the premium version: [Fluid Responsive Slideshow Premium](https://tonjoostudio.com/addons/fluid-responsive-slideshow-premium-skin-pack/?utm_source=wp_org&utm_medium=link&utm_campaign=frs/ "premium version")
+Get the premium version: [Fluid Responsive Slideshow Premium](https://tonjoostudio.com/addons/fluid-responsive-slideshow-premium-skin-pack/?utm_source=wp_org&utm_medium=link&utm_campaign=frs "premium version")
 
 **Plugin Demo**
 You can try the plugin on this url: http://coba.tonjoostudio.com
@@ -39,9 +39,9 @@ You can try the plugin on this url: http://coba.tonjoostudio.com
 
 **Manual :**
 
-You can read the manual here [Fluide Responsive Slideshow Manual](https://tonjoostudio.com/addons/fluid-responsive-slideshow/#manual "manual")
+You can read the manual here [Fluide Responsive Slideshow Manual](https://tonjoostudio.com/addons/fluid-responsive-slideshow-premium-skin-pack/?utm_source=wp_org&utm_medium=link&utm_campaign=frs#manual "manual")
 
-*If you have any questions, comment, customization request please use [tonjoo forum](https://forum.tonjoostudio.com/thread-category/fluid-responsive-slideshow/ "tonjoo forum"), or you can find our best plugins at [Tonjoo Studio](https://tonjoostudio.com)*
+*If you have any questions, comment, customization request please use [Tonjoo Forum](https://forum.tonjoostudio.com/thread-category/fluid-responsive-slideshow/ "tonjoo forum"), or you can find our best plugins at [Tonjoo Studio](https://tonjoostudio.com)*
 
 *We can also modify your WordPress plugins according to your needs. Visit us: [Tonjoo WordPress Developer](https://tonjoo.com "Visit Tonjoo Dev Website")*
 
