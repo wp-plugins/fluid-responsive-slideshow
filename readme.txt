@@ -67,6 +67,9 @@ All of the slide must have a slide order and slide type.
 
 == Changelog ==
 
+= 2.1.3 =
+* Fixed compability issue with WordPress 4.2
+
 = 2.1.1 =
 * Fixed striped html on content
 * Fixed plugin updater

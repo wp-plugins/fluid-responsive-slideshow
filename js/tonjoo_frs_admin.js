@@ -224,6 +224,9 @@ jQuery(document).ready(function($){
 		   		}
 
 	   			jQuery.post(ajaxurl, data,function(response){
+
+	   				var response = $.parseJSON(response);
+
 	   				if(response.success)
 	   				{
 	   					jQuery('.frs-modal-backdrop').removeClass('active');
@@ -257,7 +260,10 @@ jQuery(document).ready(function($){
 		   			name: string
 		   		}
 
-	   			jQuery.post(ajaxurl, data,function(response){	   				
+	   			jQuery.post(ajaxurl, data,function(response){	   
+
+	   				var response = $.parseJSON(response);
+
 	   				if(response.success) {	   	
 	   					window.location.href = admin_url + '&tab=' + response.slug + '&tabtype=slide';
 	   				}
@@ -287,7 +293,10 @@ jQuery(document).ready(function($){
 		   			name: string
 		   		}
 
-	   			jQuery.post(ajaxurl, data,function(response){	   				
+	   			jQuery.post(ajaxurl, data,function(response){
+
+	   				var response = $.parseJSON(response);
+
 	   				if(response.success) {	   	
 	   					window.location.href = admin_url + '&tab=' + response.slug + '&tabtype=slide';
 	   				}
@@ -310,7 +319,10 @@ jQuery(document).ready(function($){
 		   			id: $(this).attr('id')
 		   		}
 
-	   			jQuery.post(ajaxurl, data,function(response){	   				
+	   			jQuery.post(ajaxurl, data,function(response){	
+
+	   				var response = $.parseJSON(response);
+
 	   				if(response.success) {	   	
 	   					window.location.href = admin_url + '&settings-updated=true';
 	   				}
@@ -334,10 +346,6 @@ jQuery(document).ready(function($){
 	   	{
 	   		add_slide();
 
-	   		// alert('xxx');
-
-	   		// introJs().goToStep(8).start();
-
 	   		window.setTimeout(function(){
 	   			introJs()
 		   		.setOption('tooltipPosition', 'auto')
@@ -358,7 +366,10 @@ jQuery(document).ready(function($){
 	   			post_id: 'false'
 	   		}
 
-   			jQuery.post(ajaxurl, data,function(response){	   				
+   			jQuery.post(ajaxurl, data,function(response){	   		
+
+   				var response = $.parseJSON(response);
+
    				if(response.success){	   					
 
    					decoded = $("<div/>").html(response.modal).text();
@@ -415,7 +426,9 @@ jQuery(document).ready(function($){
 	   			post_id:button.data('post-id')
 	   		}
 
-   			jQuery.post(ajaxurl, data,function(response){	   				
+   			jQuery.post(ajaxurl, data,function(response){	
+
+   				var response = $.parseJSON(response);   				
 
    				if(response.success){	   					
 
@@ -490,12 +503,10 @@ jQuery(document).ready(function($){
 	jQuery('.frs-modal-container').on('click','[frs-save-slider]',function(){
 
 	 	if(jQuery('#frs-modal-form #frs-title').val() == "")
-	 	{
-	 		
+	 	{	 		
 	 		alert("Please fill the slider title");
 
-	 		post_id = jQuery(this).data('post-id')
-	 		
+	 		post_id = jQuery(this).data('post-id')	 		
 	 	}
 	 	else
 	 	{
@@ -513,16 +524,19 @@ jQuery(document).ready(function($){
 
 			var data =  jQuery('#frs-modal-form').serialize() + '&action=frs_save&content=' + content +"&post_id="+post_id+"&slide_type="+current_frs_slide_type;
 
-			jQuery.post(ajaxurl, data,function(response){	   				
-				if(response.success){	   					
-					//insert row ke table, jquery sortable diulangi)
+			jQuery.post(ajaxurl, data,function(response){	  
 
-					// 
+				var response = $.parseJSON(response); 				
+
+				if(response.success){
 					var data = 'action=frs_render_row&post_id=' + response.id
 
 					replace_id = response.id
 
 					jQuery.post(ajaxurl, data,function(response){
+
+						var response = $.parseJSON(response);
+
 						if(response.success){
 
 							decoded = $("<div/>").html(response.row).text();
@@ -651,6 +665,7 @@ function frs_resort_data_table(){
 	    opacity: 0.5,
 	    cursor: 'pointer',
 	    axis: 'y',
+    	distance: 5,
 	    update: function() {
 	        var ordr = jQuery(this).sortable('serialize') + '&action=frs_list_update_order';
 

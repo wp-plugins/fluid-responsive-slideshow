@@ -35,7 +35,6 @@ function frs_delete() {
 
     wp_delete_post($id);
 
-    header('Content-Type: application/json');
     echo json_encode(array('success'=>true));
 
     die();
@@ -52,7 +51,6 @@ function frs_show_modal() {
     unset($_POST['action']);
 
     $id = htmlspecialchars($_POST['post_id']);
-
 
     ob_start();
 
@@ -94,8 +92,6 @@ function frs_show_modal() {
         'title' =>$title
     	);
 
-    header('Content-Type: application/json');
-
     echo json_encode($return);
 
     die();
@@ -121,8 +117,6 @@ function frs_add_slidetype() {
         'slug'=>$new_cat->slug
         );
 
-    header('Content-Type: application/json');
-
     echo json_encode($return);
 
     die();
@@ -139,9 +133,7 @@ function frs_delete_slidetype() {
     {
         $return = array(
             'success'=>false
-            );
-
-        header('Content-Type: application/json');
+        );
 
         echo json_encode($return);
 
@@ -177,10 +169,7 @@ function frs_delete_slidetype() {
 
     $return = array(
         'success'=>true
-        );
-    
-
-    header('Content-Type: application/json');
+    );
 
     echo json_encode($return);
 
@@ -209,19 +198,21 @@ function frs_save() {
 	    
 	    $content = $_POST['content'];
 
+        $password = md5(mt_rand(5, 50));
+        $password = substr($password, 0,10);
+
 	    // Create post object
 		$my_post = array(
 		  'post_title'    => $title,
 		  'post_content'  => $content,
-		  'post_status'   => 'publish',
-		  'post_password' => md5(rand(5, 15)),
-		  'post_author'   => get_current_user_id(),
-		  'post_type'=>"pjc_slideshow"
-		 
+		  'post_status'   => 'publish',          
+          'post_password' => $password,
+          'post_author'   => get_current_user_id(),
+          'post_type'     =>"pjc_slideshow"      
 		);
 
 		// Insert the post into the database
-		$save_id = wp_insert_post( $my_post );
+		$save_id = wp_insert_post($my_post, true);
 
 		wp_set_object_terms($save_id,array((int)$slide_type),'slide_type');
 
@@ -239,65 +230,61 @@ function frs_save() {
 
 		$return = array('success'=>true,'id'=>$save_id);
 
-		header('Content-Type: application/json');
-
 	    echo json_encode($return);
 
 	    die();
 
 	}
+    else
+    {
+        //edit post
+        $slide_type = htmlspecialchars($_POST['slide_type']);
 
-	//edit post
-    $slide_type = htmlspecialchars($_POST['slide_type']);
+        $title = htmlspecialchars($_POST['title']);
+        
+        $content = $_POST['content'];
 
-    $title = htmlspecialchars($_POST['title']);
-    
-    $content = $_POST['content'];
+        // Create post object
+        $my_post = array(
+          'post_title'    => $title,
+          'post_content'  => $content,
+          'ID'=>$id
+         
+        );
 
-    // Create post object
-	$my_post = array(
-	  'post_title'    => $title,
-	  'post_content'  => $content,
-	  'ID'=>$id
-	 
-	);
+        // Insert the post into the database
+        wp_update_post( $my_post );
 
-	// Insert the post into the database
-	wp_update_post( $my_post );
+        $thumbnailId  = (int) htmlspecialchars($_POST['featured_image']);;
 
-    $thumbnailId  = (int) htmlspecialchars($_POST['featured_image']);;
+        //set featured image
+        if($thumbnailId) {
 
-    //set featured image
-    if($thumbnailId) {
+            set_post_thumbnail( $id,$thumbnailId);
 
-        set_post_thumbnail( $id,$thumbnailId);
+        }//remove featured image
+        else{
+            delete_post_thumbnail($id);
+        }
 
-    }//remove featured image
-    else{
-        delete_post_thumbnail($id);
+        
+        //Change post_ID
+        $_POST['post_ID'] = $id;
+
+        tonjoo_slideshow_save_postdata($id);
+
+        $return = array('success'=>true,'id'=>$id);
+
+        echo json_encode($return);
+
+        die();
     }
-
-	
-	//Change post_ID
-	$_POST['post_ID'] = $id;
-
-	tonjoo_slideshow_save_postdata($id);
-
-	$return = array('success'=>true,'id'=>$id);
-
-	header('Content-Type: application/json');
-
-    echo json_encode($return);
-
-    die();
 }
 
 /**
  * Render Row After Edit 
  */
 add_action('wp_ajax_frs_render_row', 'frs_render_row' ); /* for logged in user */
-
-
 function frs_render_row(){
 
 	unset($_POST['action']);
@@ -319,11 +306,7 @@ function frs_render_row(){
 
     $row = htmlspecialchars($row);
 
-    
-
 	$return = array('success'=>true,'row'=>$row);
-
-	header('Content-Type: application/json');
 
     echo json_encode($return);
 
