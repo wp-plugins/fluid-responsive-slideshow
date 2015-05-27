@@ -1,6 +1,6 @@
 === Fluid Responsive Slideshow ===
 Contributors: Todi.Adiatmo, haristonjoo, Alzea
-Tags: responsive slider, slider plugin, wordpress slider, image slider, content slider, image gallery, best gallery plugin, best slider, best slider plugin, wordpress responsive plugin, responsive slider plugin, slideshow maker, slideshow
+Tags: responsive slider, slider plugin, wordpress slider, image slider, content slider, image gallery, best gallery plugin, best slider
 Donate link: https://tonjoostudio.com/donate/
 Requires at least: 3.0.1
 Tested up to: 4.2
@@ -66,9 +66,6 @@ All of the slide must have a slide order and slide type.
 2. Great slideshow with complete settings.
 
 == Changelog ==
-
-= 2.1.3 =
-* Fixed compability issue with WordPress 4.2
 
 = 2.1.1 =
 * Fixed striped html on content

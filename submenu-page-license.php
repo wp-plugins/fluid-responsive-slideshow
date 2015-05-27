@@ -164,6 +164,8 @@ $options = get_option('pjc_slideshow_license');
 			<?php 
 				_e('Register your license code here to get all benefit of Fluid Responsive Slideshow. ',FRS_VERSION);
 				echo '<div style="height:10px;"></div>';
+				_e('<b>Remove Ads</b> by register your license code. ',FRS_VERSION);
+				echo '<div style="height:10px;"></div>';
 				_e('Find your license code at ',FRS_VERSION);
 			?> 
 			<a href="https://tonjoostudio.com/manage/plugin" target="_blank">https://tonjoostudio.com/manage/plugin</a>
@@ -192,6 +194,12 @@ $options = get_option('pjc_slideshow_license');
 	</div>
 
 	<!-- ADS -->
+	<?php
+		$options = get_option('pjc_slideshow_license');
+		$license = isset($options['license_status']) ? unserialize($options['license_status']) : false;	
+		if(!$license || !$license['status'] || !function_exists('is_frs_premium_exist')):
+	?>
+
 		<div class="postbox">			
 		<script type="text/javascript">
 			/**
@@ -301,7 +309,11 @@ $options = get_option('pjc_slideshow_license');
 				</a>
 			</div>
 		</div>
+
 	</div>
+
+	<?php endif; ?>
+
 </div>
 </div>
 </div>	

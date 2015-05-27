@@ -655,7 +655,7 @@ function pjc_gallery_print($attr)
 
 			if(! empty($url))
 			{
-				$slide .= "<img src='$url' />";
+				$slide .= "<img alt='$post->post_title' src='$url' />";
 			}
 
 			if($options[$current]['show_textbox'] == "true")

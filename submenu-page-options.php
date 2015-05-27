@@ -577,6 +577,12 @@ jQuery(document).ready(function($){
 	</div>
 
 	<!-- ADS -->
+	<?php
+		$options = get_option('pjc_slideshow_license');
+		$license = isset($options['license_status']) ? unserialize($options['license_status']) : false;	
+		if(!$license || !$license['status'] || !function_exists('is_frs_premium_exist')):
+	?>
+
 		<div class="postbox">			
 		<script type="text/javascript">
 			/**
@@ -686,7 +692,11 @@ jQuery(document).ready(function($){
 				</a>
 			</div>
 		</div>
+
 	</div>
+
+	<?php endif; ?>
+
 </div>
 </div>
 </div>	
