@@ -67,6 +67,18 @@ All of the slide must have a slide order and slide type.
 
 == Changelog ==
 
+= 2.2.0 =
+* Improved images responsiveness
+* Images always centered both on vertical and horizontal
+* Add full widh option
+* Add min height option to improve mobile visibility
+* Add max height, default value is '0' (zero) to make it unlimited
+
+= 2.1.4 =
+* Add alt tag to images
+* Hide ads when premium key is registered
+* Fix known bugs
+
 = 2.1.1 =
 * Fixed striped html on content
 * Fixed plugin updater

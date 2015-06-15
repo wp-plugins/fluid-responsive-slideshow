@@ -8,6 +8,15 @@ if (!isset($options[$current]["height"]))
 if (!isset($options[$current]["width"]))
 	$options[$current]["width"] = "650";
 
+if (!isset($options[$current]["full_width"]))
+	$options[$current]["full_width"] = "false";
+
+if (!isset($options[$current]["min_height"]))
+	$options[$current]["min_height"] = "300";
+
+if (!isset($options[$current]["max_height"]))
+	$options[$current]["max_height"] = "0";
+
 if (!isset($options[$current]["show_textbox"]))
 	$options[$current]["show_textbox"] = "true";
 

@@ -229,21 +229,74 @@ jQuery(document).ready(function($){
 		</td>
 	</tr>
 
-	<tr><td colspan=2><h3 class="meta-subtitle">Dimension</h3></td></tr>
+	<tr><td colspan=2><h3 class="meta-subtitle">Base Dimension and Proportion</h3></td></tr>
 
 	<tr valign="top">
-		<th scope="row">Width</th>
+		<th scope="row">Base Width</th>
 		<td>
 			<input required class="regular-text" type="number" name="pjc_slideshow_options<?php echo "[$current][width]"?>" value="<?php esc_attr_e($options[$current]["width"]); ?>" />
-			<label class="description" >Maximum slider width</label>
+			<label class="description" >Slider width</label>
 		</td>
 	</tr>
 			
 	<tr valign="top">
-		<th scope="row">Height</th>
+		<th scope="row">Base Height</th>
 		<td>
 			<input class="regular-text" type="number" name="pjc_slideshow_options<?php echo "[$current][height]"?>" value="<?php esc_attr_e($options[$current]["height"]); ?>" />
 			<label class="description" >Slider height</label>
+		</td>
+	</tr>
+
+	<tr><td colspan=2><h3 class="meta-subtitle">Size And Scaling</h3></td></tr>
+
+	<tr valign="top">
+		<th scope="row">Full Width</th>
+		<td>
+			<select name="pjc_slideshow_options<?php echo "[$current][full_width]"?>">
+				<?php
+				
+					$full_width = array(									
+						'0' => array(
+							'value' =>	'false',
+							'label' =>  'No' 
+						),
+						'1' => array(
+							'value' =>	'true',
+							'label' =>  'Yes'
+						)
+					);
+					
+				
+					$selected = $options[$current]["full_width"];
+					$r = '';
+
+					foreach ( $full_width as $option ) {
+						$label = $option['label'];
+						if ( $selected == $option['value'] )
+							$r .= "<option selected='selected' value='" . esc_attr( $option['value'] ) . "'>$label</option>";
+						else
+							$r .= "<option value='" . esc_attr( $option['value'] ) . "'>$label</option>";
+					}
+					echo $r;
+				?>
+			</select>
+			<label class="description" >Fluid the slideshow width to container width</label>
+		</td>
+	</tr>
+
+	<tr valign="top">
+		<th scope="row">Min Height</th>
+		<td>
+			<input class="regular-text" type="number" name="pjc_slideshow_options<?php echo "[$current][min_height]"?>" value="<?php esc_attr_e($options[$current]["min_height"]); ?>" />
+			<label class="description" >Minimum slider shrink height</label>
+		</td>
+	</tr>
+
+	<tr valign="top">
+		<th scope="row">Max Height</th>
+		<td>
+			<input class="regular-text" type="number" name="pjc_slideshow_options<?php echo "[$current][max_height]"?>" value="<?php esc_attr_e($options[$current]["max_height"]); ?>" />
+			<label class="description" >Maximum slider height, set to 0 (zero) to make it unlimited.</label>
 		</td>
 	</tr>
 
