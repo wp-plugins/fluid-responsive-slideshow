@@ -29,7 +29,7 @@ Fluid Responsive Slideshow is an easy to use slideshow. It's responsive, dummypr
 
 If you are migrating from previous version, please clear your browser cache after installing new version of FRS.
 
-Get the premium version: [Fluid Responsive Slideshow Premium](https://tonjoostudio.com/addons/fluid-responsive-slideshow-premium-skin-pack/?utm_source=wp_org&utm_medium=link&utm_campaign=frs "premium version")
+Get the premium version: <a href="https://tonjoostudio.com/addons/fluid-responsive-slideshow-premium-skin-pack/?utm_source=wp_org&utm_medium=link&utm_campaign=frs" title="Fluid Responsive Slideshow Premium" rel="friend">Fluid Responsive Slideshow Premium</a>
 
 **Plugin Demo**
 You can try the plugin on this url: http://coba.tonjoostudio.com
@@ -39,11 +39,11 @@ You can try the plugin on this url: http://coba.tonjoostudio.com
 
 **Manual :**
 
-You can read the manual here [Fluide Responsive Slideshow Manual](https://tonjoostudio.com/addons/fluid-responsive-slideshow-premium-skin-pack/?utm_source=wp_org&utm_medium=link&utm_campaign=frs#manual "manual")
+You can read the manual here <a href="https://tonjoostudio.com/addons/fluid-responsive-slideshow-premium-skin-pack/?utm_source=wp_org&utm_medium=link&utm_campaign=frs#manual" title="FRS Manual" rel="friend">Fluide Responsive Slideshow Manual</a>
 
-*If you have any questions, comment, customization request please use [Tonjoo Forum](https://forum.tonjoostudio.com/thread-category/fluid-responsive-slideshow/ "tonjoo forum"), or you can find our best plugins at [Tonjoo Studio](https://tonjoostudio.com)*
+*If you have any questions, comment, customization request please use <a href="https://forum.tonjoostudio.com/thread-category/fluid-responsive-slideshow/" title="Tonjoo Forum" rel="friend">Tonjoo Forum</a>, or you can find our best plugins at <a href="https://tonjoostudio.com" title="Tonjoo Studio" rel="friend">Tonjoo Studio</a>*
 
-*We can also modify your WordPress plugins according to your needs. Visit us: [Tonjoo WordPress Developer](https://tonjoo.com "Visit Tonjoo Dev Website")*
+*We can also modify your WordPress plugins according to your needs. Visit us: <a href="https://tonjoo.com" title="Visit Tonjoo Dev Website" rel="friend">Tonjoo Wordpress Developer</a>*
 
 == Installation ==
 
