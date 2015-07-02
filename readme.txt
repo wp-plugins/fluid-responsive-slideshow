@@ -17,11 +17,12 @@ Fluid Responsive Slideshow is an easy to use slideshow. It's responsive, dummypr
 **Features :**
 
 * Drag and drop 
-* Multiple slideshow on single page/post.
-* Responsive slider image.
+* Multiple slideshow on single page/post
+* Responsive slider image
+* Auto-Scaling Slider (Full width & height)
 * Dummyproof UI
-* Custom text and font size.
-* And many custumizable parameter.
+* Custom text and font size
+* And many custumizable parameter
 * 50+ Skins
 * 20+ Button
 
