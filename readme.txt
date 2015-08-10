@@ -3,7 +3,7 @@ Contributors: Todi.Adiatmo, haristonjoo, Alzea
 Tags: best gallery plugin, best slider, content slider, image gallery, image slider, responsive slider, slider plugin, wordpress slider, responsive slideshow, slideshow, image slideshow, wordpress slideshow
 Donate link: https://tonjoostudio.com/donate/
 Requires at least: 3.0.1
-Tested up to: 4.2
+Tested up to: 4.2.4
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
