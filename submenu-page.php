@@ -110,6 +110,9 @@ function pjc_slideshow_tab($current = 'plugin')
 			<a href="http://wordpress.org/support/view/plugin-reviews/fluid-responsive-slideshow?rate=5#postform" target="_blank" style="margin-left:10px;">Enjoy the plugin?, rate us!</a>
 		</p>
 
+		<!-- Progress Notification -->
+		<div id="frs_ajax_on_progress">On Progress..</div>
+
 		<!-- BEGIN TAB SLIDE AND OPTIONS -->
 		<h2 class="nav-tab-wrapper">
 		<?php if(isset($_GET['tab']) && $_GET['tab'] != ""): ?>

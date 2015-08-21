@@ -1,4 +1,7 @@
 jQuery(document).ready(function($){
+
+	frs_admin_loading('hide');
+
 	if($('.widget-liquid-right').length > 0) $('.widget-liquid-right').accordion();
 
 	$(".postbox-container  ").on('change','#tonjoo-frs-show_button select',function(){
@@ -223,7 +226,11 @@ jQuery(document).ready(function($){
 		   			post_id:button.data('post-id')
 		   		}
 
+		   		frs_admin_loading();
+
 	   			jQuery.post(ajaxurl, data,function(response){
+
+	   				frs_admin_loading('hide');
 
 	   				var response = $.parseJSON(response);
 
@@ -260,7 +267,11 @@ jQuery(document).ready(function($){
 		   			name: string
 		   		}
 
+		   		frs_admin_loading();
+
 	   			jQuery.post(ajaxurl, data,function(response){	   
+
+	   				frs_admin_loading('hide');
 
 	   				var response = $.parseJSON(response);
 
@@ -293,7 +304,11 @@ jQuery(document).ready(function($){
 		   			name: string
 		   		}
 
+		   		frs_admin_loading();
+
 	   			jQuery.post(ajaxurl, data,function(response){
+
+	   				frs_admin_loading('hide');
 
 	   				var response = $.parseJSON(response);
 
@@ -319,7 +334,11 @@ jQuery(document).ready(function($){
 		   			id: $(this).attr('id')
 		   		}
 
+		   		frs_admin_loading();
+
 	   			jQuery.post(ajaxurl, data,function(response){	
+
+	   				frs_admin_loading('hide');
 
 	   				var response = $.parseJSON(response);
 
@@ -366,7 +385,11 @@ jQuery(document).ready(function($){
 	   			post_id: 'false'
 	   		}
 
+	   		frs_admin_loading();
+
    			jQuery.post(ajaxurl, data,function(response){	   		
+
+   				frs_admin_loading('hide');
 
    				var response = $.parseJSON(response);
 
@@ -426,7 +449,11 @@ jQuery(document).ready(function($){
 	   			post_id:button.data('post-id')
 	   		}
 
+	   		frs_admin_loading();
+
    			jQuery.post(ajaxurl, data,function(response){	
+
+   				frs_admin_loading('hide');
 
    				var response = $.parseJSON(response);   				
 
@@ -495,11 +522,9 @@ jQuery(document).ready(function($){
 	})
 
 	
-
 	/**
 	 * Save 
 	 */
-
 	jQuery('.frs-modal-container').on('click','[frs-save-slider]',function(){
 
 	 	if(jQuery('#frs-modal-form #frs-title').val() == "")
@@ -524,16 +549,24 @@ jQuery(document).ready(function($){
 
 			var data =  jQuery('#frs-modal-form').serialize() + '&action=frs_save&content=' + content +"&post_id="+post_id+"&slide_type="+current_frs_slide_type;
 
+			frs_admin_loading();
+
 			jQuery.post(ajaxurl, data,function(response){	  
+
+				frs_admin_loading('hide');
 
 				var response = $.parseJSON(response); 				
 
 				if(response.success){
 					var data = 'action=frs_render_row&post_id=' + response.id
 
+					frs_admin_loading();
+
 					replace_id = response.id
 
 					jQuery.post(ajaxurl, data,function(response){
+
+						frs_admin_loading('hide');
 
 						var response = $.parseJSON(response);
 
@@ -654,8 +687,12 @@ function save_sort_table()
 {
 	var ordr = jQuery('table#table-slide tbody').sortable('serialize') + '&action=frs_list_update_order';
 
+	frs_admin_loading();
+
     jQuery.post(ajaxurl, ordr, function(response){
        	frs_notice_updated() 
+
+       	frs_admin_loading('hide');
     });
 }
 
@@ -669,8 +706,12 @@ function frs_resort_data_table(){
 	    update: function() {
 	        var ordr = jQuery(this).sortable('serialize') + '&action=frs_list_update_order';
 
+	        frs_admin_loading();
+
 	        jQuery.post(ajaxurl, ordr, function(response){
 	           	frs_notice_updated() 
+
+	           	frs_admin_loading('hide');
 	        });
 	    },
 	    helper: function(e, tr){
@@ -713,4 +754,22 @@ function frs_notice_error_updated() {
 	jQuery('.frs-notice-wrapper').addClass('active');
 	jQuery('.frs-updated-error').hide()
 	jQuery('.frs-updated-error').stop().show('slow')
+}
+
+function frs_admin_loading(action)
+{
+	if(action == 'hide')
+	{
+		jQuery('#frs_ajax_on_progress').css({
+			'background': 'none',
+			'display': 'none'
+		})
+	}
+	else
+	{
+		jQuery('#frs_ajax_on_progress').css({
+			'background': '',
+			'display': 'block'
+		})
+	}
 }
