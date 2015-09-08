@@ -30,7 +30,7 @@ Fluid Responsive Slideshow is an easy to use slideshow. It's responsive, dummypr
 
 If you are migrating from previous version, please clear your browser cache after installing new version of FRS.
 
-Get the premium version: <a href="https://tonjoostudio.com/addons/fluid-responsive-slideshow-premium-skin-pack/?utm_source=wp_org&utm_medium=link&utm_campaign=frs" title="Fluid Responsive Slideshow Premium" rel="friend">Fluid Responsive Slideshow Premium</a>
+Get a better and more advance premium slider plugin, Sangar Slider: <a href="https://tonjoostudio.com/addons/sangar-slider/?utm_source=wp_org&utm_medium=link&utm_campaign=ss" title="Sangar Slider" rel="friend">Sangar Slider</a>
 
 **Plugin Demo**
 You can try the plugin on this url: http://coba.tonjoostudio.com
