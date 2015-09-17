@@ -10,9 +10,11 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Fluid Responsive Slideshow is an easy to use slideshow. It's responsive, dummyproof and powered with 50+ beautiful skins.
 
-<div class="block-content"><blockquote>
+<div class="block-content">
+<blockquote>
   <p><a href="http://coba.tonjoostudio.com" title="Live demos of Sangar Slider" rel="nofollow">Demo sliders</a> | <a href="https://tonjoostudio.com/addons/sangar-slider" title="All features" rel="nofollow">Features</a> | <a href="https://tonjoostudio.com/addons/sangar-slider#manual" title="Sangar Slider documentation" rel="nofollow">Documentation</a> | <a href="http://sangar-slider.com" title="Official Website" rel="nofollow">Official Website</a> | <a href="https://forum.tonjoostuido.com" title="Support" rel="nofollow">Support forum</a></p>
 </blockquote>
+</div>
 
 == Description ==
 
