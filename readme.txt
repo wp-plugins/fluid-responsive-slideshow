@@ -26,11 +26,12 @@ Fluid Responsive Slideshow is an easy to use slideshow. It's responsive, dummypr
 * 50+ Skins
 * 20+ Button
 
+
+<em>New version of frs is called <strong>Sangar Slider</strong>. This new slider have all feature of frs + layered slider and animatio system, you can check here</em>: <a href="http://sangarslider.com/" title="Sangar Slider" rel="friend">Sangar Slider</a>
+
 **Important :**
 
 If you are migrating from previous version, please clear your browser cache after installing new version of FRS.
-
-Get a better and more advance premium slider plugin, Sangar Slider: <a href="https://tonjoostudio.com/addons/sangar-slider/?utm_source=wp_org&utm_medium=link&utm_campaign=ss" title="Sangar Slider" rel="friend">Sangar Slider</a>
 
 **Plugin Demo**
 You can try the plugin on this url: http://coba.tonjoostudio.com
